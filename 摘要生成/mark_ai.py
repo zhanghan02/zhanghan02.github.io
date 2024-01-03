@@ -77,7 +77,7 @@ def gen_ai_abstract_from_one_md_file(md_path):
             # 使用pangu库对文本进行拼接
             abstract = pangu.spacing_text(call_with_messages(md.content))
             # 将摘要添加到md文件中
-            md.content = '{% tip cogs %}AI摘要：' + abstract + '{% endtip %}' + '\n' + md.content
+            md.content = '{% tip info %}AI摘要：' + abstract + '{% endtip %}' + '\n' + md.content
             # md['ai'] = abstract
             md['YOU_NEED_TO_ADD_ABSTRACT_MANUALLY'] = False
         except RuntimeError as e:
