@@ -1,0 +1,350 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【剑指offer】反向传播 | ZhangHan个人博客</title><meta name="author" content="Zhang Han,944211286@qq.com"><meta name="copyright" content="Zhang Han"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="AI摘要：这篇 Markdown 文档介绍了深度学习中的反向传播算法。反向传播算法是一种常用的优化方法，用于计算神经网络中每个参数的梯度值，以便利用梯度下降法或其他优化方法来更新参数，从而最小化损失函数。 反向传播算法的主要流程包括前向传播和反向传播两个阶段。前向传播是从输入层开始，通过神经网络的每一层计算每个神经元的输出结果，直到输出层输出最终的结果。在这个过程中，我们需要使用神经元的权重和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【剑指offer】反向传播">
+<meta property="og:url" content="https://www.zhanghan.xyz/posts/29966/index.html">
+<meta property="og:site_name" content="ZhangHan个人博客">
+<meta property="og:description" content="AI摘要：这篇 Markdown 文档介绍了深度学习中的反向传播算法。反向传播算法是一种常用的优化方法，用于计算神经网络中每个参数的梯度值，以便利用梯度下降法或其他优化方法来更新参数，从而最小化损失函数。 反向传播算法的主要流程包括前向传播和反向传播两个阶段。前向传播是从输入层开始，通过神经网络的每一层计算每个神经元的输出结果，直到输出层输出最终的结果。在这个过程中，我们需要使用神经元的权重和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/3tboxnhYjqpK9G7.png">
+<meta property="article:published_time" content="2023-07-12T01:54:00.000Z">
+<meta property="article:modified_time" content="2024-04-24T10:54:46.869Z">
+<meta property="article:author" content="Zhang Han">
+<meta property="article:tag" content="深度学习基础">
+<meta property="article:tag" content="反向传播">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/3tboxnhYjqpK9G7.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.zhanghan.xyz/posts/29966/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?88f0b6eab573586585614e3e0b8047c9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【剑指offer】反向传播',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-24 18:54:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/4pKqh38Gnk9bHC2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/AIagent/"><i class="fa-fw fas fa-wallet"></i><span> AI agent</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/SJ9tkRVgloc134Z.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ZhangHan个人博客"><span class="site-name">ZhangHan个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/AIagent/"><i class="fa-fw fas fa-wallet"></i><span> AI agent</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【剑指offer】反向传播</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-12T01:54:00.000Z" title="发表于 2023-07-12 09:54:00">2023-07-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T10:54:46.869Z" title="更新于 2024-04-24 18:54:46">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%91%E6%8C%87offer/">剑指offer</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【剑指offer】反向传播"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="tip info"><p>AI摘要：这篇 Markdown
+文档介绍了深度学习中的反向传播算法。反向传播算法是一种常用的优化方法，用于计算神经网络中每个参数的梯度值，以便利用梯度下降法或其他优化方法来更新参数，从而最小化损失函数。</p>
+<p>反向传播算法的主要流程包括前向传播和反向传播两个阶段。前向传播是从输入层开始，通过神经网络的每一层计算每个神经元的输出结果，直到输出层输出最终的结果。在这个过程中，我们需要使用神经元的权重和偏置值以及激活函数来计算每个神经元的输出。</p>
+<p>反向传播则是从输出层开始，计算每个神经元的误差，然后向前计算每个神经元的误差，直到计算出输入层每个神经元的误差。这个过程可以使用链式法则来计算。反向传播的主要目的是计算每个神经元的梯度，以便于更新神经元的权重和偏置值，使得损失函数的值最小化。</p>
+<p>通过反向传播算法，我们可以不断更新神经元的权重和偏置值，使得损失函数的值逐渐降低，从而达到优化神经网络的目的。</p>
+<p>此外，文档还提供了反向传播的一些主要特点和应用领域，包括用于深度学习中的自动特征提取、多任务学习、半监督学习、迁移学习和强化学习等。</p>
+<p>总的来说，反向传播算法是深度学习中的重要组成部分，它为我们提供了一种有效的优化方法，帮助我们在大规模的神经网络模型中有效地学习到有用的特征。</p>
+</div>
+<h1 id="系列文章目录">系列文章目录</h1>
+<p><a
+target="_blank" rel="noopener" href="https://zhanghan.xyz/2023/07/13/%E3%80%90%E5%89%91%E6%8C%87offer%E3%80%91BN%E5%B1%82%E8%AF%A6%E8%A7%A3/">BN层详解</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://zhanghan.xyz/2023/07/13/%E3%80%90%E5%89%91%E6%8C%87offer%E3%80%91%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E5%92%8C%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8/">梯度消失和梯度爆炸</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://zhanghan.xyz/2023/07/12/%E3%80%90%E5%89%91%E6%8C%87offer%E3%80%911-1%E5%8D%B7%E7%A7%AF%E7%9A%84%E4%BD%9C%E7%94%A8/">1*1卷积的作用</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://zhanghan.xyz/2023/07/12/%E3%80%90%E5%89%91%E6%8C%87offer%E3%80%911-1%E5%8D%B7%E7%A7%AF%E7%9A%84%E4%BD%9C%E7%94%A8/">常用的数据增强的方法</a></p>
+<hr />
+<h1 id="什么是反向传播">什么是反向传播</h1>
+<p>深度学习中的反向传播（<code>Backpropagation</code>）是一种基于梯度下降法的优化方法，用于计算神经网络中每个参数的梯度值，以便利用梯度下降法或其他优化方法来更新参数，从而最小化损失函数。</p>
+<p>反向传播的基本思想是通过链式法则计算整个神经网络中每个参数对损失函数的贡献，以便利用梯度下降法来更新参数。具体来说，反向传播算法从输出层开始，将输出误差反向传播到隐藏层和输入层，计算每个神经元的误差和梯度，并使用梯度下降法来更新参数。反向传播算法的关键在于计算每个神经元的误差和梯度，这可以通过链式法则来实现。</p>
+<p>在深度学习中，反向传播是一种非常重要的优化方法，可以用于训练各种类型的神经网络，包括卷积神经网络、循环神经网络和自编码器等。反向传播算法的优化和改进也一直是深度学习研究的热点之一。
+# 反向传播的过程</p>
+<p>反向传播是深度学习中最基本的优化方法之一，用于计算神经网络中每个参数的梯度值，以便利用梯度下降法或其他优化方法来更新参数，从而最小化损失函数。反向传播的过程可以分为以下几个步骤：</p>
+<p>假设我们有一个多层前馈神经网络，其中包含输入层、若干个隐藏层和输出层，每个神经元都有权重和偏差。我们的目标是最小化损失函数。</p>
+<ol type="1">
+<li>前向传播：将输入数据输入到网络中，通过神经网络的前向传播计算出每个神经元的输出结果，直到输出层输出最终的结果。</li>
+<li>计算损失函数：将神经网络输出的结果与真实标签进行比较，计算出损失函数的值。</li>
+<li>反向传播误差：从输出层开始，计算每个神经元的误差，然后向前计算每个神经元的误差，直到计算出输入层每个神经元的误差。具体来说，我们首先计算输出层的误差，然后反向传播到前一层隐藏层，计算隐藏层的误差，并将误差反向传播到更早的层，直到计算出输入层的误差。这个过程可以使用链式法则来计算。</li>
+<li>计算梯度：根据误差计算每个神经元的梯度，即损失函数对每个神经元权重和偏差的偏导数。</li>
+<li>更新参数：使用梯度下降法或其他优化方法来更新每个神经元的权重和偏差，使得损失函数的值最小化。</li>
+</ol>
+<p>重复上述步骤，直到达到收敛条件或达到预设的训练次数。通过反向传播算法，神经网络可以根据给定的输入和输出数据进行训练，并逐步优化网络参数，从而得到更准确的预测结果。
+# 部分过程详解 ## （1）前向传播
+前向传播是计算神经网络输出的过程。在前向传播中，输入信号通过神经网络的所有层，最终得到输出信号。这个过程可以看作是一个函数的计算过程，函数的输入是神经网络的输入数据，输出是神经网络的输出数据。在计算神经网络的输出时，需要使用神经元的权重和偏置值进行计算。
+具体来说，前向传播的过程如下： 1. 将输入数据传递给输入层的神经元。 2.
+计算输入层神经元的输出，即将输入数据乘以神经元的权重，再加上神经元的偏置值，最后使用激活函数进行非线性变换。这样可以得到输入层的输出信号。
+3. 将输入层的输出信号传递给下一层的神经元。 4.
+重复步骤2和3，直到所有层的神经元都计算完毕，得到神经网络的输出信号。 5.
+将输出信号与真实的标签进行比较，计算损失函数的值。</p>
+<p>将损失函数的值作为反向传播的起点，使用链式法则计算每个神经元的梯度，以便进一步更新神经元的权重和偏置值。
+在前向传播中，每个神经元都扮演着一个函数的角色，将输入信号转换为输出信号。这些函数的参数是神经元的权重和偏置值。因此，在反向传播中，需要计算每个神经元函数的梯度，以便更新神经元的参数，以最小化损失函数。</p>
+<h2 id="计算梯度和更新参数">（2）计算梯度和更新参数</h2>
+<p>反向传播算法中的计算梯度和更新参数部分是整个算法的核心。在前向传播过程中，神经元的输出由输入和参数共同决定。在反向传播过程中，需要计算损失函数对每个参数的偏导数，以确定梯度方向。然后，使用梯度下降法或其他优化方法来更新参数，以最小化损失函数。</p>
+<p>反向传播算法的计算梯度和更新参数部分可以分为以下步骤：</p>
+<ol type="1">
+<li>计算输出层神经元的梯度。输出层神经元的梯度可以通过损失函数的导数和激活函数的导数来计算。具体来说，输出层神经元的梯度等于损失函数对神经元输出的偏导数乘以激活函数对神经元加权和的偏导数。</li>
+<li>计算隐藏层神经元的梯度。隐藏层神经元的梯度可以通过链式法则来计算。具体来说，隐藏层神经元的梯度等于该神经元输出对下一层神经元加权和的偏导数乘以下一层神经元梯度对该神经元输出的偏导数。</li>
+<li>计算参数的梯度。对于每个参数，需要计算损失函数对该参数的偏导数。具体来说，对于权重矩阵中的每个元素，需要计算损失函数对该元素的偏导数。对于偏置向量中的每个元素，需要计算损失函数对该元素的偏导数。</li>
+<li>更新参数。使用梯度下降法或其他优化方法来更新参数。具体来说，对于权重矩阵中的每个元素，需要将该元素减去学习率乘以该元素的梯度。对于偏置向量中的每个元素，需要将该元素减去学习率乘以该元素的梯度。
+<code>（具体地，可以使用随机梯度下降法（SGD）等优化算法来更新参数，公式如下： w = w - learning_rate * dw b = b - learning_rate * db 其中，w和b分别表示神经元的权重和偏置，dw和db分别表示相应的梯度，learning_rate表示学习率，用于控制参数更新的步长。）</code></li>
+<li>重复步骤1到4，直到达到停止条件。</li>
+</ol>
+<p>在实现反向传播算法时，需要注意梯度消失和梯度爆炸的问题。梯度消失和梯度爆炸可能会导致算法无法更新参数，从而影响模型的训练效果。为了解决这个问题，可以使用一些技巧，例如梯度裁剪、权重初始化和正则化等方法。其中，梯度裁剪可以防止梯度爆炸，即限制梯度的最大值，以避免梯度过大。权重初始化可以使神经元的输出均匀分布，从而避免梯度消失。正则化可以通过限制参数的大小来避免过拟合，从而提高模型的泛化能力。也可以参考系列文章：<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_52118067/article/details/129885826?spm=1001.2014.3001.5501">梯度消失和梯度爆炸</a></p>
+<p>总之，在反向传播算法中，计算梯度和更新参数是非常重要的步骤。通过计算参数的梯度，并使用梯度下降法或其他优化方法来更新参数，可以最小化损失函数，从而提高模型的准确性。而为了处理梯度消失和梯度爆炸的问题，需要使用一些技巧来优化算法。
+# 代码理解
+以下是一个简单的Python代码示例，用于说明反向传播过程的实现：</p>
+<p>假设我们有一个三层神经网络，包含一个输入层、一个隐藏层和一个输出层，其中输入层有两个神经元，隐藏层有三个神经元，输出层有一个神经元。我们使用sigmoid作为激活函数，并使用均方误差作为损失函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 激活函数sigmoid</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sigmoid</span>(<span class="params">x</span>):</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-x))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 损失函数均方误差</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mse_loss</span>(<span class="params">y_true, y_pred</span>):</span><br><span class="line">	<span class="keyword">return</span> np.mean(np.square(y_true - y_pred))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 前向传播</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward_propagation</span>(<span class="params">X, W1, b1, W2, b2</span>):</span><br><span class="line">	hidden_layer_output = sigmoid(np.dot(X, W1) + b1)</span><br><span class="line">	y_pred = sigmoid(np.dot(hidden_layer_output, W2) + b2)</span><br><span class="line">	<span class="keyword">return</span> hidden_layer_output, y_pred</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 反向传播</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backward_propagation</span>(<span class="params">X, y_true, hidden_layer_output, y_pred, W1, b1, W2, b2</span>):</span><br><span class="line">	<span class="comment"># 计算输出层误差</span></span><br><span class="line">	output_error = y_pred - y_true</span><br><span class="line">	output_delta = output_error * y_pred * (<span class="number">1</span> - y_pred)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 计算隐藏层误差</span></span><br><span class="line">	hidden_error = np.dot(output_delta, W2.T)</span><br><span class="line">	hidden_delta = hidden_error * hidden_layer_output * (<span class="number">1</span> - hidden_layer_output)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 计算梯度</span></span><br><span class="line">	dW2 = np.dot(hidden_layer_output.T, output_delta)</span><br><span class="line">	db2 = np.<span class="built_in">sum</span>(output_delta, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">	dW1 = np.dot(X.T, hidden_delta)</span><br><span class="line">	db1 = np.<span class="built_in">sum</span>(hidden_delta, axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> dW1, db1, dW2, db2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练模型</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train</span>(<span class="params">X, y_true, hidden_units, epochs, learning_rate</span>):</span><br><span class="line">	<span class="comment"># 初始化参数</span></span><br><span class="line">	input_units = X.shape[<span class="number">1</span>]</span><br><span class="line">	output_units = y_true.shape[<span class="number">1</span>]</span><br><span class="line">	W1 = np.random.randn(input_units, hidden_units)</span><br><span class="line">	b1 = np.zeros((<span class="number">1</span>, hidden_units))</span><br><span class="line">	W2 = np.random.randn(hidden_units, output_units)</span><br><span class="line">	b2 = np.zeros((<span class="number">1</span>, output_units))</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 迭代训练</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(epochs):</span><br><span class="line">		<span class="comment"># 前向传播</span></span><br><span class="line">		hidden_layer_output, y_pred = forward_propagation(X, W1, b1, W2, b2)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 计算损失函数</span></span><br><span class="line">		loss = mse_loss(y_true, y_pred)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 反向传播</span></span><br><span class="line">		dW1, db1, dW2, db2 = backward_propagation(X, y_true, hidden_layer_output, y_pred, W1, b1, W2, b2)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 更新参数</span></span><br><span class="line">		W1 -= learning_rate * dW1</span><br><span class="line">		b1 -= learning_rate * db1</span><br><span class="line">		W2 -= learning_rate * dW2</span><br><span class="line">		b2 -= learning_rate * db2</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 打印损失函数</span></span><br><span class="line">		<span class="keyword">if</span> i % <span class="number">1000</span> == <span class="number">0</span>:</span><br><span class="line">			<span class="built_in">print</span>(<span class="string">&quot;Epoch %d: loss = %f&quot;</span> % (i, loss))</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 返回训练好的模型参数</span></span><br><span class="line">	<span class="keyword">return</span> W1, b1, W2, b2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X = np.array([[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line">y_true = np.array([[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">1</span>], [<span class="number">0</span>]])</span><br><span class="line">W1, b1, W2, b2 = train(X, y_true, hidden_units=<span class="number">3</span>, epochs=<span class="number">10000</span>, learning_rate=<span class="number">0.1</span>)</span><br><span class="line">_, y_pred = forward_propagation(X, W1, b1, W2, b2)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Predictions: \n&quot;</span>, y_pred)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz">Zhang Han</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz/posts/29966/">https://www.zhanghan.xyz/posts/29966/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.zhanghan.xyz" target="_blank">ZhangHan个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/">深度学习基础</a><a class="post-meta__tags" href="/tags/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD/">反向传播</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/3tboxnhYjqpK9G7.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/38654/" title="【剑指offer】1*1卷积的作用"><img class="cover" src="https://s2.loli.net/2023/10/06/3tboxnhYjqpK9G7.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【剑指offer】1*1卷积的作用</div></div></a></div><div class="next-post pull-right"><a href="/posts/59448/" title="第一篇博客"><img class="cover" src="https://s2.loli.net/2023/10/06/enKEbTtiFm9yqlj.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">第一篇博客</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/8307/" title="【剑指offer】BN层详解"><img class="cover" src="https://s2.loli.net/2023/10/06/3tboxnhYjqpK9G7.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-13</div><div class="title">【剑指offer】BN层详解</div></div></a></div><div><a href="/posts/38654/" title="【剑指offer】1*1卷积的作用"><img class="cover" src="https://s2.loli.net/2023/10/06/3tboxnhYjqpK9G7.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-12</div><div class="title">【剑指offer】1*1卷积的作用</div></div></a></div><div><a href="/posts/20451/" title="【剑指offer】梯度消失和梯度爆炸"><img class="cover" src="https://s2.loli.net/2023/10/06/3tboxnhYjqpK9G7.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-13</div><div class="title">【剑指offer】梯度消失和梯度爆炸</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">系列文章目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">2.</span> <span class="toc-text">什么是反向传播</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%A2%AF%E5%BA%A6%E5%92%8C%E6%9B%B4%E6%96%B0%E5%8F%82%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">（2）计算梯度和更新参数</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Zhang Han</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/隐私政策/">隐私政策</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'wuiUoLymCkLAFy3G045hw4Ua-gzGzoHsz',
+      appKey: '3sBi4GBTzCgF7bwei4BOg1Q7',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'https://www.zhanghan.xyz/posts/29966/'
+    this.page.identifier = '/posts/29966/'
+    this.page.title = '【剑指offer】反向传播'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><div class="aplayer no-destroy" data-id="2625940695" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script src="/js/my.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="富强,民主,文明,和谐,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --></body></html>

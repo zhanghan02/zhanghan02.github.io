@@ -1,0 +1,440 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>联邦学习综述 | ZhangHan个人博客</title><meta name="author" content="Zhang Han,944211286@qq.com"><meta name="copyright" content="Zhang Han"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="第一章：联邦学习背景1.1 现状 AlphaGo的巨大成功使得人们自然而然地希望像这种大数据驱动的人工智能会在各行各业得以实现。但是真实的情况却让人非常失望:除了有限的几个行业,更多领域存在着数据有限且质量较差的问题,不足以支撑人工智能技术的实现.更多的应用领域有的只是小数据,或者质量很差的数据.这种”人工智能到处可用”的错误的认知会导致很严重的商业后果.  例如在医疗领域需要非常多的标注数据,而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="联邦学习综述">
+<meta property="og:url" content="https://www.zhanghan.xyz/posts/54575/index.html">
+<meta property="og:site_name" content="ZhangHan个人博客">
+<meta property="og:description" content="第一章：联邦学习背景1.1 现状 AlphaGo的巨大成功使得人们自然而然地希望像这种大数据驱动的人工智能会在各行各业得以实现。但是真实的情况却让人非常失望:除了有限的几个行业,更多领域存在着数据有限且质量较差的问题,不足以支撑人工智能技术的实现.更多的应用领域有的只是小数据,或者质量很差的数据.这种”人工智能到处可用”的错误的认知会导致很严重的商业后果.  例如在医疗领域需要非常多的标注数据,而">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/y3VEFdvJgcMKLqa.png">
+<meta property="article:published_time" content="2023-07-24T05:14:28.000Z">
+<meta property="article:modified_time" content="2024-04-24T10:54:46.872Z">
+<meta property="article:author" content="Zhang Han">
+<meta property="article:tag" content="联邦学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/y3VEFdvJgcMKLqa.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.zhanghan.xyz/posts/54575/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?88f0b6eab573586585614e3e0b8047c9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '联邦学习综述',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-24 18:54:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/4pKqh38Gnk9bHC2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/AIagent/"><i class="fa-fw fas fa-wallet"></i><span> AI agent</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/SJ9tkRVgloc134Z.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ZhangHan个人博客"><span class="site-name">ZhangHan个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/AIagent/"><i class="fa-fw fas fa-wallet"></i><span> AI agent</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">联邦学习综述</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-24T05:14:28.000Z" title="发表于 2023-07-24 13:14:28">2023-07-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T10:54:46.872Z" title="更新于 2024-04-24 18:54:46">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/">联邦学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="联邦学习综述"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="第一章：联邦学习背景"><a href="#第一章：联邦学习背景" class="headerlink" title="第一章：联邦学习背景"></a>第一章：联邦学习背景</h1><h2 id="1-1-现状"><a href="#1-1-现状" class="headerlink" title="1.1 现状"></a>1.1 现状</h2><blockquote>
+<p>AlphaGo的巨大成功使得人们自然而然地希望像这种大数据驱动的人工智能会在各行各业得以实现。但是真实的情况却让人非常失望:除了有限的几个行业,更多领域存在着数据有限且质量较差的问题,不足以支撑人工智能技术的实现.更多的应用领域有的只是小数据,或者质量很差的数据.这种”人工智能到处可用”的错误的认知会导致很严重的商业后果.</p>
+</blockquote>
+<p>例如在医疗领域需要非常多的标注数据,而医生的时间却非常宝贵,不能像其他的一些计算机视觉应用一样,可以由大众普通人来完成数据标注.所以在医疗这样的专业领域,这种<code>标注的数据非常有限</code>.有人估计,把医疗数据放在第三方公司标注,需要动用1万人用长达10年的时间才能收集到有效的数据.这就说明,在这些领域,即使动用很多人来做标注,数据也不够。这就是我们面临的现实。<br>同时数据源之间存在着难以打破的壁垒,一般情况下人工智能的所需要的数据会涉及多个领域,例如在基于人工智能的产品推荐服务中，产品销售方拥有产品的数据、用户购买商品的数据，但是没有用户购买能力和支付习惯的数据.在大多数行业中,数据是以孤岛的形式存在的<code>数据孤岛（data silos）</code>,由于行业竞争、隐私安全、行政手续复杂等问题即使是在同一个公司的不同部门之间实现数据整合也面临着重重阻力,在现实中想要将分散在各地、各个机构的数据进行整合几乎是不可能的,或者说所需的成本是巨大的.</p>
+<hr>
+<h2 id="1-2-挑战"><a href="#1-2-挑战" class="headerlink" title="1.2 挑战"></a>1.2 挑战</h2><p>随着大数据的进一步发展,重视数据隐私和安全已经成为了世界性的趋势.每一次公众数据的泄露都会引起媒体和公众的极大关注,例如最近 Facebook的数据泄露事件就引起了大范围的抗议行动.同时各国都在加强对数据安全和隐私的保护,欧盟 2018 年正式施行的法案<code>《通用数据保护条例》(GeneralData Protection Regulation,GDPR)</code>表明,对用户数据隐私和安全管理的日趋严格将是世界趋势.这给人工智能领域带来了前所未有的挑战,研究界和企业界目前的情况是收集数据的一方通常不是使用数据的一方,如 A 方收集数据,转移到 B方清洗,再转移到C方建模,最后将模型卖给 D方使用.这种数据在实体间转移,交换和交易的形式违反了GDPR,并可能遭到法案严厉的惩罚.同样,中国在2017年起实施的《中华人民共和国网络安全法》叫和《中华人民共和国民法总则》中也指出网络运营者不得泄露、篡改、毁坏其收集的个人信息,并且与第三方进行数据交易时需确保拟定的合同明确约定拟交易数据的范围和数据保护义务。这些法规的建立在不同程度上对人工智能传统的数据处理模式提出了新的挑战.在这个问题上,人工智能的学界和企业界,目前并无较好的解决方案来应对这些挑战。</p>
+<h2 id="1-3-联邦学习解决方案"><a href="#1-3-联邦学习解决方案" class="headerlink" title="1.3 联邦学习解决方案"></a>1.3 联邦学习解决方案</h2><blockquote>
+<p>要解决大数据的困境,仅仅靠传统的方法已经出现瓶颈.两个公司简单的交换数据在很多法规包括 GDPR是不允许的.用户是原始数据的拥有者,在用户没有批准的情况下,公司间不能交换数据.其次,数据建模使用的目的,在用户认可前不可以改变.所以,过去的许多数据交换的尝试,例如数据交易所的数据交换,也需要巨大的改变才能合规.同时,商业公司所拥有的数据往往有巨大的潜在价值.两个公司甚至公司间的部门都要考虑利益的交换，在这个前提下，往往这些部门不会把数据与其他部门做简单的聚合。这将导致即使在同一个公司内，数据也往往以孤岛形式出现。</p>
+</blockquote>
+<p>如何在满足数据隐私、安全和监管要求的前提下，设计一个机器学习框架，让人工智能系统能够更加高效、准确地共同使用各自的数据，是当前人工智能发展的一个重要课题。我们倡议把研究的重点转移到如何解决数据孤岛的问题。我们提出一个满足隐私保护和数据安全的一个可行的解决方案，叫做联邦学习(Federalted learning)</p>
+<h2 id="1-4-联邦学习"><a href="#1-4-联邦学习" class="headerlink" title="1.4 联邦学习"></a>1.4 联邦学习</h2><ul>
+<li>各方数据都保留在本地，不泄露隐私也不违反法规</li>
+<li>多个参与者联合数据建立虚拟的公有模型，并且共同获益的体系</li>
+<li>在联邦学习的体系下，各个参与者的身份和地位平等</li>
+<li>联邦学习的建模效果和将整个数据放在一处建模的效果相同，或相差不大（在各个数据的用户对齐（<code>user alignment</code>）或特征对齐（<code>feature alignment</code>）的条件下）</li>
+<li>迁移学习是在用户或特征不对齐的情况下，也可以在数据间通过交换加密参数达到知识迁移的效果</li>
+</ul>
+<p>联邦学习使多个参与方在保护数据隐私、满足合法合规要求的前提下继续进行机器学习，解决数据孤岛问题。</p>
+<h1 id="第二章：定义及价值"><a href="#第二章：定义及价值" class="headerlink" title="第二章：定义及价值"></a>第二章：定义及价值</h1><h2 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h2><blockquote>
+<p>什么是联邦学习呢?举例来说,假设有两个不同的企业A和B,它们拥有不同的数据.比如,企业A有用户特征数据;企业 B 有产品特征数据和标注数据.这两个企业按照上述 GDPR 准则是不能粗暴地把双方数据加以合并的,因为数据的原始提供者,即他们各自的用户并没有机会来同意这样做.假设双方各自建立一个任务模型,每个任务可以是分类或预测,而这些任务也已经在获得数据时有各自用户的认可.那现在的问题是如何在A和B 各端建立高质量的模型.但是,由于数据不完整(例如企业A缺少标签数据,企业 B 缺少特征数据),或者数据不充分(数据量不足以建立好的模型),那么,在各端的模型有可能无法建立或效果并不理想.</p>
+</blockquote>
+<p>联邦学习是要解决这个问题:它希望做到各个企业的自有数据不出本地，而联邦系统可以通过加密机制下的参数交换方式，即在不违反数据隐私法规情况下,建立一个虚拟的共有模型.这个虚拟模型就好像大家把数据聚合在一起建立的最优模型一样.但是在建立虚拟模型的时候,数据本身不移动,也不泄露隐私和影响数据合规.这样,建好的模型在各自的区域仅为本地的目标服务.在这样一个联邦机制下,各个参与者的身份和地位相同,而联邦系统帮助大家建立了”共同富裕”的策略。这就是为什么这个体系叫做”<strong>联邦学习</strong>”。</p>
+<h2 id="2-2-定义"><a href="#2-2-定义" class="headerlink" title="2.2 定义"></a>2.2 定义</h2><font face="华文新魏" size =4>==在进行机器学习的过程中,各参与方可借助其他方数据进行联合建模.各方无需共享数据资源,即数据不出本地的情况下,进行数据联合训练,建立共享的机器学习模型.==</font>
+
+<p><strong>约束条件</strong>：</p>
+<font color=#0000CD size=3>|V_FED-V_SUM|<δ</font>
+式中：
+<font color=#0000CD size=3>V_FED</font>——联邦学习模型效果
+<font color=#0000CD size=3>V_SUM</font>  ——传统方法模型效果
+<font color=#0000CD size=3>δ</font>   ——有界正数
+![FL_1.png](https://s2.loli.net/2023/10/06/y3VEFdvJgcMKLqa.png)
+## 2.3 公共价值
+联邦学习作为未来 Al发展的底层技术，它依靠安全可信的数据保护措施下连接数据孤岛的模式，将不断推动全球 Al 技术的创新与飞跃。随着联邦学习在更大范围和更多行业场景的渗透及应用，它在更高层面上对各类人群、组织、行业和社会都将产生巨大影响，联邦学习的公共价值主要体现在以下几个方面∶
+![FL_2.png](https://s2.loli.net/2023/10/06/j7Cv85kEHxTJlXV.png)
+
+ - <font color=#0000CD face="华文新魏" size=4> 加速人工智能技术创新发展</font>
+人工智能技术当前已形成汇聚了全球技术、资金、人才和影响力等多元资源的产业生态，而作为 Al 建模底层不可或缺的核心技术，联邦学习将真正助力大数据实现价值，在数据不出本地的环境下带动 Al 各领域在各行业的深度融合，使得人工智能技术能够扫清数据障碍，不断迭代成长和创新。
+ - <font color=#0000CD face="华文新魏" size=4>  保障隐私信息及数据安全</font>
+联邦学习可做到个体的自有数据不出本地，联邦系统通过加密机制下的参数交换方式，在不违反数据隐私保护法规的情况下，建立一个虚拟的共有模型。建立虚拟模型时，数据本身不移动，也不会泄露用户隐私或影响数据规范，充分保障了个体隐私信息及数据安全。
+ - <font color=#0000CD face="华文新魏" size=4>  促进全社会智能化水平提升</font>
+基于联邦学习的 Al 技术将更安全地融入社会基础设施和生活中，它不仅能辅助人类的工作及生活，也逐步改变人类的认知模式，从而推动社会经济及发展。
+## 2.4 商业价值
+联邦学习技术是一种“合作共赢”的模式，对商业利益而言极具价值。在这样一个联邦机制下，各个参与者的身份和地位相同，而联邦系统帮助大家建立了“共同富裕”的策略。这就是为什么这个体系叫做“联邦学习”。从商业角度而言，联邦学习的主要价值有∶
+![FL_3.png](https://s2.loli.net/2023/10/06/NcZEgHDIQCPbU6y.png)
+ - <font color=#0000CD face="华文新魏" size=4>  带动跨领域的企业级数据合作，智能策略辅助市场布局及竞争力提升</font>
+联邦学习作为Al发展的底层技术，能够帮助到企业参与到新的全球化、泛行业化的协作网络和联邦生态中，通过跨领域的企业界数据合作，更有效地训练模型辅助自身市场布局、策略优化，从而提升竞争力。联邦学习能在技术层面帮助企业更好地确立自身合作与竞争策略，以此形成联邦中的独有生态，从而更好推动企业良性发展。
+ - <font color=#0000CD face="华文新魏" size=4>  催生基于联合建模的新业态和模式</font>
+通过联邦生态及联邦学习在其他领域的应用拓展，将不断影响和改变合作中提供方、需求方的关系，重定义各方合作者的身份、服务方式和盈利方式，催生出基于联合建模的全新业态及模式。
+ - <font color=#0000CD face="华文新魏" size=4> 降低技术提升成本和促进创新技术发展</font>
+联邦学习技术成体系可复用的解决方案能够有效降低技术应用的门槛，扩大技术应用的范围和广度，这使得广大泛Al行业企业机构能够为不同客户提供更加丰富的产品及服务，同时去除数据安全隐忧的Al大环境将有助于创新型技术的进一步飞跃，在提升效率和获得成长的同时，实现自身发展。
+
+## 2.5 联邦学习与现有研究的关系
+作为一种全新的技术，联邦学习在借鉴一些成熟技术的同时也具备了一定的独创性。下面我们就从多个角度来阐释联邦学习和其他相关概念之间的关系。
+
+ - <font color=#0000CD face="华文新魏" size=5> 联邦学习与差分隐私理论的区别</font>
+联邦学习的特点使其可以被用来保护用户数据的隐私，但是它和大数据、数据挖掘领域中常用的隐私保护理论如`差分隐私保护理论（Differential Privacy）`、`k 匿名（k-Anonymity）`和` Ι 多样化（I-Diversity）`等方法还是有较大的差别的。首先联邦学习与传统隐私保护方法的原理不同，联邦学习通过加密机制下的参数交换方式保护用户数据隐私，加密手段包括**同态加密**等。与`Differential Privacy `不同，其数据和模型本身不会进行传输，因此在数据层面上不存在泄露的可能，也不违反更严格的数据保护法案如`GDPR`等。而差分隐私理论、k 匿名和I多样化等方法是通过在数据里加噪音，或者采用概括化的方法模糊某些敏感属性，直到第三方不能区分个体为止，从而以较高的概率使数据无法被还原，以此来保护用户隐私。但是，从本质上来说这些方法还是进行了原始数据的传输，存在着潜在被攻击的可能性，并且在`GDPR`等更严格的数据保护法案下这种数据隐私的保护方式可能不再适用。与之对应的，联邦学习是对用户数据隐私保护更为有力的手段。
+
+ - <font color=#0000CD face="华文新魏" size=5> 联邦学习与分布式机器学习的区别</font>
+横向联邦学习中多方联合训练的方式与`分布式机器学习（Distributed Machine Learning）`有部分相似的地方。分布式机器学习涵盖了多个方面，包括把机器学习中的训练数据分布式存储、计算任务分布式运行、模型结果分布式发布等，`参数服务器（Parameter Server） IP）`是分布式机器学习中一个典型的例子。参数服务器作为加速机器学习模型训练过程的一种工具，它将数据存储在分布式的工作节点上，通过一个中心式的调度节点调配数据分布和分配计算资源，以便更高效的获得最终的训练模型。而对于联邦学习而言，首先在于横向联邦学习中的工作节点代表的是模型训练的数据拥有方，其对本地的数据具有完全的自治权限，可以自主决定何时加入联邦学习进行建模，相对地在参数服务器中，中心节点始终占据着主导地位，因此联邦学习面对的是一个更复杂的学习环境；其次，联邦学习则强调模型训练过程中对数据拥有方的数据隐私保护，是一种应对数据隐私保护的有效措施，能够更好地应对未来愈加严格的数据隐私和数据安全监管环境。
+ - <font color=#0000CD face="华文新魏" size=5>联邦学习与联邦数据库的关系</font>
+`联邦数据库系统（Federated Database System）`是将多个不同的单元数据库进行集成，并对集成后的整体进行管理的系统。它的提出是为了实现对多个独立的数据库进行相互操作。联邦数据库系统对单元数据库往往采用分布式存储的方式，并且在实际中各个单元数据库中的数据是**异构**的，因此，它和联邦学习在数据的类型与存储方式上有很多相似之处。但是，联邦数据库系统在各个单元数据库交互的过程中不涉及任何隐私保护机制，所有单元数据库对管理系统都是完全可见的。此外，联邦数据库系统的工作重心在包括插入、删除、查找、合并等各种数据库基本操作上面，而联邦学习的目的是在保护数据隐私的前提下对各个数据建立一个联合模型，使数据中蕴含的各种模式与规律更好地为我们服务。
+ - <font color=#0000CD face="华文新魏" size=5>联邦学习与区块链的关系</font>
+==区块链是一个基于密码学安全的分布式账本，其方便验证，不可篡改==。区块链 2.0是一个**去中心化**的应用，通过使用开源的代码及分布式的存储和运行，保证极高的**透明度和安全性**，使数据不会被篡改。区块链的典型应用包括`比特币（BTC）、以太坊（ETH）`等。区块链与联邦学习都是一种去中心化的网络，区块链是一种完全`P2P （peer to peer）`的网络结构，在联邦学习中，第三方会承担汇聚模型、管理等功能。联邦学习与区块链中，均涉及到密码学、加密算法等基础技术。根据技术的不同，区块链技术使用的加密算法包括哈希算法，非对称加密等；联邦学习中使用同态加密等。从数据角度上看，区块链上通过加密的方式在各个节点上记录了完整的数据，而联邦学习中，各方的数据均仅保留在本地。从奖励机制上看，区块链中，不同节点之间通过竞争记账来获得奖励；在联邦学习中，多个参与方通过共同学习，提高模型训练结果，依据每一方的贡献来分配奖励。
+ - <font color=#0000CD face="华文新魏" size=5>联邦学习与多方安全计算的关系</font>
+在联邦学习中，用户的隐私与安全是重中之重。为了保护用户隐私，防止联邦学习应用被恶意方攻击，多方安全计算技术可以在联邦学习中被应用，成为联邦学习技术框架中的一部分。学术界已经展开利用多方安全计算来增强联邦学习的安全性的研究。`McMahan ` 指出，联邦学习可以通过差分隐私，多方安全计算，或它们的结合等技术来提供更强的安全保障。`Bonawitz`指出，联邦学习中，可以利用多方安全计算以安全的方式计算来自用户设备的模型参数更新的总和。`Truex`中提出了一种利用差分隐私和多方安全计算来保护隐私的联邦学习方法。`Liu`提出将加性同态加密（AHE）应用于神经网络的多方计算。微众银行提出的开源联邦学习框架`FATE `中包含了多方安全计算的相关算子，方便应用方对多方安全计算进行高效的开发。
+
+---
+
+# 第三章 联邦学习分类
+前两章对联邦学习的定义并没有讨论如何具体地设计一种联邦学习的实施方案。在实际中，孤岛数据具有不同分布特点，根据这些特点，我们可以提出相对应的联邦学习方案。下面，我们将以孤岛数据的分布特点为依据对联邦学习进行分类。
+考虑有多个数据拥有方，每个数据拥有方各自所持有的数据集 **D_i**可以用一个矩阵来表示。矩阵的每一行代表一个用户，每一列代表一种用户特征。同时，某些数据集可能还包含标签数据。如果要对用户行为建立预测模型，就必须要有标签数据。我们可以把用户特征叫做 **X**，把标签特征叫做 **Y**。比如，在金融领域，用户的信用是需要被预测的标签**Y**；在营销领域，标签是用户的购买愿望Y；在教育领域，则是学生掌握知识的程度等。用户特征 **X** 加标签**Y**构成了完整的训练数据**（X，Y）**。但是，在现实中，往往会遇到这样的情况∶各个数据集的用户不完全相同，或用户特征不完全相同。具体而言，以包含两个数据拥有方的联邦学习为例，数据分布可以分为以下三种情况∶
+
+ - <font color=RoyalBlue size=3>两个数据集的用户特征（X1，X2，..）重叠部分较大，而用户（U1，U2..）重叠部分较小；</font>
+ - <font color=RoyalBlue size=3>两个数据集的用户（U1，U2...）重叠部分较大，而用户特征（X1，X2，.）重叠部分较小；</font>
+ - <font color=RoyalBlue size=3>两个数据集的用户（U1，U2...）与用户特征重叠（X1，X2，..）部分都比较小。</font>
+
+<p>为了应对以上三种数据分布情况，我们把联邦学习分为<strong>横向联邦学习、纵向联邦学习与联邦迁移学习</strong>。</p>
+<h2 id="3-1-横向联邦学习"><a href="#3-1-横向联邦学习" class="headerlink" title="3.1 横向联邦学习"></a>3.1 横向联邦学习</h2><p>==在两个数据集的用户特征重叠较多而用户重叠较少的情况下，我们把数据集按照横向（即用户维度）切分，并取出双方用户特征相同而用户不完全相同的那部分数据进行训练。这种方法叫做横向联邦学习==。比如有两家不同地区银行，它们的用户群体分别来自各自所在的地区，相互的交集很小。但是，它们的业务很相似，因此，记录的用户特征是相同的。此时，就可以使用横向联邦学习来构建联合模型。Google在2017年提出了一个针对安卓手机横型更新的数据联合建模方案；在单个用户使用安卓手机时，不断在本地更新模型参数并将参数上传到安卓云上，从而使特征维度相同的各数据拥有方建立联合模型的一种联邦学习方案。<br><img src="https://s2.loli.net/2023/10/06/OLjlWIPdnwD1hB5.png" alt="FL_4.png"></p>
+<h2 id="3-2-纵向联邦学习"><a href="#3-2-纵向联邦学习" class="headerlink" title="3.2 纵向联邦学习"></a>3.2 纵向联邦学习</h2><p>==在两个数据集的用户重叠较多而用户特征重叠较少的情况下，我们把数据集按照纵向（即特征维度）切分，并取出双方用户相同而用户特征不完全相同的那部分数据进行训练。这种方法叫做纵向联邦学习==。比如有两个不同机构，一家是某地的银行，另一家是同一个地方的电商。它们的用户群体很有可能包含该地的大部分居民，因此用户的交集较大。但是，由于银行记录的都是用户的收支行为与信用评级，而电商则保有用户的浏览与购买历史，因此它们的用户特征交集较小。纵向联邦学习就是将这些不同特征在加密的状态下加以聚合，以增强模型能力的联邦学习。目前，逻辑回归模型，树型结构模型和神经网络模型等众多机器学习模型已经逐渐被证实能够建立在这个联邦体系上<br><img src="https://s2.loli.net/2023/10/06/fwvKdMe296bq1JE.png" alt="FL_5.png"></p>
+<h2 id="3-3-联邦迁移学习"><a href="#3-3-联邦迁移学习" class="headerlink" title="3.3 联邦迁移学习"></a>3.3 联邦迁移学习</h2><p><img src="https://s2.loli.net/2023/10/06/Gv5erIwij4XNDfK.png" alt="FL_6.png"></p>
+<p>在两个数据集的用户与用户特征重叠都较少的情况下，我们不对数据进行切分，而可以利用迁移学习来克服数据或标签不足的情况，这种方法叫作联邦迁移学习。<br>比如有两个不同机构，一家是位于中国的银行，另一家是位于美国的电商。由于受到地域限制，这两家机构的用户群体交集很小。同时，由于机构类型的不同，二者的数据特征也只有小部分重合。在这种情况下，要想进行有效的联邦学习，就必须引入迁移学习，来解决单边数据规模小和标签样本少的问题，从而提升模型的效果。</p>
+<h1 id="第四章-联邦学习框架"><a href="#第四章-联邦学习框架" class="headerlink" title="第四章 联邦学习框架"></a>第四章 联邦学习框架</h1><h2 id="4-1-开源框架介绍"><a href="#4-1-开源框架介绍" class="headerlink" title="4.1 开源框架介绍"></a>4.1 开源框架介绍</h2><p>目前业界中主要的联邦学习框架有FATE，<code>TensorFlow Federated，PaddleFL，Pysyft</code> 等。<br>2019年2月，微众银行开源FATE开源项目，截止2019年12月发布<code>FATEv1.2</code>版本，覆盖横向联邦学习，纵向联邦学习，联邦迁移学习，得到了社区内广泛的关注与应用。同时，<code>FATE</code>提供20多个联邦学习算法组件，涵盖<code>LR，GBDT，DNN</code> 等主流算法，覆盖常规商业应用场景建模需求。尤其值得注意的是，<code>FATE</code>提供了一站式联邦模型服务解决方案，涵盖联邦特征工程，联邦机器学习模型训练，联邦模型评估，联邦在线推理，相比其他开源框架，在工业应用上有显著的优势。</p>
+<p><code>OpenMinded</code>开源的<code>Pysyft</code>框架，较好地支持横向联邦学习。该框架同时支持 Tensorflow，Keras，Pytorch，为使用人员快速上手提供了较多的选择。<code>Pysyft</code>提供了安全加密算子，数值运算算子，及联邦学习算法，用户也可以高效搭建自己的联邦学习算法。相比较 FATE，OpenMinded 尚未提供高效的部署方案及 serving 端解决方案，相比工业应用，更适合作为高效的学术研究、原型开发的工具。</p>
+<p>谷歌开源的<code>TensorFlow Federated</code>框架，截止2019年12月已发布至0.11版本，较好地支持横向联邦学习。其中，可以通过 <code>Federated Learning（FL）API</code>，与 <code>Tensorflow/Keras</code>交互，完成分类、回归等任务。用户也可以通过其提供的<code>Federated Core（FC）API</code>，通过在强类型函数编程环境中将 TensorFlow 与分布式通信运算符相结合，简洁地表达新的联合算法。目前 TensorFlow Federated 在安全加密算子上缺少开放实现，同时缺少对线上生产的完善支撑。</p>
+<p>2019年11月，百度宣布开源其联邦学习框架<code>PaddleFL</code>。PaddleFL开源框架中包含了DiffieHellman等安全算子，及 LR 等机器学习算法。由于其开源时间较短，算子丰富程度逊于上述三个框架。PaddleFL的优势在于通过与百度机器学习开源框架PaddlePaddle的交互，吸引相关生态开发者加入开发。<br><img src="https://s2.loli.net/2023/10/06/VCnIHNQJgmwDyu2.png" alt="FL_7.png"></p>
+<h2 id="4-2-FATE——企业级框架"><a href="#4-2-FATE——企业级框架" class="headerlink" title="4.2 FATE——企业级框架"></a>4.2 FATE——企业级框架</h2><p>2019年2月，微众银行Al 团队对外发布自主研发的开源项目<code>FATE（Federated Al Technology Enabler）</code>，作为全球首个联邦学习开源框架，FATE为联邦Al生态提供了一种安全计算框架。<br>FATE 提供了一种基于数据隐私保护的分布式安全计算框架，为机器学习、深度学习、迁移学习算法提供高性能的安全计算支持，支持同态加密、SecretShare、DiffieHellman 等多种多方安全计算协议。同时，FATE 提供了一套友好的跨域交互信息管理方案，解决了联邦学习信息安全审计难的问题。简单易用的开源工具平台能有效帮助多个机构在满足用户隐私保护、数据安全和政府法规的前提下，进行多方数据合作。<br>目前FATE已在信贷风控、客户权益定价、监管科技等领域推动应用落地。<br><img src="https://s2.loli.net/2023/10/06/oO9iR13laUzFPxK.png" alt="FL_8.png"><br><img src="https://s2.loli.net/2023/10/06/3DjyNxALcWtaZPf.png" alt="FL_9.png"></p>
+<font color=#1E90FF size=5>FATE技术框架</font>
+![FL_10.png](https://s2.loli.net/2023/10/06/6mEcRJftFO4h58l.png)
+
+---
+
+<font color=#1E90FF size=4>FederatedML:</font>
+联邦学习算法功能组件，包括了许多常见机器学习算法联邦化实现。所有模块均采用模块化的解耦的方式进行开发，从而增强可扩展性。
+<font color=#1E90FF size=4>主要功能∶:</font>
+
+<ul>
+<li><font color=#4169E1 size=3>联邦样本对齐∶纵向样本ID对齐，包括基于RSA+哈希等对齐方式:</font></li>
+<li><font color=#4169E1 size=3>联邦特征工程∶联邦采样，联邦特征分箱，联邦特征选择，联邦相关性，联邦统计等:</font></li>
+<li><font color=#4169E1 size=3>联邦机器学习∶联邦LogisticRegression，LinearRegression，PossionRegression，联邦SecureBoost，联邦
+DNN，联邦迁移学习等</font></li>
+<li><font color=#4169E1 size=3>多方安全计算协议∶提供多种安全协议，包括同态加密，SecretShare，RSA，DiffieHellman等:</font>
+</li>
+</ul>
+<hr>
+<font color=#1E90FF size=4>FATE-Flow:</font>
+联邦学习建模Pipeline调度和生命周期管理工具，为用户构建端到端的联邦学习pipeline生产服务。
+<font color=#1E90FF size=4>主要功能∶:</font>
+
+<ul>
+<li><font color=#4169E1 size=3>联邦建模Pipeline DAG Parser:</font></li>
+<li><font color=#4169E1 size=3>联邦建模任务生命周期管理</font></li>
+<li><font color=#4169E1 size=3> 联邦建模任务多方协同调度</font></li>
+<li><font color=#4169E1 size=3> 联邦多方模型管理、模型版本管理</font></li>
+<li><font color=#4169E1 size=3> 联邦建模过程数据、指标、模型等输入输出实时跟踪
+</font>
+</li>
+</ul>
+<hr>
+<font color=#1E90FF size=4>FATE-Board:</font>
+联邦学习建模的可视化工具，为终端用户可视化和度量模型训练的全过程。支持对模型训练过程全流程的跟踪、统计和监控等，并为模型运行状态、模型输出、日志追踪等提供了丰富的可视化呈现，帮助用户简单而高效地深入探索模型与理解模型。
+<font color=#1E90FF size=4>主要功能∶:</font>
+
+<ul>
+<li><font color=#4169E1 size=3>联邦建模任务生命周期过程可视化</font></li>
+<li><font color=#4169E1 size=3>联邦模型可视化</font></li>
+<li><font color=#4169E1 size=3>评估报告可视化</font>
+</li>
+</ul>
+<hr>
+<font color=#1E90FF size=4>FATE-Serving:</font>
+高性能可扩展的联邦学习在线模型服务。
+<font color=#1E90FF size=4>主要功能∶:</font>
+
+<ul>
+<li><font color=#4169E1 size=3>高性能在线联邦模型推理算法</font></li>
+<li><font color=#4169E1 size=3>在线联邦模型管理</font></li>
+<li><font color=#4169E1 size=3>联邦学习在线推理pipeline</font>
+</li>
+</ul>
+<hr>
+<p><font color=#1E90FF size=4>KubeFATE:</font><br>通过把FATE的所有组件用容器的形式封装，实现了使用Docker Compose或Kubernetes（Helm Charts）来部署。现代应用以DevOps方式开发，基于容器部署应用的优势相当明显，应用不仅可以无差别地运行在支持容器的平台上，还可以按需灵活地实现多实例水平扩展。通过KubeFATE项目，开发者可以轻松地在公有云或私有云中部署FATE项目。</p>
+<h1 id="第五章-未来研究方向"><a href="#第五章-未来研究方向" class="headerlink" title="第五章 未来研究方向"></a>第五章 未来研究方向</h1><h2 id="5-1-安全性"><a href="#5-1-安全性" class="headerlink" title="5.1 安全性"></a>5.1 安全性</h2><p><code>联邦学习中，以下部分可能遭受到攻击∶</code></p>
+<p><font color=#1E90FF size=4>客户端∶</font>对客户端设备具有管理员访问权限的人，可以通过控制客户端进行恶意攻击。被恶意操控的客户<br>端可以在它们参与的迭代中，检查从服务器接收到的所有消息（包括模型），并可以篡改训练过程。中立的客户端可以检查从服务器收到的所有消息，但不会篡改训练过程。</p>
+<p><font color=#1E90FF size=4>服务端∶</font>被恶意操控的服务器可以在所有迭代中检查发送到服务器的所有消息（包括梯度更新），并可以篡改训练过程。中立的服务器可以检查发送到服务器的所有消息，但不会篡改培训过程。<br>同时，在模型输出以及部署的过程中，也可能遭受到恶意攻击。在这种情况下如何严格保证隐私，是一个极大的挑战。<br>从攻击手段上看，主要有模型更新攻击（<code>model update poisoning</code>），数据攻击（<code>data poisoning attack</code>）和逃逸攻击 （<code>evasion attack</code>）。依据在生命周期中的位置，这些攻击也可大致分为训练时间攻击（模型更新攻击，<br>数据攻击）和推理时间攻击（逃逸攻击）。</p>
+<p><font color=#1E90FF size=4>模型更新攻击∶</font>恶意攻击者可以直接控制一些客户端，并改变这些客户端的输出，从而使所学习的模型偏向于他们的目标。当恶意攻击者可以控制客户端产生任意输出时，这种攻击称为<code>拜占庭攻击</code>。该攻击下，受控的客户端可以发送任意值，而不是将本地更新的模型发送到服务器。这可能导致收敛到次优模型，其至导致模型发散。相比拜占庭攻击式的无目标攻击，有目标模型攻击通常需要较低的成本。文献显示，在联邦学习中，当10%的设备被恶意者控制，即有可能通过攻击服务器的模型引入后门。在中心化机器学习中，通过控制训练过程的方法减少模型更新攻击的防护手段，在联邦学习中无法直接应用。</p>
+<p><font color=#1E90FF size=4>数据攻击∶</font>区别于模型更新攻击，在数据攻击中，恶意攻击方不能直接更改中心节点的模型，但可以通过篡改客户端的数据，特征或者标签达到无目标攻击或者针对特定目标攻击的目的。与模型更新攻击相同，仅靠全局准确率或单客户端训练准确率等指标较难检测恶意的数据攻击的存在。</p>
+<p><font color=#1E90FF size=4>逃逸攻击∶</font>在模型推理阶段，攻击者可以在不改变机器学习系统的情况下，通过构造特定输入样本以完成欺骗目标系统的攻击。通过增加噪声等方式，产生在人类看来与原始的测试输入几乎没有区别的输入，却可以欺骗经过训练的模型。在图像和音频领域，对抗样本通常是通过在测试样本中加入范数有界的扰动来构建的。对抗性训练（用对抗性样本训练一个健壮的模型）通常对白盒规避攻击具有一定的健壮性，然而对抗性训练通常只会提高对训练中包含的对抗性样本这种特定类型样本的健壮性，训练后的模型依然容易受到其他形式的对抗性噪声的影响。同时，通过对抗训练来减少逃逸攻击的方法，在联邦学习中可能存在以下问题∶对抗性训练主要是针对独立同分布数据开发的，而在非独立同分布环境中它的表现并不清楚；在无法在训练前检查训练数据的联邦学习中，较难设置适当的扰动范数界限。因此，在联合学习设置中可能需要新的鲁棒优化技术来解决逃逸攻击。<br>差分隐私等技术是减小攻击的一个主要技术。联邦学习系统中的许多挑战可以被看作是确保一定程度的健壮性∶不管是否是恶意的，干净的数据被破坏或以其他方式篡改。差分隐私（DP）从健壮性的角度定义了隐私。简而言之，通过在训练或测试时加入随机噪声，以减少特定数据点的影响。<br>除了恶意的攻击外，与传统的中心化机器学习相比，联邦学习也可能受到来自服务提供者控制之外的不可靠客户端的非恶意故障的影响。虽然非恶意的失败通常比恶意攻击的破坏性更小，但它们可能更常见，并且与恶意攻击具有共同的根源和复杂性。因此，未来在安全方面的研究，不仅包含防范恶意攻击，也包括减少非恶意的故障带来的隐私安全影响。</p>
+<h2 id="5-2-激励机制"><a href="#5-2-激励机制" class="headerlink" title="5.2 激励机制"></a>5.2 激励机制</h2><p>联邦学习的价值在于打破数据孤岛，通过鼓励具有相同数据结构（横向联邦学习）或不同数据结构（纵向联邦学习）共同参与训练，提高模型的整体效果。在整个过程中，一个有效的激励机制的设计，可以激励更多终端用户，或者不同企业、组织参与联邦学习。博弈论、契约理论等的引入，可以更好地帮助设计激励机制。同时，<br>在不同终端或组织参与的过程中，需要有效衡量不同参与方的贡献程度，从而根据贡献程度公平地分配奖励给参与方，进一步提高用户或组织的贡献热情，形成一个良好的正循环。一个联邦学习下的有效的奖惩及分配机制的<br>设计，也有其重要研究价值。</p>
+<h2 id="5-3-有效性和效率"><a href="#5-3-有效性和效率" class="headerlink" title="5.3 有效性和效率"></a>5.3 有效性和效率</h2><p><font color=#1E90FF size=4>非独立同分布的数据</font><br>现实世界中，大量的数据分布是<code>非独立同分布（non-IID）</code>的，例如∶不同地理区域的人有不同的喜好与倾向；在特殊的时间段下，一个人会做出与平时不同的差异选择；不同的客户端拥有的数据量大小可能有巨大的差异等。<br>中心化机器学习可以获取全部样本或者过去已产生的全部样本，从而完成全局最优的模型训练。在联邦学习中，由于数据无法出本地的限制，传统的中心化机器学习中大量调参方法，如<code>随机化数据顺序（data shuffle）</code>无法被直接应用。相比中心化的机器学习训练过程，这种数据分布造成的影响将带来训练模型效果的降低。<br>通过对目标函数进行改进，或者进行有限假设是减少非独立同分布数据影响的一个研究方向。为了解决数据分布造成的影响，<code>FedProx</code> 算法提出在每个局部目标函数中加入一个近端项，使算法对局部目标的不均匀性更加鲁棒。<code>Ahmed Khaled</code>假设所有客户端都参与，并对客户端使用批梯度下降，该方法下客户端上的随机梯度收敛得更快。<br>通过对优化函数进行改进也是解决数据非独立同分布的一个研究方向。在深度学习中，优化函数经历了<code>SGD，Adagrad，Adam</code>等发展，其中动量概念的引入带来了更快的收敛速度与精度。在联邦学习优化函数中，对于一阶优化方法，动量和方差的引入是提高优化和泛化性能的有效途径。然而，对于如何将动量或方差技术纳入联邦学习相关的局部SGD和联合平均，目前还没有达成共识。<code>SCAFFOLD</code>使用控制变量显式地对客户端更新中的差异进行建模，以执行方差减少，这可以在不限制客户端数据分布差异的情况下快速收敛。对于动量方案，Yu 等人建议在每个客户端维护一个本地动量缓冲区，并在每个通信回合平均这些本地缓冲区以及本地模型参数。虽然这种方法在实验中提高了本地SGD的精度，但它需要双倍的通信成本。Wang等人提出了<code>SlowMo</code>的动量方案，它可以在不牺牲吞吐量的情况下显著提高局部SGD的优化和泛化性能。Hsu等人提出类似于SlowMo的动量方案。局部SGD的动量变量可以凭借与同步小批量SGD相同的速度收敛到非凸目标函数的平稳点，但要证明动量加速了联邦学习环境下的收敛速度依然在理论上存在困难。<br>此外，微调<code>（fine-tuning）</code>，迁移学习<code>（transfer learning）</code>，元数据学习<code>（meta learning）</code>等技术也在不断被引入联邦学习，探索如何解决非独立同分布数据带来的影响。</p>
+<p><font color=#1E90FF size=4>有限资源下的参数调节</font><br>在联邦学习中，除了具有与深度学习或传统机器学习相似的优化函数选择，如学习率，批量大小，正则化等，还需要考虑聚合规则，每一个迭代中选择的客户端数量，本地每轮的迭代数量等参数选择。联邦学习的参与方中，可能是拥有较多计算和存储资源的数据中心服务器，也可能是不定时在线的边缘设备。一些参与方可能仅拥有有限的计算、存储、网络资源。一些在深度学习中帮助调节模型性能的方法，诸如<code>AutoML，NAS（neural architecture Search）</code>等，由于将占用较多的资源，将直接降低通信和计算效率，无法直接在联邦学习中应用。在有限资源下的超参数调节是一个极具挑战和有意义的研究方向</p>
+<p><font color=#1E90FF size=4>有限的通信带宽及设备的不可靠性</font><br>通过无线网络接入，或者互联网中靠近终端的端方用户，相比数据中心或者数据中心链路上的核心节点，通常拥有较低的网络带宽及通信效率，同时这种网络连接可能有较高的花费，或者无法保证完全稳定在线。例如，一个终端手机可能仅在电量充足并连接至无线网络的情况下，接入联邦学习训练。这引发了学者对减少联邦学习的通信带宽的研究。在梯度，模型传播，局部计算等部分均有数据压缩的空间。将联邦平均与稀疏化，或者和量<br>化模型更新结合的方法，已经证明在对训练精度影响较小的情况下显著降低了通信成本。然而，目前还不清楚是否可以进一步降低通信成本，以及这些方法或它们的组合是否能够在联邦学习中提供通信效率和模型准确性之间的最佳平衡。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz">Zhang Han</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz/posts/54575/">https://www.zhanghan.xyz/posts/54575/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.zhanghan.xyz" target="_blank">ZhangHan个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0/">联邦学习</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/y3VEFdvJgcMKLqa.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/6314/" title="[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction"><img class="cover" src="https://s2.loli.net/2023/10/06/FtICSvTs6EXuaqM.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction</div></div></a></div><div class="next-post pull-right"><a href="/posts/1559/" title="[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?"><img class="cover" src="https://s2.loli.net/2023/10/06/ROewzGkbWcaIF5l.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%9A%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">第一章：联邦学习背景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E7%8E%B0%E7%8A%B6"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 现状</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%8C%91%E6%88%98"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 联邦学习解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 联邦学习</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%9A%E5%AE%9A%E4%B9%89%E5%8F%8A%E4%BB%B7%E5%80%BC"><span class="toc-number">2.</span> <span class="toc-text">第二章：定义及价值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E6%A6%82%E8%BF%B0"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%AE%9A%E4%B9%89"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E6%A8%AA%E5%90%91%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.3.</span> <span class="toc-text">3.1 横向联邦学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E7%BA%B5%E5%90%91%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.4.</span> <span class="toc-text">3.2 纵向联邦学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E8%81%94%E9%82%A6%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.5.</span> <span class="toc-text">3.3 联邦迁移学习</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E8%81%94%E9%82%A6%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6"><span class="toc-number">3.</span> <span class="toc-text">第四章 联邦学习框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.1.</span> <span class="toc-text">4.1 开源框架介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-FATE%E2%80%94%E2%80%94%E4%BC%81%E4%B8%9A%E7%BA%A7%E6%A1%86%E6%9E%B6"><span class="toc-number">3.2.</span> <span class="toc-text">4.2 FATE——企业级框架</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%9C%AA%E6%9D%A5%E7%A0%94%E7%A9%B6%E6%96%B9%E5%90%91"><span class="toc-number">4.</span> <span class="toc-text">第五章 未来研究方向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E5%AE%89%E5%85%A8%E6%80%A7"><span class="toc-number">4.1.</span> <span class="toc-text">5.1 安全性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E6%BF%80%E5%8A%B1%E6%9C%BA%E5%88%B6"><span class="toc-number">4.2.</span> <span class="toc-text">5.2 激励机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E6%9C%89%E6%95%88%E6%80%A7%E5%92%8C%E6%95%88%E7%8E%87"><span class="toc-number">4.3.</span> <span class="toc-text">5.3 有效性和效率</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Zhang Han</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/隐私政策/">隐私政策</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'wuiUoLymCkLAFy3G045hw4Ua-gzGzoHsz',
+      appKey: '3sBi4GBTzCgF7bwei4BOg1Q7',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'https://www.zhanghan.xyz/posts/54575/'
+    this.page.identifier = '/posts/54575/'
+    this.page.title = '联邦学习综述'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><div class="aplayer no-destroy" data-id="2625940695" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script src="/js/my.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="富强,民主,文明,和谐,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --></body></html>

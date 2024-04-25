@@ -1,0 +1,426 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>工业产品表面缺陷检测算法 | ZhangHan个人博客</title><meta name="author" content="Zhang Han,944211286@qq.com"><meta name="copyright" content="Zhang Han"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="AI摘要：介绍了经典的缺陷检测算法，包括 PaDiM、PatchCore 和 SimpleNet 等。其中，PaDiM 使用预训练模型提取嵌入向量，并且具有创新的高斯分布特征学习和独立于训练集大小的时间和空间复杂度；PatchCore 则通过创建内存银行和核心集来近似正常模式的补丁特征；SimpleNet 则是以全局信息为主的简单网络，用于检测大规模缺陷。  介绍 经典缺陷检测算法整">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工业产品表面缺陷检测算法">
+<meta property="og:url" content="https://www.zhanghan.xyz/posts/20240116/index.html">
+<meta property="og:site_name" content="ZhangHan个人博客">
+<meta property="og:description" content="AI摘要：介绍了经典的缺陷检测算法，包括 PaDiM、PatchCore 和 SimpleNet 等。其中，PaDiM 使用预训练模型提取嵌入向量，并且具有创新的高斯分布特征学习和独立于训练集大小的时间和空间复杂度；PatchCore 则通过创建内存银行和核心集来近似正常模式的补丁特征；SimpleNet 则是以全局信息为主的简单网络，用于检测大规模缺陷。  介绍 经典缺陷检测算法整">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/01/16/6q3WViXSy8fKvDj.png">
+<meta property="article:published_time" content="2024-01-16T05:24:22.000Z">
+<meta property="article:modified_time" content="2024-04-24T10:54:46.872Z">
+<meta property="article:author" content="Zhang Han">
+<meta property="article:tag" content="卷积神经网络">
+<meta property="article:tag" content="无监督学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/01/16/6q3WViXSy8fKvDj.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.zhanghan.xyz/posts/20240116/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?88f0b6eab573586585614e3e0b8047c9";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '工业产品表面缺陷检测算法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-24 18:54:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/4pKqh38Gnk9bHC2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">34</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/AIagent/"><i class="fa-fw fas fa-wallet"></i><span> AI agent</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/SJ9tkRVgloc134Z.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ZhangHan个人博客"><span class="site-name">ZhangHan个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/AIagent/"><i class="fa-fw fas fa-wallet"></i><span> AI agent</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">工业产品表面缺陷检测算法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-16T05:24:22.000Z" title="发表于 2024-01-16 13:24:22">2024-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T10:54:46.872Z" title="更新于 2024-04-24 18:54:46">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E7%BC%BA%E9%99%B7%E6%A3%80%E6%B5%8B/">缺陷检测</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="工业产品表面缺陷检测算法"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="tip info"><p>AI摘要：介绍了经典的缺陷检测算法，包括 PaDiM、PatchCore 和 SimpleNet
+等。其中，PaDiM
+使用预训练模型提取嵌入向量，并且具有创新的高斯分布特征学习和独立于训练集大小的时间和空间复杂度；PatchCore
+则通过创建内存银行和核心集来近似正常模式的补丁特征；SimpleNet
+则是以全局信息为主的简单网络，用于检测大规模缺陷。</p>
+</div>
+<h2 id="介绍"><strong>介绍</strong></h2>
+<p>经典缺陷检测算法整理，包含PaDiM（2020ICPR）、PatchCore（2022CVPR）、SimpleNet（2023CVPR）、EfficientAD（2023）。</p>
+<blockquote>
+<p>代码仓库：https://gitee.com/zhgn2020814/Defect_detection.git</p>
+</blockquote>
+<blockquote>
+<p>文中部分图源见水印</p>
+</blockquote>
+<h2 id="padim">1、PaDiM</h2>
+<h3 id="问题">问题</h3>
+<ul>
+<li>异常检测：实际应用中缺乏异常样本，并且异常可能会有意想不到的模式，不能使用完全监督的方法训练模型，即训练数据集仅包含正常类的图像。</li>
+<li>目前的单类别学习模式的异常检测模型要么需要训练<a
+target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C&amp;spm=1001.2101.3001.7020">深度神经网络</a>，非常麻烦。要么测试阶段在整个训练集上使用K最近邻算法，KNN算法线性复杂度的特点导致随着训练集的增大，其时间和空间复杂度也随之增大。</li>
+</ul>
+<h3 id="创新">创新</h3>
+<p>PaDiM利用预训练好的CNN进行embedding提取，并且具有以下两个特点：（1）每个patch位置都用一个多元高斯分布来描述。（2）PaDiM考虑到了CNN不同语义层之间的关联。</p>
+<p>此外，在测试阶段，它的时间和空间复杂度都比较小，且<strong>独立于训练集的大小</strong>，这非常有利于工业部署应用。对于异常检测和定位任务，在MVTec
+AD和ShanghaiTec
+Campus两个数据集上，PaDiM超越了现有SOTA方法（2020年本文提出时）。</p>
+<h3 id="详细">详细</h3>
+<ul>
+<li><strong>Embedding extraction（嵌入向量提取）</strong></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/01/16/uZA34jCBO6Xf18s.png" /></p>
+<p>将预训练模型中三个不同层的feature map对应位置进行拼接得到embedding
+vector，这里分别取resnet18中layer1、layer2、layer3的最后一层，模型输入大小为224x224，这三层对应输出维度分别为(209,64,56,56）、(209,128,28,28）、(209,256,14,14），这里实现1中是通过将小特征图每个位置复制多份得到与大特征图同样的spatial
+size，然后再进行拼接。比如28x28的特征图中一个1x1的patch与56x56的特征图中对应位置的2x2的patch相对应，将该1x1的patch复制4份得到2x2大小patch后再与56x56对应位置的2x2
+patch进行拼接</p>
+<p>将三个不同语义层的特征图进行拼接后得到(209,448,56,56）大小的patch嵌入向量可能带有冗余信息，因此作者对其进行了降维，作者发现随机挑选某些维度的特征比PCA更有效，在保持sota性能的前提下降低了训练和测试的复杂度，文中维度选择100，因此输出为(209,100,56,56）</p>
+<ul>
+<li><strong>Learning of the normality（正常特征学习）</strong></li>
+</ul>
+<p>为了学习正常图像在位置<strong>(i,j)</strong>处的特征，我们首先计算N张正常训练图片在位置<strong>(i,j)</strong>处的嵌入向量集和
+<strong>Xij= {xk ij, k ∈[[1,
+N]]}</strong>。为了整合这个set的信息假设，我们假设<strong>Xij</strong>由多元高斯分布
+<strong>N (µij, Σij)</strong>得到的，其中<strong>µij</strong> 是
+<strong>Xij</strong> 的样本均值，样本协方差
+<strong>Σij</strong>通过下式估计得到</p>
+<p><img src="https://s2.loli.net/2024/01/16/Z6b1UVGt2AEJxNF.png" /></p>
+<p>其中正则项 <strong>ϵI</strong>
+保证协方差矩阵时满秩且可逆的，如上图右所示，图像中每个位置都通过高斯参数矩阵与一个多元高斯分别相关联。</p>
+<ul>
+<li><strong>Inference: computation of the anomaly
+map（推理：异常图的计算）</strong></li>
+</ul>
+<p>我们使用马氏距离<strong>M (xij
+)</strong>给测试图像位置<strong>(i,j)</strong>的 patch
+一个异常分数。<strong>M (xij
+)</strong>可以解释为嵌入<strong>xij</strong></p>
+<p>与学习分布<strong>N(µij，Σij )</strong>之间的距离，计算公式如下：</p>
+<p><img src="https://s2.loli.net/2024/01/16/KCbNvu42Sf3YBjc.png" /></p>
+<ul>
+<li><strong>损失函数</strong></li>
+</ul>
+<p><strong>AUC</strong>：ROC（Receiver Operating
+Characteristic）曲线是以假正率（FPR）和真正率（TPR）为轴的曲线，ROC曲线下面的面积我们叫做AUC，如下图所示：</p>
+<p><img src="https://s2.loli.net/2024/01/16/H9wy6S1hqPQF2ZL.png" /></p>
+<p><strong>真正例率</strong> TPR = TP / (TP + FN)
+表示，预测为正例且真实情况为正例的，占所有真实情况中正例的比率。
+<strong>假正例率</strong> FPR = FP /（TN +
+FP）表示的，预测为正例但真实情况为反例的，占所有真实情况中反例的比率。
+TPR越大，则表示挑出的越有可能（是正确的）；FPR越大，则表示越不可能（在挑选过程中，再挑新的出来，即再挑认为是正确的出来，越有可能挑的是错误的）</p>
+<h2 id="patchcore">2、PatchCore</h2>
+<p>PatchCore
+作为一种异常检测技术于2021年推出，旨在在工业应用中实现全面召回。如下图所示，PatchCore
+有2个主要步骤。==首先，它从正常图像块中提取局部感知特征。之后，它应用子采样技术（核心集）来近似这些特征并构建一组描述正常模式的补丁特征。在测试时，为测试样本提取补丁特征，并使用最近邻方法计算异常分数。</p>
+<p><img src="https://s2.loli.net/2024/01/16/6q3WViXSy8fKvDj.png" /></p>
+<h3 id="问题-1">问题</h3>
+<ul>
+<li>冷启动问题：在训练集中都是正常的图片，模型很容易捕获到正常图像的特征，但是很难捕获到异常缺陷的样本</li>
+<li>分布漂移。正常图像和异常图像分布是不一样的，模型学习的是正常图像的数据分布，而异常图像的数据分布和正常图像不一样</li>
+</ul>
+<h3 id="详细-1">详细</h3>
+<ul>
+<li><p><strong>使用中间 ResNet 表示</strong></p>
+<p>采用ResNet-50/
+WideResNet-50进行特征提取，由4个残差块组成。一般来说，获取提取的特征是在ResNet最后一层获取，但是存在两个问题</p>
+<ol type="1">
+<li>损失太多的信息</li>
+<li>深度抽象的特征对当前的分类任务存在较大的偏差，因为冷启动带来的问题，缺陷特征很少，很难推测出来</li>
+</ol>
+<p>解决：</p>
+<ol type="1">
+<li>创建一个存储块：memory bank,存储patch
+features（可理解为块特征）</li>
+<li>不从Resnet最后一层获取特征，而是从中间获取：</li>
+</ol>
+<p><img src="https://s2.loli.net/2024/01/16/Y3xbye5ZTrMFW42.png" /></p>
+<ol type="1">
+<li>为了不损失空间的分辨率和有用的特征，采用局部邻居聚合的方法来增加感受野，然后合并特征</li>
+</ol></li>
+<li><p><strong>使用核心集构建内存库</strong></p></li>
+</ul>
+<p><img
+src="https://img-blog.csdnimg.cn/img_convert/d1a68032ba9801384291347e66d9e693.png" /></p>
+<p>流程解释：</p>
+<ol type="1">
+<li><p>M是我们需要的特征集，整个特征集不能太大（放在内存里面的），尽可能小的coreset能代表绝大多数的数据特征</p></li>
+<li><p>遍历所有的图像，获得经过ResNet提取后的特征，还是太多，得优化</p></li>
+<li><p>l是设定的coreset的特征子集个数，是个超参数</p></li>
+<li><p>关键：如果选才能满足1中的要求？
+就是，每次选一个coresset（Mc）中的点，在M中找一个最近又最远（贪心策略）的点，抽出来</p></li>
+<li><p>解释一下什么是最近又最远：在最近的范围内找到最远的点，也就是在局部找到一个最远的点，即最优解。如果不这样，搜索计算量巨大NP难的问题</p></li>
+</ol>
+<ul>
+<li><strong>用PatchCore进行异常检测</strong></li>
+</ul>
+<p>测试集的数据进来，进行最近邻搜索</p>
+<p><img src="https://s2.loli.net/2024/01/16/gLQ3GYqfTC65XA7.png" /></p>
+<ul>
+<li><strong>每个query进来，首先找最近距离最近的领域质心（蓝色标记，非数据点）</strong></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/01/16/8yZqbY2awvpGTP5.png" /></p>
+<ul>
+<li><strong>找到距离query最近的质心后，锁定该领域</strong></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/01/16/pc8PzhJ975Z1IrK.png" /></p>
+<ul>
+<li><strong>然后在该领域内计算距离最远的数据点，用该距离计算anomaly
+score，判断是否异常，得到结果</strong></li>
+</ul>
+<p><img src="https://s2.loli.net/2024/01/16/yX71GqDsHLoICAe.png" /></p>
+<h2 id="padim和patchcore对比">3、PaDiM和PatchCore对比</h2>
+<ul>
+<li>PatchCore与PaDiM对比: patchcore 使用高效的patch-feature memory
+bank,在测试时所有patch都可以访问该内存库。 PaDiM 是针对每个 patch
+的马氏距离度量。 相比之下， PatchCore对图像对齐的依赖性降低。</li>
+<li>特征提取：特征表示为何不选择网络特征层次的最后一级：（1）会丢失更多的局部正常样本信息；（2）深层特征具有更强的语义信息，偏向于分类任务。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz">Zhang Han</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz/posts/20240116/">https://www.zhanghan.xyz/posts/20240116/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.zhanghan.xyz" target="_blank">ZhangHan个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">卷积神经网络</a><a class="post-meta__tags" href="/tags/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/">无监督学习</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2024/01/16/6q3WViXSy8fKvDj.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/20240117/" title="AIGC彩妆粉底设计"><img class="cover" src="https://s2.loli.net/2024/01/17/NZq9ohi4mVPTrWE.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AIGC彩妆粉底设计</div></div></a></div><div class="next-post pull-right"><a href="/posts/20240113/" title="分类数据提取标注软件"><img class="cover" src="https://s2.loli.net/2024/01/13/E1a9Gcml5eVnMiT.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">分类数据提取标注软件</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/1559/" title="[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?"><img class="cover" src="https://s2.loli.net/2023/10/06/ROewzGkbWcaIF5l.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-21</div><div class="title">[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?</div></div></a></div><div><a href="/posts/6314/" title="[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction"><img class="cover" src="https://s2.loli.net/2023/10/06/FtICSvTs6EXuaqM.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-24</div><div class="title">[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#padim"><span class="toc-number">2.</span> <span class="toc-text">1、PaDiM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E6%96%B0"><span class="toc-number">2.2.</span> <span class="toc-text">创新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86"><span class="toc-number">2.3.</span> <span class="toc-text">详细</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#patchcore"><span class="toc-number">3.</span> <span class="toc-text">2、PatchCore</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1"><span class="toc-number">3.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86-1"><span class="toc-number">3.2.</span> <span class="toc-text">详细</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#padim%E5%92%8Cpatchcore%E5%AF%B9%E6%AF%94"><span class="toc-number">4.</span> <span class="toc-text">3、PaDiM和PatchCore对比</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Zhang Han</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/隐私政策/">隐私政策</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'wuiUoLymCkLAFy3G045hw4Ua-gzGzoHsz',
+      appKey: '3sBi4GBTzCgF7bwei4BOg1Q7',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  const disqus_config = function () {
+    this.page.url = 'https://www.zhanghan.xyz/posts/20240116/'
+    this.page.identifier = '/posts/20240116/'
+    this.page.title = '工业产品表面缺陷检测算法'
+  }
+
+  const disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  btf.addModeChange('disqus', disqusReset)
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><div class="aplayer no-destroy" data-id="2625940695" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="false" data-order="random" data-preload="none" data-autoplay="false" muted></div><script src="/js/my.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="富强,民主,文明,和谐,平等,公正,法治,爱国,敬业,诚信,友善" data-fontsize="15px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --></body></html>
