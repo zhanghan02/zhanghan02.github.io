@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction | ZhangHan个人博客</title><meta name="author" content="Zhang Han,944211286@qq.com"><meta name="copyright" content="Zhang Han"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="一、摘要 预测周围车辆的运动是部署在复杂交通中的自动驾驶汽车的一项关键能力。场景中所有车辆的运动受交通环境控制，即相邻车辆的运动和相对空间配置。在本文中，我们提出了一种 LSTM 编码器-解码器模型，该模型使用卷积社交池（convolutional social pooling）作为对社交池层的改进，以稳健地学习车辆运动中的相互依赖性。此外，我们的模型基于&#x3D;&#x3D;机动类别，输出未来轨迹的多模态预测">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction | ZhangHan个人博客</title><meta name="author" content="Zhang Han,944211286@qq.com"><meta name="copyright" content="Zhang Han"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="一、摘要预测周围车辆的运动是部署在复杂交通中的自动驾驶汽车的一项关键能力。场景中所有车辆的运动受交通环境控制，即相邻车辆的运动和相对空间配置。在本文中，我们提出了一种 LSTM 编码器-解码器模型，该模型使用卷积社交池（convolutional social pooling）作为对社交池层的改进，以稳健地学习车辆运动中的相互依赖性。此外，我们的模型基于&#x3D;&#x3D;机动类别，输出未来轨迹的多模态预测分布&#x3D;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction">
 <meta property="og:url" content="https://www.zhanghan.xyz/posts/6314/index.html">
 <meta property="og:site_name" content="ZhangHan个人博客">
-<meta property="og:description" content="一、摘要 预测周围车辆的运动是部署在复杂交通中的自动驾驶汽车的一项关键能力。场景中所有车辆的运动受交通环境控制，即相邻车辆的运动和相对空间配置。在本文中，我们提出了一种 LSTM 编码器-解码器模型，该模型使用卷积社交池（convolutional social pooling）作为对社交池层的改进，以稳健地学习车辆运动中的相互依赖性。此外，我们的模型基于&#x3D;&#x3D;机动类别，输出未来轨迹的多模态预测">
+<meta property="og:description" content="一、摘要预测周围车辆的运动是部署在复杂交通中的自动驾驶汽车的一项关键能力。场景中所有车辆的运动受交通环境控制，即相邻车辆的运动和相对空间配置。在本文中，我们提出了一种 LSTM 编码器-解码器模型，该模型使用卷积社交池（convolutional social pooling）作为对社交池层的改进，以稳健地学习车辆运动中的相互依赖性。此外，我们的模型基于&#x3D;&#x3D;机动类别，输出未来轨迹的多模态预测分布&#x3D;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2023/10/06/FtICSvTs6EXuaqM.png">
 <meta property="article:published_time" content="2023-07-24T13:31:47.000Z">
@@ -169,570 +169,111 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/4pKqh38Gnk9bHC2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/SJ9tkRVgloc134Z.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ZhangHan个人博客"><span class="site-name">ZhangHan个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-24T13:31:47.000Z" title="发表于 2023-07-24 21:31:47">2023-07-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T10:54:46.867Z" title="更新于 2024-04-24 18:54:46">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>29分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一摘要">一、摘要</h1>
-<p>预测周围车辆的运动是部署在复杂交通中的自动驾驶汽车的一项关键能力。场景中所有车辆的运动受交通环境控制，即相邻车辆的运动和相对空间配置。在本文中，我们提出了一种
-<code>LSTM 编码器-解码器</code>模型，该模型使用<code>卷积社交池（convolutional social pooling）</code>作为对社交池层的改进，以稳健地学习车辆运动中的相互依赖性。此外，我们的模型基于==机动类别，输出未来轨迹的多模态预测分布==。我们使用公开可用的
-<code>NGSIM US-101</code>和 <code>I-80</code>
-数据集评估我们的模型。我们的结果表明，在模型的预测分布下，预测误差的<code>RMS</code>
-值和真实未来轨迹的==负对数似然比==现有技术有所改进。我们还对模型在各种交通场景下的预测分布进行了==定性分析==。</p>
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/4pKqh38Gnk9bHC2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/SJ9tkRVgloc134Z.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ZhangHan个人博客"><span class="site-name">ZhangHan个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-24T13:31:47.000Z" title="发表于 2023-07-24 21:31:47">2023-07-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T10:54:46.867Z" title="更新于 2024-04-24 18:54:46">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>30分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="[论文阅读]用于车辆轨迹预测的卷积社交池Convolutional Social Pooling for Vehicle Trajectory Prediction"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、摘要"><a href="#一、摘要" class="headerlink" title="一、摘要"></a>一、摘要</h1><p>预测周围车辆的运动是部署在复杂交通中的自动驾驶汽车的一项关键能力。场景中所有车辆的运动受交通环境控制，即相邻车辆的运动和相对空间配置。在本文中，我们提出了一种 <code>LSTM 编码器-解码器</code>模型，该模型使用<code>卷积社交池（convolutional
+social pooling）</code>作为对社交池层的改进，以稳健地学习车辆运动中的相互依赖性。此外，我们的模型基于==机动类别，输出未来轨迹的多模态预测分布==。我们使用公开可用的 <code>NGSIM US-101</code>和 <code>I-80</code> 数据集评估我们的模型。我们的结果表明，在模型的预测分布下，预测误差的<code>RMS</code> 值和真实未来轨迹的==负对数似然比==现有技术有所改进。我们还对模型在各种交通场景下的预测分布进行了==定性分析==。</p>
 <blockquote>
-<p><strong>编码器</strong>：编码器的作用是把一个不定长的输入序列变换成一个定长的背景变量
-c，并在该背景变量中编码输入序列信息。常用的编码器是循环神经网络
-通过编码器与解码器架构，我们可以将不同长度的序列先通过编码器编码成固定长度的隐藏层状态，再通过解码器将固定长度的隐藏层状态解码成不同长度的序列</p>
-<p>在机器学习中也有这样类似的模型，比如机器翻译、自动摘要、图像解说等等。
-在机器翻译中，需要将一种语言的句子转化为另一种语言的句子。<img
-src="https://s2.loli.net/2023/10/06/5XiFwpHuRogMOQh.png"
-alt="在这里插入图片描述" /></p>
-</blockquote>
-<blockquote>
+<p><strong>编码器</strong>：编码器的作用是把一个不定长的输入序列变换成一个定长的背景变量 c，并在该背景变量中编码输入序列信息。常用的编码器是循环神经网络<br>通过编码器与解码器架构，我们可以将不同长度的序列先通过编码器编码成固定长度的隐藏层状态，再通过解码器将固定长度的隐藏层状态解码成不同长度的序列</p>
+<p>在机器学习中也有这样类似的模型，比如机器翻译、自动摘要、图像解说等等。<br>在机器翻译中，需要将一种语言的句子转化为另一种语言的句子。<img src="https://s2.loli.net/2023/10/06/5XiFwpHuRogMOQh.png" alt="在这里插入图片描述"></p>
 <p><strong>社交池层</strong>：该架构将对应于邻近序列的LSTM连接起来。引入了一个“social”池化层，它允许空间邻近序列的LSTM彼此共享它们的隐藏状态。这种体系结构，称之为“Social-LSTM”，可以自动学习在时间上重合的轨迹之间发生的典型交互。<font color=red size=3>[1]</font></p>
+<p><strong>RMS值</strong> “RMS代表的其它释义均方根RMS（Root Mean Square）就是均方根，实际就是有效值，是一组统计数据的平方和的平均值的平方根。”</p>
 </blockquote>
-<blockquote>
-<p><strong>RMS值</strong> “RMS代表的其它释义均方根RMS（Root Mean
-Square）就是均方根，实际就是有效值，是一组统计数据的平方和的平均值的平方根。”</p>
-</blockquote>
-<h1 id="二介绍">二、介绍</h1>
-<p>在复杂交通中部署的自动驾驶车辆需要平衡两个因素：车内乘客和周围<strong>人的安全</strong>，以及在不阻碍交通的情况下<strong>高效运行</strong>。车辆需要有自我决策的能力，例如，决定何时改变车道，通过没有信号的交叉口，或超过另一辆车，这就要求自动驾驶系统对周围车辆的未来运动有一定的推理能力。这可以在现有的战术路径规划算法中看到，所有这些算法都依赖于对周围车辆未来轨迹的可靠估计。
-许多方法使用运动模型来预测车辆轨迹。然而，对于更长的预测范围，运动模型可能是不可靠的，因为由于驾驶员所作的决定，车辆的轨迹往往是<strong>高度非线性的</strong>。这可以通过<strong>数据驱动的轨道预测方法</strong>来解决。==这些方法通过最小化训练数据集中预测轨迹与真实轨迹之间的误差，将轨迹预测问题转化为一个回归问题==。基于回归的方法的一个陷阱是驾驶员行为固有的多形态。在相同的交通环境下，人类司机可以做出许多决定之一。例如，一个司机以更快的速度接近他们的领头车辆，或者减速，或者改变车道、加速超车。基于回归的方法倾向于输出这些多重可能性的平均值，因为==平均预测可以最小化回归误差==。然而，平均预测可能不是一个好的预测。例如，在上面描述的示例场景中，平均预测将保持在没有减速的车道上。因此，我们需要==弹道预测模型，以解决预测的多模态性质==。
-<img src="https://s2.loli.net/2023/10/06/C5HxL8gUPmYweFz.png"
-alt="在这里插入图片描述" /></p>
-<p>图1.在复杂交通中部署的自动驾驶车辆(如图中所示)，需要有能力预测周围车辆的未来运动。我们提出的LSTM模型允许基于机动类对周围车辆轨迹进行非线性和多模态预测。它还为每个模式分配了相应概率，并在每个模式周围输出了预测的不确定性。
-本文将机动用于==多模态轨迹预测==，通过学习一个为不同机动类分配概率的模型，并为每个机动类输出机动的具体预测。随着长时记忆(<code>LSTM</code>)网络在序列学习和生成任务中非线性时间依赖性建模的成功，本文提出了一种适用于高速公路交通情况下车辆机动和轨迹预测的LSTM模型。它使用<font color=green size=3>车辆及其周围车辆的轨迹历史以及高速公路的车道结构作为输入</font>。它给出了六个机动类的置信度值，并在此基础上预测了未来运动的多模态分布。我们使用<code>NGSIM US-101[2]和I-80[3]</code>在加利福尼亚多车道高速公路上收集的真实车辆轨迹数据集来训练和评估我们的模型。</p>
+<h1 id="二、介绍"><a href="#二、介绍" class="headerlink" title="二、介绍"></a>二、介绍</h1><p>在复杂交通中部署的自动驾驶车辆需要平衡两个因素：车内乘客和周围<strong>人的安全</strong>，以及在不阻碍交通的情况下<strong>高效运行</strong>。车辆需要有自我决策的能力，例如，决定何时改变车道，通过没有信号的交叉口，或超过另一辆车，这就要求自动驾驶系统对周围车辆的未来运动有一定的推理能力。这可以在现有的战术路径规划算法中看到，所有这些算法都依赖于对周围车辆未来轨迹的可靠估计。<br>许多方法使用运动模型来预测车辆轨迹。然而，对于更长的预测范围，运动模型可能是不可靠的，因为由于驾驶员所作的决定，车辆的轨迹往往是<strong>高度非线性的</strong>。这可以通过<strong>数据驱动的轨道预测方法</strong>来解决。==这些方法通过最小化训练数据集中预测轨迹与真实轨迹之间的误差，将轨迹预测问题转化为一个回归问题==。基于回归的方法的一个陷阱是驾驶员行为固有的多形态。在相同的交通环境下，人类司机可以做出许多决定之一。例如，一个司机以更快的速度接近他们的领头车辆，或者减速，或者改变车道、加速超车。基于回归的方法倾向于输出这些多重可能性的平均值，因为==平均预测可以最小化回归误差==。然而，平均预测可能不是一个好的预测。例如，在上面描述的示例场景中，平均预测将保持在没有减速的车道上。因此，我们需要==弹道预测模型，以解决预测的多模态性质==。<br><img src="https://s2.loli.net/2023/10/06/C5HxL8gUPmYweFz.png" alt="在这里插入图片描述"></p>
+<p>图1.在复杂交通中部署的自动驾驶车辆(如图中所示)，需要有能力预测周围车辆的未来运动。我们提出的LSTM模型允许基于机动类对周围车辆轨迹进行非线性和多模态预测。它还为每个模式分配了相应概率，并在每个模式周围输出了预测的不确定性。<br>本文将机动用于==多模态轨迹预测==，通过学习一个为不同机动类分配概率的模型，并为每个机动类输出机动的具体预测。随着长时记忆(<code>LSTM</code>)网络在序列学习和生成任务中非线性时间依赖性建模的成功，本文提出了一种适用于高速公路交通情况下车辆机动和轨迹预测的LSTM模型。它使用<font color=green size=3>车辆及其周围车辆的轨迹历史以及高速公路的车道结构作为输入</font>。它给出了六个机动类的置信度值，并在此基础上预测了未来运动的多模态分布。我们使用<code>NGSIM US-101[2]和I-80[3]</code>在加利福尼亚多车道高速公路上收集的真实车辆轨迹数据集来训练和评估我们的模型。</p>
 <blockquote>
 <p>多模态轨迹预测：轨迹预测或者行为预测天然具有不确定性，一个目标未来的行为（轨迹）具有多种可能性，从空域上讲，可以对应走不同的道路，从具体<code>maneuver</code>上讲可以是不同的加减速特性，不同的曲率。总之，未来的行为存在多种可能，预测模型就是要对未来行为进行合理的描述，并给出合理的概率分布。轨迹预测或者行为预测的多模态预测难点在于同一个输入对应的未来行为或者轨迹有多种可能，而现实世界中获得的数据，也就是预测任务的<code>ground truth</code>是从这多个可能性里面采样一次得到的，其他的可能是未知的。这也就是<code>multi modal prediction</code>的难点，真值是多种，但是数据里给你的真值永远是采样一次后的。有点像多标签分类问题里只给你一个标签让模型学习预测其他可能存在的标签是什么</p>
 </blockquote>
-<h1 id="三相关研究">三、相关研究</h1>
-<h2 id="基于机动的模型">3.1 基于机动的模型</h2>
-<p>将车辆运动分类为语义上可解释的操纵性类别在高级驾驶辅助系统和自然主义驾驶研究中都得到了广泛的讨论。
-特别令人感兴趣的是使用公认的机动来更好地预测未来轨迹的工作。这些方法通常包括用于对机动进行分类的==机动识别模块==和==机动特定轨迹预测模块==。
-<font color=green size=3>机动识别模块是典型的分类器，使用车辆过去的位置和运动状态以及上下文线索作为特征。</font>
-基于启发式的分类器、贝叶斯网络、隐马尔可夫模型、随机森林分类器和递归神经网络已经被用于机动识别。
-<font color=green size=3>轨迹预测模块输出给定机动等级的车辆的未来位置。</font>
-多项式拟合，机动特定运动模型，
-高斯过程和高斯混合模型已经被用于轨迹预测。</p>
+<h1 id="三、相关研究"><a href="#三、相关研究" class="headerlink" title="三、相关研究"></a>三、相关研究</h1><h2 id="3-1-基于机动的模型"><a href="#3-1-基于机动的模型" class="headerlink" title="3.1 基于机动的模型"></a>3.1 基于机动的模型</h2><p>将车辆运动分类为语义上可解释的操纵性类别在高级驾驶辅助系统和自然主义驾驶研究中都得到了广泛的讨论。<br>特别令人感兴趣的是使用公认的机动来更好地预测未来轨迹的工作。这些方法通常包括用于对机动进行分类的==机动识别模块==和==机动特定轨迹预测模块==。</p>
+<p><font color=green size=3>机动识别模块是典型的分类器，使用车辆过去的位置和运动状态以及上下文线索作为特征。</font><br>基于启发式的分类器、贝叶斯网络、隐马尔可夫模型、随机森林分类器和递归神经网络已经被用于机动识别。</p>
+<p><font color=green size=3>轨迹预测模块输出给定机动等级的车辆的未来位置。</font><br>多项式拟合，机动特定运动模型， 高斯过程和高斯混合模型已经被用于轨迹预测。</p>
 <blockquote>
-<p>贝叶斯网络：通过对具有因果证据和诊断证据的贝叶斯网络中的域进行建模来推断驾驶场景内所有车辆的高级抽象驾驶机动的分布。
-<img src="https://s2.loli.net/2023/10/06/JLkq2IQmFU4NMpi.png"
-alt="在这里插入图片描述" /></p>
-</blockquote>
-<blockquote>
-<p>随机森林分类器：随机森林指的是利用多棵树对样本进行训练并预测的一种分类器
-使用随机决策森林分配给每个机动车道跟随、左变道和右变道的概率。使用车辆的测量数据和从真实世界数据中获取的车辆随时间的典型横向运动的知识，我们推导出高斯混合回归方法。对于最终结果，我们将回归方法的预测概率密度函数和使用混合专家方法计算的机动概率相结合。
-<img src="https://s2.loli.net/2023/10/06/SAFGw3Kd6cg1bp4.png"
-alt="在这里插入图片描述" /></p>
-</blockquote>
-<blockquote>
+<p>贝叶斯网络：通过对具有因果证据和诊断证据的贝叶斯网络中的域进行建模来推断驾驶场景内所有车辆的高级抽象驾驶机动的分布。<br><img src="https://s2.loli.net/2023/10/06/JLkq2IQmFU4NMpi.png" alt="在这里插入图片描述"></p>
+<p>随机森林分类器：随机森林指的是利用多棵树对样本进行训练并预测的一种分类器<br>使用随机决策森林分配给每个机动车道跟随、左变道和右变道的概率。使用车辆的测量数据和从真实世界数据中获取的车辆随时间的典型横向运动的知识，我们推导出高斯混合回归方法。对于最终结果，我们将回归方法的预测概率密度函数和使用混合专家方法计算的机动概率相结合。<br><img src="https://s2.loli.net/2023/10/06/SAFGw3Kd6cg1bp4.png" alt="在这里插入图片描述"></p>
 <p>多项式拟合：多项式拟合是用一个多项式展开去拟合包含数个分析格点的一小块分析区域中的所有观测点，得到观测数据的客观分析场。展开系数用最小二乘拟合确定。但此方法的区域多项式拟合并不稳定，当资料缺测时更是如此,而且会导致分析在拟合的各个区域之间不连续</p>
 </blockquote>
-<h2 id="交互感知模型">3.2 交互感知模型</h2>
-<p>用于运动预测的交互感知模型考虑了车辆间交互对车辆运动的影响，有两种不同的方法来结合车辆间的交互。</p>
-<ol type="1">
-<li>第一种：根据车辆的相对配置使用手工制作的<code>成本函数</code>，并根据这些成本函数对未来运动进行最佳预测。
-优点：基于成本函数的方法不依赖于训练数据，并且可以推广到新的流量配置。
-缺点：它们可能会受到手工成本函数的设计程度的限制。</li>
-<li>第二种：==从实际交通的轨迹数据中隐式学习==。
-优点：不会受到手工成本函数的设计程度的限制。
-缺点：由于流量配置的巨大变化，这种方法需要一个大的<code>数据集进行泛化</code>。</li>
+<h2 id="3-2-交互感知模型"><a href="#3-2-交互感知模型" class="headerlink" title="3.2 交互感知模型"></a>3.2 交互感知模型</h2><p>用于运动预测的交互感知模型考虑了车辆间交互对车辆运动的影响，有两种不同的方法来结合车辆间的交互。</p>
+<ol>
+<li>第一种：根据车辆的相对配置使用手工制作的<code>成本函数</code>，并根据这些成本函数对未来运动进行最佳预测。<br>优点：基于成本函数的方法不依赖于训练数据，并且可以推广到新的流量配置。<br>缺点：它们可能会受到手工成本函数的设计程度的限制。</li>
+<li>第二种：==从实际交通的轨迹数据中隐式学习==。<br>优点：不会受到手工成本函数的设计程度的限制。<br>缺点：由于流量配置的巨大变化，这种方法需要一个大的<code>数据集进行泛化</code>。</li>
 </ol>
-<p>本文中我们使用<code>数据驱动</code>的方法进行车辆间交互，因为它不受手工成本函数设计的限制，而且还因为有大量真实高速公路交通数据集的可用性（美国
-101 号高速公路数据集）（美国高速公路 i-80 数据集）</p>
+<p>本文中我们使用<code>数据驱动</code>的方法进行车辆间交互，因为它不受手工成本函数设计的限制，而且还因为有大量真实高速公路交通数据集的可用性（美国 101 号高速公路数据集）（美国高速公路 i-80 数据集）</p>
 <blockquote>
 <p>交互感知模型：假设每辆车的未来运动受到其他交通的影响。一种想法是通过找到最佳预测场景来考虑道路使用者之间的交互，从而最小化所有交通参与者的风险，交互感知模型允许更长期的可靠预测，因为它们考虑了驾驶员运动决策之间的相互依赖关系。然而，质量很大程度上取决于模型假设的正确性。例如，由于风险最小化假设，可能无法正确预测真正的危险交通情况。另一个问题是计算复杂度通常随着交通场景中车辆的数量呈指数增长。因此，难以满足在线需求。</p>
-</blockquote>
-<blockquote>
 <p>成本函数(<code>cost function</code>)：指在技术水平和要素价格不变的条件下，成本与产出之间的相互关系。在统计学中，成本函数(<code>cost function</code>)通常被称为损失函数(<code>loss function</code>)。可以通过优化损失函数搜索最优轨迹。</p>
-</blockquote>
-<blockquote>
 <p>轨迹数据中隐式学习：通过大量轨道数据，隐式模型隐藏状态会随着迭代的增加逐渐收敛到稳态。模型在稳定状态下的梯度与可学习参数可直接使用隐函数定理直接计算，从而避开了对各个时间步上隐藏状体的求导，所以具有恒定的内存成本。并且计算的梯度更加精确。</p>
-</blockquote>
-<blockquote>
 <p>数据集泛化：有效降低了聚合运算的运算量,提高了运算效率,将数据库中的原始数据泛化成用户感兴趣的概念层次上的、聚合的、具有统计意义的元数据。</p>
+<p>数据驱动的轨迹预测：数据驱动的轨迹预测方法可以大致分为基于聚类的方法和概率方法。基于聚类的方对训练数据进行聚类以给出一组原型轨迹。部分观察到的轨迹与基于距离测量的原型轨迹匹配，并将原型轨迹用作未来运动的模型。基于聚类的方法的主要缺点是预测的确定性。相比之下，概率方法学习运动模式的概率分布，并在给定部分轨迹的情况下输出未来运动的条件分布。这些具有将一定程度的不确定性与未来预测相关联的额外优势。高斯过程是最流行的轨迹建模方法 。</p>
 </blockquote>
-<blockquote>
-<p>数据驱动的轨迹预测：数据驱动的轨迹预测方法可以大致分为基于聚类的方法和概率方法。基于聚类的方对训练数据进行聚类以给出一组原型轨迹。部分观察到的轨迹与基于距离测量的原型轨迹匹配，并将原型轨迹用作未来运动的模型。基于聚类的方法的主要缺点是预测的确定性。相比之下，概率方法学习运动模式的概率分布，并在给定部分轨迹的情况下输出未来运动的条件分布。这些具有将一定程度的不确定性与未来预测相关联的额外优势。高斯过程是最流行的轨迹建模方法
-。</p>
-</blockquote>
-<h2 id="运动预测的递归网络">3.3 运动预测的递归网络</h2>
-<p>由于运动预测可以看作是一种序列分类或序列生成任务，近年来提出了许多基于<code>递归神经网络(RNN)</code>的方法用于机动分类和轨迹预测。
-<font color=blue size=3>2016、2017：科斯罗沙希等人和菲利普斯等人使用lstm对十字路口的车辆机动进行分类。</font><font color=red size=3>[2]</font>（论文详细地址：https://paper.idea.edu.cn/paper/2964193755）
-(==与卷积递归神经网络交互的车辆轨迹x预测==)
-提出了一种新颖的基于卷积长短期记忆 (<code>Conv-LSTM</code>)
-的神经网络架构，以使用几秒钟的历史驾驶观察来预测汽车的未来位置。这包括三个模块：</p>
+<h2 id="3-3-运动预测的递归网络"><a href="#3-3-运动预测的递归网络" class="headerlink" title="3.3 运动预测的递归网络"></a>3.3 运动预测的递归网络</h2><p>由于运动预测可以看作是一种序列分类或序列生成任务，近年来提出了许多基于<code>递归神经网络(RNN)</code>的方法用于机动分类和轨迹预测。</p>
+<p><font color=blue size=3>2016、2017：科斯罗沙希等人和菲利普斯等人使用lstm对十字路口的车辆机动进行分类。</font><font color=red size=3>[2]</font>（论文详细地址：<a target="_blank" rel="noopener" href="https://paper.idea.edu.cn/paper/2964193755）">https://paper.idea.edu.cn/paper/2964193755）</a><br>(==与卷积递归神经网络交互的车辆轨迹x预测==)<br>提出了一种新颖的基于卷积长短期记忆 (<code>Conv-LSTM</code>) 的神经网络架构，以使用几秒钟的历史驾驶观察来预测汽车的未来位置。这包括三个模块：</p>
 <ul>
 <li>1）交互学习来捕捉周围汽车的影响</li>
 <li>2）时间学习来识别对过去运动的依赖</li>
 <li>3）运动学习来将从这两个模块中提取的特征转换为未来的位置</li>
 </ul>
-<p>为了不断实现准确的预测，我们引入了一种新颖的反馈方案，其中利用每辆车的当前预测位置来更新未来的运动，封装周围汽车的效果。
-操作过程和结果如下： <img
-src="https://s2.loli.net/2023/10/06/V7yPadr128ZQRHt.png"
-alt="在这里插入图片描述" /> <img
-src="https://s2.loli.net/2023/10/06/JePBXACkLr2UOj1.png"
-alt="cl_x1.png" /></p>
-<p><font color=blue size=3>2017：Kim等人提出了一种LSTM，可以预测未来间隔0.5秒、1秒和2秒的车辆在占用网格中的位置。</font><font color=red size=3>[3]</font>
-这是一种基于循环神经网络的高效车辆轨迹预测框架。它的方法是数据驱动，易于使用，因为它通过深度神经网络模型从大量轨迹数据中学习车辆的复杂行为。所提出的轨迹预测方法采用称为长短期记忆（<code>LSTM</code>）的循环神经网络来分析时间行为并预测周围车辆的未来坐标。
-所提出的方案将从传感器测量获得的车辆坐标序列馈送到<code>LSTM</code>，并在占用网格地图上生成有关车辆未来位置的概率信息。使用从高速公路驾驶收集的数据进行的实验表明，所提出的方法可以对未来轨迹产生相当好的估计。
-模型图解和结果如下： <img
-src="https://s2.loli.net/2023/10/06/3IKNB9cWXjTriOv.png"
-alt="在这里插入图片描述" /> <img
-src="https://s2.loli.net/2023/10/06/Qs7bwlCNv2mFago.png"
-alt="在这里插入图片描述" /></p>
-<p>与这种方法相反，我们的模型==输出车辆未来位置的连续多模态概率分布，预测范围可达
-5 秒==。
-<font color=blue size=3>2016、2017：Lee提出了一个结合条件变分自动编码器(CVAE)和RNN编码器-解码器用于轨迹预测的模型。</font></font><font color=red size=3>[4]</font>
-这是一个深度随机逆最优控制<code>（IOC）RNN编码器-解码器框架DESIRE</code>，用于动态场景中交互代理的未来预测。DESIRE以几个方式预测目标在多个场景中的未来位置：</p>
+<p>为了不断实现准确的预测，我们引入了一种新颖的反馈方案，其中利用每辆车的当前预测位置来更新未来的运动，封装周围汽车的效果。<br>操作过程和结果如下：<br><img src="https://s2.loli.net/2023/10/06/V7yPadr128ZQRHt.png" alt="在这里插入图片描述"><br><img src="https://s2.loli.net/2023/10/06/JePBXACkLr2UOj1.png" alt="cl_x1.png"></p>
+<p><font color=blue size=3>2017：Kim等人提出了一种LSTM，可以预测未来间隔0.5秒、1秒和2秒的车辆在占用网格中的位置。</font><font color=red size=3>[3]</font><br>这是一种基于循环神经网络的高效车辆轨迹预测框架。它的方法是数据驱动，易于使用，因为它通过深度神经网络模型从大量轨迹数据中学习车辆的复杂行为。所提出的轨迹预测方法采用称为长短期记忆（<code>LSTM</code>）的循环神经网络来分析时间行为并预测周围车辆的未来坐标。<br>所提出的方案将从传感器测量获得的车辆坐标序列馈送到<code>LSTM</code>，并在占用网格地图上生成有关车辆未来位置的概率信息。使用从高速公路驾驶收集的数据进行的实验表明，所提出的方法可以对未来轨迹产生相当好的估计。<br>模型图解和结果如下：<br><img src="https://s2.loli.net/2023/10/06/3IKNB9cWXjTriOv.png" alt="在这里插入图片描述"><br><img src="https://s2.loli.net/2023/10/06/Qs7bwlCNv2mFago.png" alt="在这里插入图片描述"></p>
+<p>与这种方法相反，我们的模型==输出车辆未来位置的连续多模态概率分布，预测范围可达 5 秒==。</p>
+<p><font color=blue size=3>2016、2017：Lee提出了一个结合条件变分自动编码器(CVAE)和RNN编码器-解码器用于轨迹预测的模型。</font>&lt;/font&gt;<font color=red size=3>[4]</font><br>这是一个深度随机逆最优控制<code>（IOC）RNN编码器-解码器框架DESIRE</code>，用于动态场景中交互代理的未来预测。DESIRE以几个方式预测目标在多个场景中的未来位置：</p>
 <ul>
 <li>1）考虑预测的多模性（即，相同的上下文可能会有不同的未来）</li>
 <li>2）预见未来的结果并进行战略性预测</li>
-<li>3）推理不仅来自过去的运动历史，而且还来自场景上下文以及代理之间的交互
-<img src="https://s2.loli.net/2023/10/06/28uYZDUAVaGmf1k.png"
-alt="在这里插入图片描述" /></li>
+<li>3）推理不仅来自过去的运动历史，而且还来自场景上下文以及代理之间的交互<br><img src="https://s2.loli.net/2023/10/06/28uYZDUAVaGmf1k.png" alt="在这里插入图片描述"></li>
 </ul>
-<p>另外，在单个端到端可训练的NN模型中<code>DESIRE</code>计算高效。虽然这允许通过对CVAE进行抽样来进行多模态预测，但该模型只能提供来自预测分布的样本的估计，而不能提供对分布本身的估计。在他们的开创性工作中，Alahi等人提出了Social
-LSTM</font></font><font color=red size=3>[1]</font>，该方法通过使用社会池化层联合建模和预测行人在密集人群中的运动。
-==我们通过使用卷积社会池来改进了这种方法。我们还将高速公路的车道结构纳入了我们的社交池化层中。==</p>
-<p><font color=blue size=3>最后，Kuefler等人的[使用了一个基于门控循环单元(GRU)的策略，使用行为克隆和生成的对抗性模仿学习范式来生成自行车车辆运动模型的加速度和偏航率值。</font></font><font color=red size=3>[5]</font>论文地址：（https://paper.idea.edu.cn/paper/2949251504）
-本文采用一种方法来克服现有方法中固有的级联误差问题，从而产生对轨迹扰动具有鲁棒性的真实行为。我们将生成对抗模仿学习扩展到循环策略的训练，并证明我们的模型在现实高速公路模拟中优于基于规则的控制器和最大似然模型。我们的模型既重现了人类驾驶员的紧急行为，例如变道率，同时又保持了对长时间范围的真实控制。
-<img src="https://s2.loli.net/2023/10/06/kZHdzcu2QYngmlX.png"
-alt="在这里插入图片描述" /></p>
-<p>==我们将我们的轨迹预测结果与其中报道的结果进行了比较。== #
-四、问题制定
-我们用运动预测来估计车辆未来位置的概率分布，这种概率分布取决于车辆的轨迹历史和周围车辆在每一时刻的行驶轨迹。
-## 4.1 参照系
-我们使用一个固定的参照系，将原点固定在t时刻被预测的车辆上。y轴指向车辆在高速公路的运动方向，x轴指向与高速公路垂直的方向。这使得我们的模型可以应用于自动车辆上的车载传感器，也使得模型不依赖于道路的曲率，只要有可用的车载车道估计算法，就可以在高速公路上的任何地方应用。
-<img src="https://s2.loli.net/2023/10/06/FtICSvTs6EXuaqM.png"
-alt="在这里插入图片描述" /></p>
-<h2 id="输入输出">4.2 输入输出</h2>
-<p>我们模型的<strong>输入</strong>是轨迹历史： <img
-src="https://s2.loli.net/2023/10/06/yRdwBF2VelpEL9H.png"
-alt="cl_11.png" /> 其中<img
-src="https://s2.loli.net/2023/10/06/pEkdzIBiQsHfL7M.png"
-alt="cl_12.png" /> （<img
-src="https://s2.loli.net/2023/10/06/CAkPmjr2y67b8OU.png"
-alt="cl_13.png" />）代表 t 时刻被测车辆的坐标</p>
-<p><strong>输出</strong>：被预测车辆的未来坐标的概率分布：<img
-src="https://s2.loli.net/2023/10/06/ISGBnkEcYv1eUN3.png"
-alt="cl_14.png" /> 其中 <img
-src="https://s2.loli.net/2023/10/06/EguoGIvbyWeQpPB.png"
-alt="cl_x2.png" /> 是预测车辆的未来坐标。 ## 4.3 概率运动预测
-我们的模型估计了条件分布 P(Y|X)。为了让模型产生多模态分布，我们根据机动
-m<sub>i</sub> 对其进行扩展，给出： <img
-src="https://s2.loli.net/2023/10/06/8YxaFyukPQHb4cd.png"
-alt="cl_15.png" /> 其中： <img
-src="https://s2.loli.net/2023/10/06/ghoypViO4kFYLwM.png"
-alt="cl_16.png" /></p>
-<p>是未来每个时间步长的二元高斯分布的参数，对应于未来位置的均值和方差。
-## 4.4 操作类别
-我们考虑三个横向和两个纵向操作类别,横向机动包括左右车道变换和车道保持机动。由于变道涉及准备和稳定，我们将车辆定义为在±
-4s
-内处于换道状态。纵向机动分为正常驾驶和制动。如果车辆在预测范围内的平均速度小于其预测时速度的
-0.8 倍，我们将其定义为正在执行制动操作。 <img
-src="https://s2.loli.net/2023/10/06/sCfbABrn4IY9EoU.png"
-alt="cl_17.png" /> # 五、模型 下图显示了我们提出的模型。它由一个 ==LSTM
-编码器、卷积社交池化层和一个基于机动的 LSTM 解码器==组成 <img
-src="https://s2.loli.net/2023/10/06/fsDloPE5yji2K9O.png"
-alt="cl_18.png" /> ## 5.1 LSTM 编码器 我们使用 LSTM
-编码器来==学习车辆运动的动力学==。对于每一个瞬间，最近第 t<sub>h</sub>
-帧的轨迹历史片段都会通过 LSTM
-编码器，用于被预测的车辆及其周围的所有车辆。每辆车的 LSTM 状态在过去的第
-t<sub>h</sub> 帧中逐帧更新。可以预期每辆车的最终 LSTM
-状态会对该车辆的运动状态进行编码。用于每辆车的 LSTM
-具有共享权重。这允许所有车辆的 LSTM 状态的组件之间直接对应。 ## 5.2
-Convolutional Social Pooling卷积社交池化 虽然 LSTM
-编码器捕获车辆运动动态，但它<font color=blue size=3>无法捕获场景中所有车辆运动的相互依赖性</font>。<font color=red size=3>[1]</font>
-中提出的社交池化==通过将被预测的智能体周围的所有智能体的 LSTM
-状态汇集到一个社交张量中==来解决这个问题。这是通过在被预测的目标周围定义一个空间网格并根据场景中目标的空间配置使用
-LSTM 状态填充网格来完成的。图 3
-显示了一个社交张量的例子。除了被预测的目标的 LSTM
-状态之外，使用这个社会交量作为模型的输入，已被证明可以提高未来运动预测的准确性。这是有道理的，因为模型现在可以访问周围目标的运动状态及其空间配置。
-然而，所有以前的社交池实例都将全连接层应用于社交张量。这是无效的，因为它打破了社交张量的空间结构。在空间中彼此相邻的单元格在全连接层中变得等价于彼此远离的单元格。这可能会导致测试集的泛化问题，特别是如果目标可以处于各种不同的空间配置中。例如，假设训练集在社交张量的空间位置<code>(m,n)</code>处没有单个
-LSTM
-状态实例。当现在在测试集中遇到这样的实例时，模型将无法泛化。特别是，在空间网格位置<code>(m+1, n)</code>和<code>(m,n+1)</code>处存在
-LSTM 状态的训练实例，尽管这些实例由于空间局部性而显然是有帮助的。
-作为一种补救措施，本文建议在社交张量上使用==卷积层和池化层==，称为卷积社交池化。用于在社交张量的空间网格内学习局部有用的特征，并且最大池化层<code>（max-pooling）</code>可以增加<code>局部平移不变性</code>，这两者都有助于解决上述问题。这一现象已在章节中进一步探讨</p>
+<p>另外，在单个端到端可训练的NN模型中<code>DESIRE</code>计算高效。虽然这允许通过对CVAE进行抽样来进行多模态预测，但该模型只能提供来自预测分布的样本的估计，而不能提供对分布本身的估计。在他们的开创性工作中，Alahi等人提出了Social LSTM&lt;/font&gt;&lt;/font&gt;<font color=red size=3>[1]</font>，该方法通过使用社会池化层联合建模和预测行人在密集人群中的运动。<br>==我们通过使用卷积社会池来改进了这种方法。我们还将高速公路的车道结构纳入了我们的社交池化层中。==</p>
+<p><font color=blue size=3>最后，Kuefler等人的[使用了一个基于门控循环单元(GRU)的策略，使用行为克隆和生成的对抗性模仿学习范式来生成自行车车辆运动模型的加速度和偏航率值。</font>&lt;/font&gt;<font color=red size=3>[5]</font>论文地址：（<a target="_blank" rel="noopener" href="https://paper.idea.edu.cn/paper/2949251504）">https://paper.idea.edu.cn/paper/2949251504）</a><br>本文采用一种方法来克服现有方法中固有的级联误差问题，从而产生对轨迹扰动具有鲁棒性的真实行为。我们将生成对抗模仿学习扩展到循环策略的训练，并证明我们的模型在现实高速公路模拟中优于基于规则的控制器和最大似然模型。我们的模型既重现了人类驾驶员的紧急行为，例如变道率，同时又保持了对长时间范围的真实控制。<br><img src="https://s2.loli.net/2023/10/06/kZHdzcu2QYngmlX.png" alt="在这里插入图片描述"></p>
+<p>==我们将我们的轨迹预测结果与其中报道的结果进行了比较。==</p>
+<h1 id="四、问题制定"><a href="#四、问题制定" class="headerlink" title="四、问题制定"></a>四、问题制定</h1><p>我们用运动预测来估计车辆未来位置的概率分布，这种概率分布取决于车辆的轨迹历史和周围车辆在每一时刻的行驶轨迹。</p>
+<h2 id="4-1-参照系"><a href="#4-1-参照系" class="headerlink" title="4.1 参照系"></a>4.1 参照系</h2><p>我们使用一个固定的参照系，将原点固定在t时刻被预测的车辆上。y轴指向车辆在高速公路的运动方向，x轴指向与高速公路垂直的方向。这使得我们的模型可以应用于自动车辆上的车载传感器，也使得模型不依赖于道路的曲率，只要有可用的车载车道估计算法，就可以在高速公路上的任何地方应用。<br><img src="https://s2.loli.net/2023/10/06/FtICSvTs6EXuaqM.png" alt="在这里插入图片描述"></p>
+<h2 id="4-2-输入输出"><a href="#4-2-输入输出" class="headerlink" title="4.2 输入输出"></a>4.2 输入输出</h2><p>我们模型的<strong>输入</strong>是轨迹历史：<br><img src="https://s2.loli.net/2023/10/06/yRdwBF2VelpEL9H.png" alt="cl_11.png"><br>其中<img src="https://s2.loli.net/2023/10/06/pEkdzIBiQsHfL7M.png" alt="cl_12.png"><br> （<img src="https://s2.loli.net/2023/10/06/CAkPmjr2y67b8OU.png" alt="cl_13.png">）代表 t 时刻被测车辆的坐标</p>
+<p><strong>输出</strong>：被预测车辆的未来坐标的概率分布：<img src="https://s2.loli.net/2023/10/06/ISGBnkEcYv1eUN3.png" alt="cl_14.png"><br>其中<br><img src="https://s2.loli.net/2023/10/06/EguoGIvbyWeQpPB.png" alt="cl_x2.png"><br>是预测车辆的未来坐标。</p>
+<h2 id="4-3-概率运动预测"><a href="#4-3-概率运动预测" class="headerlink" title="4.3 概率运动预测"></a>4.3 概率运动预测</h2><p>我们的模型估计了条件分布 P(Y|X)。为了让模型产生多模态分布，我们根据机动 m~i~ 对其进行扩展，给出：<br><img src="https://s2.loli.net/2023/10/06/8YxaFyukPQHb4cd.png" alt="cl_15.png"><br>其中：<br><img src="https://s2.loli.net/2023/10/06/ghoypViO4kFYLwM.png" alt="cl_16.png"></p>
+<p>是未来每个时间步长的二元高斯分布的参数，对应于未来位置的均值和方差。</p>
+<h2 id="4-4-操作类别"><a href="#4-4-操作类别" class="headerlink" title="4.4 操作类别"></a>4.4 操作类别</h2><p>我们考虑三个横向和两个纵向操作类别,横向机动包括左右车道变换和车道保持机动。由于变道涉及准备和稳定，我们将车辆定义为在± 4s  内处于换道状态。纵向机动分为正常驾驶和制动。如果车辆在预测范围内的平均速度小于其预测时速度的 0.8 倍，我们将其定义为正在执行制动操作。<br><img src="https://s2.loli.net/2023/10/06/sCfbABrn4IY9EoU.png" alt="cl_17.png"></p>
+<h1 id="五、模型"><a href="#五、模型" class="headerlink" title="五、模型"></a>五、模型</h1><p>下图显示了我们提出的模型。它由一个 ==LSTM 编码器、卷积社交池化层和一个基于机动的 LSTM 解码器==组成<br><img src="https://s2.loli.net/2023/10/06/fsDloPE5yji2K9O.png" alt="cl_18.png"></p>
+<h2 id="5-1-LSTM-编码器"><a href="#5-1-LSTM-编码器" class="headerlink" title="5.1 LSTM 编码器"></a>5.1 LSTM 编码器</h2><p>我们使用 LSTM 编码器来==学习车辆运动的动力学==。对于每一个瞬间，最近第 t~h~ 帧的轨迹历史片段都会通过 LSTM 编码器，用于被预测的车辆及其周围的所有车辆。每辆车的 LSTM 状态在过去的第 t~h~ 帧中逐帧更新。可以预期每辆车的最终 LSTM 状态会对该车辆的运动状态进行编码。用于每辆车的 LSTM 具有共享权重。这允许所有车辆的 LSTM 状态的组件之间直接对应。</p>
+<h2 id="5-2-Convolutional-Social-Pooling卷积社交池化"><a href="#5-2-Convolutional-Social-Pooling卷积社交池化" class="headerlink" title="5.2 Convolutional Social Pooling卷积社交池化"></a>5.2 Convolutional Social Pooling卷积社交池化</h2><p>虽然 LSTM 编码器捕获车辆运动动态，但它<font color=blue size=3>无法捕获场景中所有车辆运动的相互依赖性</font>。<font color=red size=3>[1]</font> 中提出的社交池化==通过将被预测的智能体周围的所有智能体的 LSTM 状态汇集到一个社交张量中==来解决这个问题。这是通过在被预测的目标周围定义一个空间网格并根据场景中目标的空间配置使用 LSTM 状态填充网格来完成的。图 3 显示了一个社交张量的例子。除了被预测的目标的 LSTM 状态之外，使用这个社会交量作为模型的输入，已被证明可以提高未来运动预测的准确性。这是有道理的，因为模型现在可以访问周围目标的运动状态及其空间配置。<br>然而，所有以前的社交池实例都将全连接层应用于社交张量。这是无效的，因为它打破了社交张量的空间结构。在空间中彼此相邻的单元格在全连接层中变得等价于彼此远离的单元格。这可能会导致测试集的泛化问题，特别是如果目标可以处于各种不同的空间配置中。例如，假设训练集在社交张量的空间位置<code>(m,n)</code>处没有单个 LSTM 状态实例。当现在在测试集中遇到这样的实例时，模型将无法泛化。特别是，在空间网格位置<code>(m+1, n)</code>和<code>(m,n+1)</code>处存在 LSTM 状态的训练实例，尽管这些实例由于空间局部性而显然是有帮助的。<br>作为一种补救措施，本文建议在社交张量上使用==卷积层和池化层==，称为卷积社交池化。用于在社交张量的空间网格内学习局部有用的特征，并且最大池化层<code>（max-pooling）</code>可以增加<code>局部平移不变性</code>，这两者都有助于解决上述问题。这一现象已在章节中进一步探讨</p>
 <blockquote>
-<p>最大池化层<code>（max-pooling）</code>：常用的池化方法有最大池化<code>（max-pooling）</code>和均值池化<code>（mean-pooling）</code>。根据相关理论，特征提取的误差主要来自两个方面：
-（1）邻域大小受限造成的估计值方差增大；
-（2）卷积层参数误差造成估计均值的偏移。
-一般来说，mean-pooling能减小第一种误差，更多的保留图像的背景信息，max-pooling能减小第二种误差，更多的保留纹理信息。
-Max Pooling的作用：
-作用1：<code>invariance</code>(不变性)：这种不变性包括<code>translation</code>(平移)不变性，<code>rotation</code>(旋转)不变性，<code>scale</code>(尺度)不变性。
-作用2：增大感受野；可能跟作用1的结论有些因果关系。
-首先它第一个作用是降低<code>feature map</code>的尺寸，减少需要训练的参数；其次，因为有缩小的作用，所以之前的4个像素点，现在压缩成1个。那么，相当于我透过这1个点，就可以看到前面的4个点，这不就是把当前map的感受野一下子放大了嘛（仅供参考）</p>
+<p>最大池化层<code>（max-pooling）</code>：常用的池化方法有最大池化<code>（max-pooling）</code>和均值池化<code>（mean-pooling）</code>。根据相关理论，特征提取的误差主要来自两个方面：<br>（1）邻域大小受限造成的估计值方差增大；<br>（2）卷积层参数误差造成估计均值的偏移。<br>一般来说，mean-pooling能减小第一种误差，更多的保留图像的背景信息，max-pooling能减小第二种误差，更多的保留纹理信息。<br>Max Pooling的作用：<br>作用1：<code>invariance</code>(不变性)：这种不变性包括<code>translation</code>(平移)不变性，<code>rotation</code>(旋转)不变性，<code>scale</code>(尺度)不变性。<br>作用2：增大感受野；可能跟作用1的结论有些因果关系。<br>首先它第一个作用是降低<code>feature map</code>的尺寸，减少需要训练的参数；其次，因为有缩小的作用，所以之前的4个像素点，现在压缩成1个。那么，相当于我透过这1个点，就可以看到前面的4个点，这不就是把当前map的感受野一下子放大了嘛（仅供参考）</p>
 </blockquote>
-<p>我们通过定义基于车道的网格来设置我们的社交张量。在被预测的车辆周围定义了一个
-==13 × 3==的空间网格，==其中每一列对应一个车道==，并且行之间的距离为 15
-英尺，大约等于一辆车的长度。社交张量是通过用周围的汽车位置填充这个网格来形成的。然后，我们将两个卷积层和一个池化层应用于社交张量，如图
-3 所示，以获得社交语境编码。此外，预测车辆的 LSTM
-状态通过全连接层获得车辆动力学编码。将这两个编码连接起来形成完整的轨迹编码，然后将其传递给解码器。
-## 5.3 基于机动的 LSTM 解码器 我们使用基于 LSTM
-的解码器来生成未来运动在下一个 t<sub>f</sub>
-帧上的预测分布。我们通过预测 4.4
-节中描述的六个机动类别（3*2）中的每一个的分布以及每个机动类别的概率来解决驾驶员行为的固有多模态。解码器有两个输出横向和纵向机动概率的<code>softmax</code>层。可以将这些相乘以从公式中得到<code>P(mi|X)</code>的值。此外，解码器在每一时间步输出，一个矢量Θ(t)对应于二元高斯分布的参数，给出预测车辆的未来位置在当时瞬间的分布，取决于轨迹历史。为了从等式中获得机动特定分布
-P<sub>Θ</sub>(Y|mi,X)，我们将轨迹编码与对应于横向机动类的
-<code>one-hot 向量</code>和对应于纵向机动类的
-<code>one-hot 向量</code>连接起来。</p>
+<p>我们通过定义基于车道的网格来设置我们的社交张量。在被预测的车辆周围定义了一个 ==13 × 3==的空间网格，==其中每一列对应一个车道==，并且行之间的距离为 15 英尺，大约等于一辆车的长度。社交张量是通过用周围的汽车位置填充这个网格来形成的。然后，我们将两个卷积层和一个池化层应用于社交张量，如图 3 所示，以获得社交语境编码。此外，预测车辆的 LSTM 状态通过全连接层获得车辆动力学编码。将这两个编码连接起来形成完整的轨迹编码，然后将其传递给解码器。</p>
+<h2 id="5-3-基于机动的-LSTM-解码器"><a href="#5-3-基于机动的-LSTM-解码器" class="headerlink" title="5.3 基于机动的 LSTM 解码器"></a>5.3 基于机动的 LSTM 解码器</h2><p>我们使用基于 LSTM 的解码器来生成未来运动在下一个 t~f~ 帧上的预测分布。我们通过预测 4.4 节中描述的六个机动类别（3*2）中的每一个的分布以及每个机动类别的概率来解决驾驶员行为的固有多模态。解码器有两个输出横向和纵向机动概率的<code>softmax</code>层。可以将这些相乘以从公式中得到<code>P(mi|X)</code>的值。此外，解码器在每一时间步输出，一个矢量Θ(t)对应于二元高斯分布的参数，给出预测车辆的未来位置在当时瞬间的分布，取决于轨迹历史。为了从等式中获得机动特定分布 P~Θ~(Y|mi,X)，我们将轨迹编码与对应于横向机动类的 <code>one-hot 向量</code>和对应于纵向机动类的 <code>one-hot 向量</code>连接起来。</p>
 <blockquote>
-<p>one-hot编码：独热编码即 One-Hot
-编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都有它独立的寄存器位，并且在任意时候，其中只有一位有效。</p>
+<p>one-hot编码：独热编码即 One-Hot 编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都有它独立的寄存器位，并且在任意时候，其中只有一位有效。</p>
 </blockquote>
-<h2 id="训练和实施细节">5.4 训练和实施细节</h2>
-我们端到端地训练模型。理想情况下，我们希望最小化负对数似然 <img
-src="https://s2.loli.net/2023/10/06/Gp9eAvrUuC8HTS6.png"
-alt="cl_19.png" />
-每个训练实例只提供一个实际执行的机动类的实现。因此我们最小化负对数似然
-<img src="https://s2.loli.net/2023/10/06/eK7RxLOk1fStToG.png"
-alt="cl_20.png" /> 相反，在所有训练实例上，我们使用 Adam
-训练模型，学习率为 0.001。编码器 LSTM 具有 64 维状态，而解码器具有 128
-维状态。卷积社会池化层的大小如图 3
-所示。获得车辆动力学编码的全连接层大小为 32。我们对所有层使用 α=0.1
-的leaky-ReLU 激活。该模型是使用 PyTorch 实现的。 # 六、实验评估 ## 6.1
-数据集
-<strong>来源</strong>：https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj<br />
-<strong>介绍</strong>： NGSIM 数据集是由研究人员通过一个叫做"Next
-Generation Simulation"的项目收集来的。
-数据集采集于美国的四个不同地区，分别是加州南向的US
-101号公路，加州洛杉矶的Lankershim Boulevard地图, 加州埃默里维尔的东向的
-I-80号公路，以及佐治亚州亚特拉大的Peachtree
-Street。在本篇论文中，我们使用了US101和I-80数据集。 <img
-src="https://s2.loli.net/2023/10/06/Xrsik7hqYIDCuUV.png"
-alt="cl_21.png" />
-US-101和I-80数据集的高速公路站点的布局和自上而下的视图
-其中，每个数据集由10赫兹、45分钟时间跨度的真实高速公路交通轨迹和15分钟的轻度、中度和拥堵交通状况片段组成。同时，数据集提供了投影到当地的坐标系统的车辆坐标。
-<img src="https://s2.loli.net/2023/10/06/kvApVz7bSwl5eB4.png"
-alt="cl_22.png" />
-<table>
-<thead>
-<tr>
-<th>
-列名
-</th>
-<th>
-描述
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Vehicle_Id
-</td>
-<td>
-车辆识别号（根据进入该区域的时间升序），重复利用
-</td>
-</tr>
-<tr>
-<td>
-Frame_Id
-</td>
-<td>
-该条数据在某一时刻的帧（按开始时间升序），同一Vehicle_ID的帧号不会重复
-</td>
-</tr>
-<tr>
-<td>
-Total_Frame
-</td>
-<td>
-该车出现在此数据集的总帧数
-</td>
-</tr>
-<tr>
-<td>
-Global_Time
-</td>
-<td>
-时间戳（ms）
-</td>
-</tr>
-<tr>
-<td>
-Local_X
-</td>
-<td>
-车辆前部中心的横向（X）坐标，以英尺为单位，相对于截面在行驶方向上的最左侧边缘。
-</td>
-</tr>
-<tr>
-<td>
-Local_Y
-</td>
-<td>
-车辆前部中心的纵向（Y）坐标，以英尺为单位，相对于截面在行驶方向上的进入边缘。
-</td>
-</tr>
-<tr>
-<td>
-以上两个
-</td>
-<td>
-采集区域内的坐标，采集区域不同，坐标系不同，会有不同的零点
-</td>
-</tr>
-<tr>
-<td>
-Global_X,Y
-</td>
-<td>
-全局坐标，只有一个零点，可用作数据筛选
-</td>
-</tr>
-<tr>
-<td>
-v_length
-</td>
-<td>
-车辆长度（以英尺为单位）
-</td>
-</tr>
-<tr>
-<td>
-v_Width
-</td>
-<td>
-车辆长度（以英尺为单位）
-</td>
-</tr>
-<tr>
-<td>
-v_Class
-</td>
-<td>
-车辆类型：1-摩托车，2-汽车，3-卡车
-</td>
-</tr>
-<tr>
-<td>
-v_Vel
-</td>
-<td>
-车辆瞬时速度，以英尺/秒为单位
-</td>
-</tr>
-<tr>
-<td>
-v_Acc
-</td>
-<td>
-车辆的瞬时加速度，以英尺/秒为单位
-</td>
-</tr>
-<tr>
-<td>
-Lane_ID
-</td>
-<td>
-车辆的当前车道位置。 第1车道是最左边的车道； 第5车道是最右边的车道。
-</td>
-</tr>
-<tr>
-<td>
-O_Zone
-</td>
-<td>
-车辆的起点区域，即车辆进入跟踪系统的位置。
-研究区域有11个起源，编号从101到111。有关更多详细信息，请参阅数据分析报告。
-</td>
-</tr>
-<tr>
-<td>
-D_Zone
-</td>
-<td>
-车辆的目的地区域，即车辆离开跟踪系统的地方。
-研究区域中有10个目的地，从201到211编号。起点102是单向出口；
-因此，没有关联的目标号码202。请参阅数据分析报告以获取更多详细信息。
-</td>
-</tr>
-<tr>
-<td>
-Int_ID
-</td>
-<td>
-车辆行驶的路口。
-交叉点的编号为1到4，交叉点1位于最南端，交叉点4位于研究区域的最北端。
-值为“ 0”表示该车辆不在交叉路口的附近，而是该车辆标识为Lankershim
-Boulevard的一段（下面的Section_ID）。
-请参阅数据分析报告以获取更多详细信息。
-</td>
-</tr>
-<tr>
-<td>
-Section_ID
-</td>
-<td>
-车辆行驶的路段。 Lankershim
-Blvd分为五个部分（路口1的南部；路口1和2、2和3、3和4之间；路口4的北部）。
-值为“ 0”表示该车辆未识别出Lankershim
-Boulevard的一段，并且该车辆紧邻交叉路口（上述Int_ID）。
-请参阅数据分析报告以获取更多详细信息
-</td>
-</tr>
-<tr>
-<td>
-Direction
-</td>
-<td>
-车辆的行驶方向。 1-东行（EB），2-北行（NB），3-西行（WB），4-南行（SB）
-</td>
-</tr>
-<tr>
-<td>
-Movement
-</td>
-<td>
-车辆的运动。 1-通过（THE），2-左转（LEFT），3-右转（RT）。
-</td>
-</tr>
-<tr>
-<td>
-Preceding
-</td>
-<td>
-同道前车的车辆编号。数值为“0”表示没有前面的车辆-发生在研究段的末尾和出匝道
-</td>
-</tr>
-<tr>
-<td>
-Following
-</td>
-<td>
-在同一车道上跟随本车辆的车辆的车辆ID。 值“
-0”表示没有跟随的车辆-在研究部分的开头和匝道发生，
-</td>
-</tr>
-<tr>
-<td>
-Space_Headway
-</td>
-<td>
-间距提供了车辆的前中心到前一辆车辆的前中心之间的距离。（英尺）
-</td>
-</tr>
-<tr>
-<td>
-Time_Headway
-</td>
-<td>
-时间进度（以秒为单位）提供了从车辆的前中心（以车辆的速度）行进到前一辆车辆的前中心的时间。
-</td>
-</tr>
-<tr>
-<td>
-Location
-</td>
-<td>
-街道名称或高速公路名称
-</td>
-</tr>
-<tr>
-<td>
-–
-</td>
-<td>
-–
-</td>
-</tr>
-</tbody>
-</table>
-<p>数据集分为训练集、验证集、测试集。比例分别为7：1：2。
-其中，测试集中使用了US-101和I-80数据集的三个子集中每个子集的第四条轨迹。作者将轨迹分成8秒的片段，其中我们使用3秒的车辆轨迹历史和5秒的预测范围。
-以10Hz的数据集采样率对这8S的片段进行采样。
-然而，为了降低模型的复杂性，我们在将每个片段输入LSTM之前将其下降两倍采样率。</p>
-<h2 id="评估指标">6.2 评估指标</h2>
-<p>我们根据预测轨迹相对于真实未来轨迹的<code>均方误差 (RMSE) 的根</code>来报告结果，在
-5
-秒的预测范围内，如中所做的那样。对于生成多模态预测分布的模型，我们使用概率最高的模式来计算
-<code>RMSE</code>。虽然 RMSE
-为模型的预测准确性提供了切实的衡量标准，但它在评估多模态预测时有局限性。==RMSE
-偏向于对模式进行平均的模型==。特别是，这个平均值可能并不代表一个好的预测。例如，打算超车的驾驶员可以通过切换到紧靠左侧或紧靠右侧的车道来超车，同时加速。这两种模式的平均值是在保持车道的同时加速。
-为了解决这个限制，我们还报告了模型生成的预测分布下真实轨迹的==负对数似然
-(NLL)==。虽然 NLL
-值不能直接解释为物理量，但它们允许我们比较单峰和多峰预测分布。</p>
+<h2 id="5-4-训练和实施细节"><a href="#5-4-训练和实施细节" class="headerlink" title="5.4 训练和实施细节"></a>5.4 训练和实施细节</h2><p>我们端到端地训练模型。理想情况下，我们希望最小化负对数似然<br><img src="https://s2.loli.net/2023/10/06/Gp9eAvrUuC8HTS6.png" alt="cl_19.png"><br>每个训练实例只提供一个实际执行的机动类的实现。因此我们最小化负对数似然<br><img src="https://s2.loli.net/2023/10/06/eK7RxLOk1fStToG.png" alt="cl_20.png"><br>相反，在所有训练实例上，我们使用 Adam 训练模型，学习率为 0.001。编码器 LSTM 具有 64 维状态，而解码器具有 128 维状态。卷积社会池化层的大小如图 3 所示。获得车辆动力学编码的全连接层大小为 32。我们对所有层使用 α=0.1 的leaky-ReLU 激活。该模型是使用 PyTorch 实现的。</p>
+<h1 id="六、实验评估"><a href="#六、实验评估" class="headerlink" title="六、实验评估"></a>六、实验评估</h1><h2 id="6-1-数据集"><a href="#6-1-数据集" class="headerlink" title="6.1 数据集"></a>6.1 数据集</h2><p><strong>来源</strong>：<a target="_blank" rel="noopener" href="https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj">https://data.transportation.gov/Automobiles/Next-Generation-Simulation-NGSIM-Vehicle-Trajector/8ect-6jqj</a><br><strong>介绍</strong>：<br>NGSIM 数据集是由研究人员通过一个叫做”Next Generation Simulation”的项目收集来的。<br>数据集采集于美国的四个不同地区，分别是加州南向的US 101号公路，加州洛杉矶的Lankershim Boulevard地图, 加州埃默里维尔的东向的 I-80号公路，以及佐治亚州亚特拉大的Peachtree Street。在本篇论文中，我们使用了US101和I-80数据集。<br><img src="https://s2.loli.net/2023/10/06/Xrsik7hqYIDCuUV.png" alt="cl_21.png"><br>US-101和I-80数据集的高速公路站点的布局和自上而下的视图<br>其中，每个数据集由10赫兹、45分钟时间跨度的真实高速公路交通轨迹和15分钟的轻度、中度和拥堵交通状况片段组成。同时，数据集提供了投影到当地的坐标系统的车辆坐标。<br><img src="https://s2.loli.net/2023/10/06/kvApVz7bSwl5eB4.png" alt="cl_22.png"></p>
+<p><table><thead><tr><th>列名</th><th>描述</th></tr></thead><tbody><tr><td>Vehicle_Id</td><td>车辆识别号&#xff08;根据进入该区域的时间升序&#xff09;&#xff0c;重复利用</td></tr><tr><td>Frame_Id</td><td>该条数据在某一时刻的帧&#xff08;按开始时间升序&#xff09;&#xff0c;同一Vehicle_ID的帧号不会重复</td></tr><tr><td>Total_Frame</td><td>该车出现在此数据集的总帧数</td></tr><tr><td>Global_Time</td><td>时间戳&#xff08;ms&#xff09;</td></tr><tr><td>Local_X</td><td>车辆前部中心的横向&#xff08;X&#xff09;坐标&#xff0c;以英尺为单位&#xff0c;相对于截面在行驶方向上的最左侧边缘。</td></tr><tr><td>Local_Y</td><td>车辆前部中心的纵向&#xff08;Y&#xff09;坐标&#xff0c;以英尺为单位&#xff0c;相对于截面在行驶方向上的进入边缘。</td></tr><tr><td>以上两个</td><td>采集区域内的坐标&#xff0c;采集区域不同&#xff0c;坐标系不同&#xff0c;会有不同的零点</td></tr><tr><td>Global_X,Y</td><td>全局坐标&#xff0c;只有一个零点&#xff0c;可用作数据筛选</td></tr><tr><td>v_length</td><td>车辆长度&#xff08;以英尺为单位&#xff09;</td></tr><tr><td>v_Width</td><td>车辆长度&#xff08;以英尺为单位&#xff09;</td></tr><tr><td>v_Class</td><td>车辆类型&#xff1a;1-摩托车&#xff0c;2-汽车&#xff0c;3-卡车</td></tr><tr><td>v_Vel</td><td>车辆瞬时速度&#xff0c;以英尺/秒为单位</td></tr><tr><td>v_Acc</td><td>车辆的瞬时加速度&#xff0c;以英尺/秒为单位</td></tr><tr><td>Lane_ID</td><td>车辆的当前车道位置。 第1车道是最左边的车道&#xff1b; 第5车道是最右边的车道。</td></tr><tr><td>O_Zone</td><td>车辆的起点区域&#xff0c;即车辆进入跟踪系统的位置。 研究区域有11个起源&#xff0c;编号从101到111。有关更多详细信息&#xff0c;请参阅数据分析报告。</td></tr><tr><td>D_Zone</td><td>车辆的目的地区域&#xff0c;即车辆离开跟踪系统的地方。 研究区域中有10个目的地&#xff0c;从201到211编号。起点102是单向出口&#xff1b; 因此&#xff0c;没有关联的目标号码202。请参阅数据分析报告以获取更多详细信息。</td></tr><tr><td>Int_ID</td><td>车辆行驶的路口。 交叉点的编号为1到4&#xff0c;交叉点1位于最南端&#xff0c;交叉点4位于研究区域的最北端。 值为“ 0”表示该车辆不在交叉路口的附近&#xff0c;而是该车辆标识为Lankershim Boulevard的一段&#xff08;下面的Section_ID&#xff09;。 请参阅数据分析报告以获取更多详细信息。</td></tr><tr><td>Section_ID</td><td>车辆行驶的路段。 Lankershim Blvd分为五个部分&#xff08;路口1的南部&#xff1b;路口1和2、2和3、3和4之间&#xff1b;路口4的北部&#xff09;。 值为“ 0”表示该车辆未识别出Lankershim Boulevard的一段&#xff0c;并且该车辆紧邻交叉路口&#xff08;上述Int_ID&#xff09;。 请参阅数据分析报告以获取更多详细信息</td></tr><tr><td>Direction</td><td>车辆的行驶方向。 1-东行&#xff08;EB&#xff09;&#xff0c;2-北行&#xff08;NB&#xff09;&#xff0c;3-西行&#xff08;WB&#xff09;&#xff0c;4-南行&#xff08;SB&#xff09;</td></tr><tr><td>Movement</td><td>车辆的运动。 1-通过&#xff08;THE&#xff09;&#xff0c;2-左转&#xff08;LEFT&#xff09;&#xff0c;3-右转&#xff08;RT&#xff09;。</td></tr><tr><td>Preceding</td><td>同道前车的车辆编号。数值为“0”表示没有前面的车辆-发生在研究段的末尾和出匝道</td></tr><tr><td>Following</td><td>在同一车道上跟随本车辆的车辆的车辆ID。 值“ 0”表示没有跟随的车辆-在研究部分的开头和匝道发生&#xff0c;</td></tr><tr><td>Space_Headway</td><td>间距提供了车辆的前中心到前一辆车辆的前中心之间的距离。&#xff08;英尺&#xff09;</td></tr><tr><td>Time_Headway</td><td>时间进度&#xff08;以秒为单位&#xff09;提供了从车辆的前中心&#xff08;以车辆的速度&#xff09;行进到前一辆车辆的前中心的时间。</td></tr><tr><td>Location</td><td>街道名称或高速公路名称</td></tr><tr><td>–</td><td>–</td></tr></tbody></table><br>数据集分为训练集、验证集、测试集。比例分别为7：1：2。 其中，测试集中使用了US-101和I-80数据集的三个子集中每个子集的第四条轨迹。作者将轨迹分成8秒的片段，其中我们使用3秒的车辆轨迹历史和5秒的预测范围。 以10Hz的数据集采样率对这8S的片段进行采样。 然而，为了降低模型的复杂性，我们在将每个片段输入LSTM之前将其下降两倍采样率。</p>
+<h2 id="6-2-评估指标"><a href="#6-2-评估指标" class="headerlink" title="6.2 评估指标"></a>6.2 评估指标</h2><p>我们根据预测轨迹相对于真实未来轨迹的<code>均方误差 (RMSE) 的根</code>来报告结果，在 5 秒的预测范围内，如中所做的那样。对于生成多模态预测分布的模型，我们使用概率最高的模式来计算 <code>RMSE</code>。虽然 RMSE 为模型的预测准确性提供了切实的衡量标准，但它在评估多模态预测时有局限性。==RMSE 偏向于对模式进行平均的模型==。特别是，这个平均值可能并不代表一个好的预测。例如，打算超车的驾驶员可以通过切换到紧靠左侧或紧靠右侧的车道来超车，同时加速。这两种模式的平均值是在保持车道的同时加速。<br>为了解决这个限制，我们还报告了模型生成的预测分布下真实轨迹的==负对数似然 (NLL)==。虽然 NLL 值不能直接解释为物理量，但它们允许我们比较单峰和多峰预测分布。</p>
 <ul>
 <li>预测轨迹相对于真实未来轨迹的均方误差 (RMSE) 的根</li>
 <li>模型生成的预测分布下真实轨迹的负对数似然 (NLL)</li>
 </ul>
-<h2 id="模型比较">6.3 模型比较</h2>
-<h3 id="与其他模型的比较">6.3.1 与其他模型的比较</h3>
-<ul>
-<li><code>Constant Velocity (CV)</code>：匀速模型
-等速卡尔曼滤波器等速（CV）模型（速度是常量的模型）的局限性：假设速度是常量，我们实际上简化了车辆实际移动的形式，因为大多数车辆道路是有拐弯的，但速度是常量的模型会无法正确预测拐弯车辆。</li>
-<li><code>C-VGMM VIM</code>:
-基于马尔可夫随机场的车辆相互作用模型我们使用了基于机动的变分高斯混合模型，并以[10]中描述的基于马尔可夫随机场的车辆相互作用模型作为我们的第二基线。</li>
-<li><code>Gail-GRU</code>：生成对抗模仿学习模型
-由于在这两个模型中都使用了相同的数据集，所以使用了作者在原始文章中报告的结果。需要注意的是，GAIL-GRU
-轨迹是通过一次运行一辆车的策略生成的，而所有周围的车辆都根据 NGSIM
-数据集的真实情况移动。
-因此，该模型可以访问预测范围内相邻车辆的真实轨迹。</li>
+<h2 id="6-3-模型比较"><a href="#6-3-模型比较" class="headerlink" title="6.3 模型比较"></a>6.3 模型比较</h2><h3 id="6-3-1-与其他模型的比较"><a href="#6-3-1-与其他模型的比较" class="headerlink" title="6.3.1 与其他模型的比较"></a>6.3.1 与其他模型的比较</h3><ul>
+<li><code>Constant Velocity (CV)</code>：匀速模型 等速卡尔曼滤波器等速（CV）模型（速度是常量的模型）的局限性：假设速度是常量，我们实际上简化了车辆实际移动的形式，因为大多数车辆道路是有拐弯的，但速度是常量的模型会无法正确预测拐弯车辆。</li>
+<li><code>C-VGMM VIM</code>: 基于马尔可夫随机场的车辆相互作用模型我们使用了基于机动的变分高斯混合模型，并以[10]中描述的基于马尔可夫随机场的车辆相互作用模型作为我们的第二基线。</li>
+<li><code>Gail-GRU</code>：生成对抗模仿学习模型<br>由于在这两个模型中都使用了相同的数据集，所以使用了作者在原始文章中报告的结果。需要注意的是，GAIL-GRU 轨迹是通过一次运行一辆车的策略生成的，而所有周围的车辆都根据 NGSIM 数据集的真实情况移动。 因此，该模型可以访问预测范围内相邻车辆的真实轨迹。</li>
 </ul>
-<h3 id="修改本模型配置来对照">6.3.2 修改本模型配置来对照</h3>
-<ul>
-<li><code>Vanilla LSTM (V-LSTM)</code>: 只是在编码器 LSTM
-中使用预测车辆的轨迹历史，并使用 LSTM 解码器生成单峰输出分布。</li>
-<li>具有完全连接的社会池化的 LSTM (<code>S-LSTM</code>):
-考虑了编码器LSTM中相邻的车辆跟踪历史，它使用完全连接的社会池化并生成单峰输出分布。</li>
-<li>具有卷积社会池化的 LSTM
-(<code>CS-LSTM</code>)：这使用卷积社会池化并生成单峰输出分布。</li>
-<li>具有卷积社会池化和机动的 LSTM
-(<code>CS-LSTM(M)</code>)：这是本文描述的完整模型，包括基于机动的解码器生成多模态预测分布。（多峰）</li>
+<h3 id="6-3-2-修改本模型配置来对照"><a href="#6-3-2-修改本模型配置来对照" class="headerlink" title="6.3.2  修改本模型配置来对照"></a>6.3.2  修改本模型配置来对照</h3><ul>
+<li><code>Vanilla LSTM (V-LSTM)</code>: 只是在编码器 LSTM 中使用预测车辆的轨迹历史，并使用 LSTM 解码器生成单峰输出分布。</li>
+<li>具有完全连接的社会池化的 LSTM (<code>S-LSTM</code>): 考虑了编码器LSTM中相邻的车辆跟踪历史，它使用完全连接的社会池化并生成单峰输出分布。</li>
+<li>具有卷积社会池化的 LSTM (<code>CS-LSTM</code>)：这使用卷积社会池化并生成单峰输出分布。</li>
+<li>具有卷积社会池化和机动的 LSTM (<code>CS-LSTM(M)</code>)：这是本文描述的完整模型，包括基于机动的解码器生成多模态预测分布。（多峰）</li>
 </ul>
-<h3 id="比较结果">6.3.3 比较结果</h3>
-<p><img src="https://s2.loli.net/2023/10/06/TRnFboG6H4pDLhx.png"
-alt="cl_23.png" /> <img
-src="https://s2.loli.net/2023/10/06/5v4QyVUWZORk3sg.png"
-alt="cl_24.png" /> <img
-src="https://s2.loli.net/2023/10/06/rRN4li8vtpHDdXx.png"
-alt="cl_25.png" /></p>
+<h3 id="6-3-3-比较结果"><a href="#6-3-3-比较结果" class="headerlink" title="6.3.3 比较结果"></a>6.3.3 比较结果</h3><p><img src="https://s2.loli.net/2023/10/06/TRnFboG6H4pDLhx.png" alt="cl_23.png"><br><img src="https://s2.loli.net/2023/10/06/5v4QyVUWZORk3sg.png" alt="cl_24.png"><br><img src="https://s2.loli.net/2023/10/06/rRN4li8vtpHDdXx.png" alt="cl_25.png"></p>
 <p>对于上面三个表种的对比信息，</p>
-<ol type="1">
-<li><code>S-LSTM、CS-LSTM</code>和<code>CS-LSTM(M)</code>在 RMSE 和 NLL
-值方面优于CV，显示了所提出模型的有效性。其他的V-LSTM和CV都未使用有关相邻车辆运动的一些信息，这表明车辆间相互作用是运动预测的有益提示。</li>
+<ol>
+<li><code>S-LSTM、CS-LSTM</code>和<code>CS-LSTM(M)</code>在 RMSE 和 NLL 值方面优于CV，显示了所提出模型的有效性。其他的V-LSTM和CV都未使用有关相邻车辆运动的一些信息，这表明车辆间相互作用是运动预测的有益提示。</li>
 <li><code>CS-LSTM</code>在RMSE和NLL值方面均优于<code>S-LSTM</code>，这表明，与完全连接的社会合并层相比，卷积的社会合并更好地模拟了车辆运动的相互依存关系</li>
-<li>与<code>CS-LSTM</code> 相比，<code>CS-LSTM(M)</code>导致更高的 RMSE
-值，因为<code>CS-LSTM(M)</code>的 RMSE
-值是使用与具有最高概率的机动相对应的轨迹计算的。<code>CS-LSTM(M)</code>的
-NLL
-值却显著降低，这表明<code>CS-LSTM(M)</code>生成的预测分布更适合真实轨迹。
-这贴合任务的多模式性质。 ### 6.3.4 全连接与卷积社会池化的比较
-之前提到，完全连接的社会池化完全连接的社会池化很难推广到在社会张量中收集的场景中代理的空间模式甚至略有差异的测试集，而卷积社会池化可以解决。
-<img src="https://s2.loli.net/2023/10/06/6pYeBANbMQJsRvW.png"
-alt="cl_26.png" /></li>
+<li>与<code>CS-LSTM</code> 相比，<code>CS-LSTM(M)</code>导致更高的 RMSE 值，因为<code>CS-LSTM(M)</code>的 RMSE 值是使用与具有最高概率的机动相对应的轨迹计算的。<code>CS-LSTM(M)</code>的 NLL 值却显著降低，这表明<code>CS-LSTM(M)</code>生成的预测分布更适合真实轨迹。 这贴合任务的多模式性质。<h3 id="6-3-4-全连接与卷积社会池化的比较"><a href="#6-3-4-全连接与卷积社会池化的比较" class="headerlink" title="6.3.4 全连接与卷积社会池化的比较"></a>6.3.4 全连接与卷积社会池化的比较</h3>之前提到，完全连接的社会池化完全连接的社会池化很难推广到在社会张量中收集的场景中代理的空间模式甚至略有差异的测试集，而卷积社会池化可以解决。<br><img src="https://s2.loli.net/2023/10/06/6pYeBANbMQJsRvW.png" alt="cl_26.png"></li>
 </ol>
-<p>全连接社交池模型的性能急剧下降，
-相比之下，卷积社交池的性能下降不那么严重，这表明使用卷积层和池化层来聚合社交上下文是一种更加稳健的方法</p>
+<p>全连接社交池模型的性能急剧下降， 相比之下，卷积社交池的性能下降不那么严重，这表明使用卷积层和池化层来聚合社交上下文是一种更加稳健的方法</p>
 <blockquote>
 <p>（图中数据是作者从车道车辆的奇数网格位置对应的训练集中删除所有实例，并从测试集中删除与偶数网格位置对应的所有实例得到的，<strong>消除重叠</strong>）</p>
 </blockquote>
-<h3 id="单模态与多模态预测的比较">6.3.5 单模态与多模态预测的比较</h3>
-<p><img src="https://s2.loli.net/2023/10/06/jubaqZdICFzr4oN.png"
-alt="cl_27.png" />
-<em>图中显示了连续三个连续的真实轨迹（顶部，黑色）、CS-LSTM
-预测分布（中间，蓝色）和 CS-LSTM(M) 预测分布（底部，红色）
-变道机动的帧。</em> 图解释： <code>CS-LSTM(M)</code>
-的预测分布有两种模式。
-与变换车道相对应的模式在进一步的机动中变得越来越突出，而与车道保持机动相对应的模式逐渐消失。对于所有三种情况，对应于车道变换的模式与真实的未来轨迹非常匹配。
-得出的结论：因为<code>CS-LSTM</code>
-生成的单峰分布显示了两种模式的平均值，并且具有更小的方差。这说明了为什么与
-<code>CS-LSTM(M)</code>相比，<code>CS-LSTM</code> 实现了较低的 RMSE
-值，同时导致了更高的 NLL 值。</p>
-<h3 id="周围车辆对预测的影响">6.3.6 周围车辆对预测的影响</h3>
-<p><img src="https://s2.loli.net/2023/10/06/qkgMcUVCwio3G2A.png"
-alt="cl_28.png" /> 上图 显示了六种不同的流量场景。每个图显示了过去 3
-秒内的轨迹历史图和每个机动类在接下来 5
-秒内的平均预测轨迹。预测轨迹图的粗细与分配给每个机动类别的概率成正比。此外，每个图都显示了完整预测分布的热图。
-上图a显示了领先车辆对模型预测的影响。第一个示例（左上角）显示了一个自由流动的交通示例，其中预测车辆和领先车辆以大致相同的速度移动。在第二个示例（中上）中，我们从跟踪历史记录中注意到，与预测车辆相比，领先车辆正在减速。我们看到该模型预测车辆将制动，尽管当前的运动表明并非如此。相反，在第三个示例（右上角）中，我们看到被预测的车辆几乎是静止的，而领先的车辆开始移动。该模型预测车辆加速，正如在走走停停的交通中所预期的那样。
-上图b显示了相邻车道车辆对模型预测的影响。这三个示例显示了相同的场景，相隔
-0.5
-秒。我们注意到，被预测的车辆处于拥堵的车道上，其前车正在减速。我们还注意到相邻的左侧车道很拥挤。另一方面，相邻的右侧车道正在以更快的速度行驶。基于此，该模型将高概率分配给预测的车辆留在车道和制动，如预期的那样。但是，它也会通过移动到正确的车道来为超车分配一个小概率。我们可以观察到，随着相邻车辆移动得更远，清理车道，模型为超车分配了更大的概率。</p>
-<h1 id="参考文献">参考文献：</h1>
-<p>[1]：Social LSTM: Human Trajectory Prediction in Crowded Spaces
-[2]：Surround vehicles trajectory analysis with recurrent neural
-networks [3]：Probabilistic vehicle trajectory prediction over occupancy
-grid map via recurrent neural network [4]：Desire: Distant future
-prediction in dynamic scenes with interacting agents [5]：Imitating
-Driver Behavior with Generative Adversarial Networks</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz">Zhang Han</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz/posts/6314/">https://www.zhanghan.xyz/posts/6314/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.zhanghan.xyz" target="_blank">ZhangHan个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">卷积神经网络</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/FtICSvTs6EXuaqM.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/22426/" title="自然语言处理应用程序设计"><img class="cover" src="https://s2.loli.net/2023/10/06/NF1CEAjBTMtqxcr.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">自然语言处理应用程序设计</div></div></a></div><div class="next-post pull-right"><a href="/posts/54575/" title="联邦学习综述"><img class="cover" src="https://s2.loli.net/2023/10/06/y3VEFdvJgcMKLqa.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">联邦学习综述</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/1559/" title="[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?"><img class="cover" src="https://s2.loli.net/2023/10/06/ROewzGkbWcaIF5l.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-21</div><div class="title">[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?</div></div></a></div><div><a href="/posts/20240116/" title="工业产品表面缺陷检测算法"><img class="cover" src="https://s2.loli.net/2024/01/16/6q3WViXSy8fKvDj.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-16</div><div class="title">工业产品表面缺陷检测算法</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">一、摘要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">二、介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E7%9B%B8%E5%85%B3%E7%A0%94%E7%A9%B6"><span class="toc-number">3.</span> <span class="toc-text">三、相关研究</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%8A%A8%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 基于机动的模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E4%BA%92%E6%84%9F%E7%9F%A5%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 交互感知模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E5%8A%A8%E9%A2%84%E6%B5%8B%E7%9A%84%E9%80%92%E5%BD%92%E7%BD%91%E7%BB%9C"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 运动预测的递归网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">3.4.</span> <span class="toc-text">4.2 输入输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E5%92%8C%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82"><span class="toc-number">3.5.</span> <span class="toc-text">5.4 训练和实施细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">3.6.</span> <span class="toc-text">6.2 评估指标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E6%AF%94%E8%BE%83"><span class="toc-number">3.7.</span> <span class="toc-text">6.3 模型比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">3.7.1.</span> <span class="toc-text">6.3.1 与其他模型的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%9C%AC%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E6%9D%A5%E5%AF%B9%E7%85%A7"><span class="toc-number">3.7.2.</span> <span class="toc-text">6.3.2 修改本模型配置来对照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E7%BB%93%E6%9E%9C"><span class="toc-number">3.7.3.</span> <span class="toc-text">6.3.3 比较结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%A8%A1%E6%80%81%E4%B8%8E%E5%A4%9A%E6%A8%A1%E6%80%81%E9%A2%84%E6%B5%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">3.7.4.</span> <span class="toc-text">6.3.5 单模态与多模态预测的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%A8%E5%9B%B4%E8%BD%A6%E8%BE%86%E5%AF%B9%E9%A2%84%E6%B5%8B%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">3.7.5.</span> <span class="toc-text">6.3.6 周围车辆对预测的影响</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">4.</span> <span class="toc-text">参考文献：</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Zhang Han</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/隐私政策/">隐私政策</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+<h3 id="6-3-5-单模态与多模态预测的比较"><a href="#6-3-5-单模态与多模态预测的比较" class="headerlink" title="6.3.5 单模态与多模态预测的比较"></a>6.3.5 单模态与多模态预测的比较</h3><p><img src="https://s2.loli.net/2023/10/06/jubaqZdICFzr4oN.png" alt="cl_27.png"><br><em>图中显示了连续三个连续的真实轨迹（顶部，黑色）、CS-LSTM 预测分布（中间，蓝色）和 CS-LSTM(M) 预测分布（底部，红色） 变道机动的帧。</em><br>图解释： <code>CS-LSTM(M)</code> 的预测分布有两种模式。 与变换车道相对应的模式在进一步的机动中变得越来越突出，而与车道保持机动相对应的模式逐渐消失。对于所有三种情况，对应于车道变换的模式与真实的未来轨迹非常匹配。<br>得出的结论：因为<code>CS-LSTM</code> 生成的单峰分布显示了两种模式的平均值，并且具有更小的方差。这说明了为什么与 <code>CS-LSTM(M)</code>相比，<code>CS-LSTM</code> 实现了较低的 RMSE 值，同时导致了更高的 NLL 值。</p>
+<h3 id="6-3-6-周围车辆对预测的影响"><a href="#6-3-6-周围车辆对预测的影响" class="headerlink" title="6.3.6 周围车辆对预测的影响"></a>6.3.6 周围车辆对预测的影响</h3><p><img src="https://s2.loli.net/2023/10/06/qkgMcUVCwio3G2A.png" alt="cl_28.png"><br>上图 显示了六种不同的流量场景。每个图显示了过去 3 秒内的轨迹历史图和每个机动类在接下来 5 秒内的平均预测轨迹。预测轨迹图的粗细与分配给每个机动类别的概率成正比。此外，每个图都显示了完整预测分布的热图。<br>上图a显示了领先车辆对模型预测的影响。第一个示例（左上角）显示了一个自由流动的交通示例，其中预测车辆和领先车辆以大致相同的速度移动。在第二个示例（中上）中，我们从跟踪历史记录中注意到，与预测车辆相比，领先车辆正在减速。我们看到该模型预测车辆将制动，尽管当前的运动表明并非如此。相反，在第三个示例（右上角）中，我们看到被预测的车辆几乎是静止的，而领先的车辆开始移动。该模型预测车辆加速，正如在走走停停的交通中所预期的那样。<br>上图b显示了相邻车道车辆对模型预测的影响。这三个示例显示了相同的场景，相隔 0.5 秒。我们注意到，被预测的车辆处于拥堵的车道上，其前车正在减速。我们还注意到相邻的左侧车道很拥挤。另一方面，相邻的右侧车道正在以更快的速度行驶。基于此，该模型将高概率分配给预测的车辆留在车道和制动，如预期的那样。但是，它也会通过移动到正确的车道来为超车分配一个小概率。我们可以观察到，随着相邻车辆移动得更远，清理车道，模型为超车分配了更大的概率。</p>
+<h1 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h1><p>[1]：Social LSTM: Human Trajectory Prediction in Crowded Spaces<br>[2]：Surround vehicles trajectory analysis with recurrent neural networks<br>[3]：Probabilistic vehicle trajectory prediction over occupancy grid map via recurrent neural network<br>[4]：Desire: Distant future prediction in dynamic scenes with interacting agents<br>[5]：Imitating Driver Behavior with Generative Adversarial Networks</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz">Zhang Han</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz/posts/6314/">https://www.zhanghan.xyz/posts/6314/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.zhanghan.xyz" target="_blank">ZhangHan个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">卷积神经网络</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/FtICSvTs6EXuaqM.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/22426/" title="自然语言处理应用程序设计"><img class="cover" src="https://s2.loli.net/2023/10/06/NF1CEAjBTMtqxcr.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">自然语言处理应用程序设计</div></div></a></div><div class="next-post pull-right"><a href="/posts/54575/" title="联邦学习综述"><img class="cover" src="https://s2.loli.net/2023/10/06/y3VEFdvJgcMKLqa.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">联邦学习综述</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/1559/" title="[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?"><img class="cover" src="https://s2.loli.net/2023/10/06/ROewzGkbWcaIF5l.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-07-21</div><div class="title">[论文阅读]深度网络的可迁移性研究How transferable are features in deep neural networks?</div></div></a></div><div><a href="/posts/20240116/" title="工业产品表面缺陷检测算法"><img class="cover" src="https://s2.loli.net/2024/01/16/6q3WViXSy8fKvDj.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-01-16</div><div class="title">工业产品表面缺陷检测算法</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">一、摘要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">二、介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%9B%B8%E5%85%B3%E7%A0%94%E7%A9%B6"><span class="toc-number">3.</span> <span class="toc-text">三、相关研究</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%8A%A8%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 基于机动的模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E4%BA%A4%E4%BA%92%E6%84%9F%E7%9F%A5%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 交互感知模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E8%BF%90%E5%8A%A8%E9%A2%84%E6%B5%8B%E7%9A%84%E9%80%92%E5%BD%92%E7%BD%91%E7%BB%9C"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 运动预测的递归网络</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%97%AE%E9%A2%98%E5%88%B6%E5%AE%9A"><span class="toc-number">4.</span> <span class="toc-text">四、问题制定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%8F%82%E7%85%A7%E7%B3%BB"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 参照系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 输入输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E6%A6%82%E7%8E%87%E8%BF%90%E5%8A%A8%E9%A2%84%E6%B5%8B"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 概率运动预测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-%E6%93%8D%E4%BD%9C%E7%B1%BB%E5%88%AB"><span class="toc-number">4.4.</span> <span class="toc-text">4.4 操作类别</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A8%A1%E5%9E%8B"><span class="toc-number">5.</span> <span class="toc-text">五、模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-LSTM-%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">5.1.</span> <span class="toc-text">5.1 LSTM 编码器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-Convolutional-Social-Pooling%E5%8D%B7%E7%A7%AF%E7%A4%BE%E4%BA%A4%E6%B1%A0%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">5.2 Convolutional Social Pooling卷积社交池化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%8A%A8%E7%9A%84-LSTM-%E8%A7%A3%E7%A0%81%E5%99%A8"><span class="toc-number">5.3.</span> <span class="toc-text">5.3 基于机动的 LSTM 解码器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E8%AE%AD%E7%BB%83%E5%92%8C%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82"><span class="toc-number">5.4.</span> <span class="toc-text">5.4 训练和实施细节</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%9E%E9%AA%8C%E8%AF%84%E4%BC%B0"><span class="toc-number">6.</span> <span class="toc-text">六、实验评估</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">6.1.</span> <span class="toc-text">6.1 数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">6.2.</span> <span class="toc-text">6.2 评估指标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E6%A8%A1%E5%9E%8B%E6%AF%94%E8%BE%83"><span class="toc-number">6.3.</span> <span class="toc-text">6.3 模型比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-1-%E4%B8%8E%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">6.3.1.</span> <span class="toc-text">6.3.1 与其他模型的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-2-%E4%BF%AE%E6%94%B9%E6%9C%AC%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE%E6%9D%A5%E5%AF%B9%E7%85%A7"><span class="toc-number">6.3.2.</span> <span class="toc-text">6.3.2  修改本模型配置来对照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-3-%E6%AF%94%E8%BE%83%E7%BB%93%E6%9E%9C"><span class="toc-number">6.3.3.</span> <span class="toc-text">6.3.3 比较结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-4-%E5%85%A8%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%8D%B7%E7%A7%AF%E7%A4%BE%E4%BC%9A%E6%B1%A0%E5%8C%96%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">6.3.4.</span> <span class="toc-text">6.3.4 全连接与卷积社会池化的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-5-%E5%8D%95%E6%A8%A1%E6%80%81%E4%B8%8E%E5%A4%9A%E6%A8%A1%E6%80%81%E9%A2%84%E6%B5%8B%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">6.3.5.</span> <span class="toc-text">6.3.5 单模态与多模态预测的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-6-%E5%91%A8%E5%9B%B4%E8%BD%A6%E8%BE%86%E5%AF%B9%E9%A2%84%E6%B5%8B%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">6.3.6.</span> <span class="toc-text">6.3.6 周围车辆对预测的影响</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%EF%BC%9A"><span class="toc-number">7.</span> <span class="toc-text">参考文献：</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Zhang Han</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/隐私政策/">隐私政策</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
   if (typeof pangu === 'object') pangu.autoSpacingPage()
   else {
     getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
