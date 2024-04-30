@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>[论文阅读]Fine–Grained Extraction of Road Networks via Joint Learning of Connectivity and Segmentation | ZhangHan个人博客</title><meta name="author" content="Zhang Han,944211286@qq.com"><meta name="copyright" content="Zhang Han"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="AI摘要：在这篇博客中，作者介绍了一种通过联合学习连接性和分割的方法，用于从卫星图像中细粒度提取道路网络。该方法利用堆叠的多任务网络，通过引入全局感知模块和与道路方向相关的连接任务，实现了端到端的道路分割，并保持了道路的连通性。作者通过在三个公共遥感数据集上评估了所提出的网络的性能，并发现该网络在道路分割精度和连通性维护方面优于现有方法。 在方法部分，作者介绍了全局感知模块和道路连通性任务的具体实">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>[论文阅读]Fine–Grained Extraction of Road Networks via Joint Learning of Connectivity and Segmentation | ZhangHan个人博客</title><meta name="author" content="Zhang Han,944211286@qq.com"><meta name="copyright" content="Zhang Han"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="AI摘要：在这篇博客中，作者介绍了一种通过联合学习连接性和分割的方法，用于从卫星图像中细粒度提取道路网络。该方法利用堆叠的多任务网络，通过引入全局感知模块和与道路方向相关的连接任务，实现了端到端的道路分割，并保持了道路的连通性。作者通过在三个公共遥感数据集上评估了所提出的网络的性能，并发现该网络在道路分割精度和连通性维护方面优于现有方法。 在方法部分，作者介绍了全局感知模块和道路连通性任务的具体">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[论文阅读]Fine–Grained Extraction of Road Networks via Joint Learning of Connectivity and Segmentation">
 <meta property="og:url" content="https://www.zhanghan.xyz/posts/20240110/index.html">
 <meta property="og:site_name" content="ZhangHan个人博客">
-<meta property="og:description" content="AI摘要：在这篇博客中，作者介绍了一种通过联合学习连接性和分割的方法，用于从卫星图像中细粒度提取道路网络。该方法利用堆叠的多任务网络，通过引入全局感知模块和与道路方向相关的连接任务，实现了端到端的道路分割，并保持了道路的连通性。作者通过在三个公共遥感数据集上评估了所提出的网络的性能，并发现该网络在道路分割精度和连通性维护方面优于现有方法。 在方法部分，作者介绍了全局感知模块和道路连通性任务的具体实">
+<meta property="og:description" content="AI摘要：在这篇博客中，作者介绍了一种通过联合学习连接性和分割的方法，用于从卫星图像中细粒度提取道路网络。该方法利用堆叠的多任务网络，通过引入全局感知模块和与道路方向相关的连接任务，实现了端到端的道路分割，并保持了道路的连通性。作者通过在三个公共遥感数据集上评估了所提出的网络的性能，并发现该网络在道路分割精度和连通性维护方面优于现有方法。 在方法部分，作者介绍了全局感知模块和道路连通性任务的具体">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.loli.net/2024/01/11/Zln1FjsdrUzoefq.png">
 <meta property="article:published_time" content="2024-01-10T08:31:24.000Z">
@@ -173,20 +173,23 @@
       }
     }
     detectApple()
-    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/4pKqh38Gnk9bHC2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/SJ9tkRVgloc134Z.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ZhangHan个人博客"><span class="site-name">ZhangHan个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">[论文阅读]Fine–Grained Extraction of Road Networks via Joint Learning of Connectivity and Segmentation</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-10T08:31:24.000Z" title="发表于 2024-01-10 16:31:24">2024-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T10:54:46.866Z" title="更新于 2024-04-24 18:54:46">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E9%81%93%E8%B7%AF%E6%8F%90%E5%8F%96/">道路提取</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">8.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>25分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="[论文阅读]Fine–Grained Extraction of Road Networks via Joint Learning of Connectivity and Segmentation"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="tip info"><p>AI摘要：在这篇博客中，作者介绍了一种通过联合学习连接性和分割的方法，用于从卫星图像中细粒度提取道路网络。该方法利用堆叠的多任务网络，通过引入全局感知模块和与道路方向相关的连接任务，实现了端到端的道路分割，并保持了道路的连通性。作者通过在三个公共遥感数据集上评估了所提出的网络的性能，并发现该网络在道路分割精度和连通性维护方面优于现有方法。</p>
+    })(window)</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/4pKqh38Gnk9bHC2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/SJ9tkRVgloc134Z.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="ZhangHan个人博客"><span class="site-name">ZhangHan个人博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/mylike/"><i class="fa-fw fas fa-link"></i><span> 我的喜欢</span></a></div><div class="menus_item"><a class="site-page" href="/offer/"><i class="fa-fw fas fa-book-open"></i><span> 面经</span></a></div><div class="menus_item"><a class="site-page" href="/ReadingNotes/"><i class="fa-fw fas fa-link"></i><span> ReadingNotes</span></a></div><div class="menus_item"><a class="site-page" href="/ChatGPT/"><i class="fa-fw fas fa-robot"></i><span> ChatGPT</span></a></div><div class="menus_item"><a class="site-page" href="/Academic/"><i class="fa-fw fas fa-wallet"></i><span> Academic-GPT</span></a></div><div class="menus_item"><a class="site-page" href="/%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">[论文阅读]Fine–Grained Extraction of Road Networks via Joint Learning of Connectivity and Segmentation</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-10T08:31:24.000Z" title="发表于 2024-01-10 16:31:24">2024-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T10:54:46.866Z" title="更新于 2024-04-24 18:54:46">2024-04-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/%E9%81%93%E8%B7%AF%E6%8F%90%E5%8F%96/">道路提取</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>30分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="[论文阅读]Fine–Grained Extraction of Road Networks via Joint Learning of Connectivity and Segmentation"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="tip info"><p>AI摘要：在这篇博客中，作者介绍了一种通过联合学习连接性和分割的方法，用于从卫星图像中细粒度提取道路网络。该方法利用堆叠的多任务网络，通过引入全局感知模块和与道路方向相关的连接任务，实现了端到端的道路分割，并保持了道路的连通性。作者通过在三个公共遥感数据集上评估了所提出的网络的性能，并发现该网络在道路分割精度和连通性维护方面优于现有方法。</p>
 <p>在方法部分，作者介绍了全局感知模块和道路连通性任务的具体实现。全局感知模块通过引入通道注意力和空间注意力机制，增强了道路特征表达，并减少了背景干扰。道路连通性任务通过考虑道路方向和像素之间的连通关系，对特征编码过程施加了连通性约束，进一步提高了道路分割的准确性。</p>
 <p>最后，作者总结了该方法的主要贡献，并指出该方法在道路分割精度和连通性正确性方面的优势。该方法的创新之处在于引入了全局感知模块和与道路方向相关的连通性任务，实现了端到端的道路分割，并在细节和连通性方面取得了良好的性能。</p>
 </div>
-<h1 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1.Abstract"></a>1.Abstract</h1><p>从卫星图像中提取道路网络在智能交通管理和自动驾驶领域有着广泛的应用。高分辨率遥感图像包含复杂的道路区域和分散的背景，这给道路提取带来了挑战。在这项研究中，我们提出了一种堆叠的多任务网络，用于端到端分割道路，同时保持连接的正确性。</p>
+<h1 id="abstract">1.Abstract</h1>
+<p>从卫星图像中提取道路网络在智能交通管理和自动驾驶领域有着广泛的应用。高分辨率遥感图像包含复杂的道路区域和分散的背景，这给道路提取带来了挑战。在这项研究中，我们提出了一种堆叠的多任务网络，用于端到端分割道路，同时保持连接的正确性。</p>
 <ul>
 <li>在网络中，引入了全局感知模块，以增强像素级道路特征表示，消除头顶图像的背景干扰；</li>
 <li>增加了与道路方向相关的连接任务，以确保网络保持路段的图形级关系。</li>
 <li>我们还开发了一种堆叠的多头结构，以联合学习并有效利用连接学习和分割学习之间的相互信息。</li>
 </ul>
 <p>我们在三个公共遥感数据集上评估了所提出的网络的性能。实验结果表明，该网络在道路分割精度和连通性维护方面优于最先进的方法。</p>
-<h1 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2.Introduction"></a>2.Introduction</h1><p>道路提取是遥感图像解析和自动驾驶领域的主要研究课题之一。丰富的遥感影像数据为道路的准确识别提供了契机，但也带来了图像背景杂乱和道路复杂性带来的挑战。现场工作和手动标记可生成可靠的道路网络，但同时需要大量的人力工作量和时间成本。[1][5]中提出了自动无监督方法。然而，这些方法始终依赖于手工制作的特征描述符和预定义的参数，这些参数已被证明在复杂区域具有低泛化和低准确性。最近，基于深度学习的监督方法取得了很高的性能。</p>
+<h1 id="introduction">2.Introduction</h1>
+<p>道路提取是遥感图像解析和自动驾驶领域的主要研究课题之一。丰富的遥感影像数据为道路的准确识别提供了契机，但也带来了图像背景杂乱和道路复杂性带来的挑战。现场工作和手动标记可生成可靠的道路网络，但同时需要大量的人力工作量和时间成本。[1][5]中提出了自动无监督方法。然而，这些方法始终依赖于手工制作的特征描述符和预定义的参数，这些参数已被证明在复杂区域具有低泛化和低准确性。最近，基于深度学习的监督方法取得了很高的性能。</p>
 <p>最常见的方法将道路提取视为分割问题[6]–[8]，其中一般语义分割的像素级监督不考虑道路连通性特征，导致路段预测的拓扑关系较差。由于道路的连通性对于道路提取也很重要，因此上述分割方法通常采用后处理来细化不连贯和不完整的路段[6]，[9],[10].然而，在后处理过程中很难强制实施拓扑约束，并且多步骤方法没有利用深度学习的端到端特性。[6]、[11]–[14]通过追踪道路像素来迭代连接路段，但它们不足以保持精确对齐。</p>
-<p>遥感影像作为一项特殊的语义分割任务，由于<strong>1）相邻物体的阴影和遮挡，2）不同材料和光照导致的外观不同，3）道路蔓延的伸长和稀薄，4）道路与背景物体之间的光谱相似性，以及5）背景物体的类内方差，给道路提取带来了困难</strong>。 这也会导致误报，指的是误报，其中令人困惑的背景对象被预测为道路并抑制了准确的估计。</p>
+<p>遥感影像作为一项特殊的语义分割任务，由于<strong>1）相邻物体的阴影和遮挡，2）不同材料和光照导致的外观不同，3）道路蔓延的伸长和稀薄，4）道路与背景物体之间的光谱相似性，以及5）背景物体的类内方差，给道路提取带来了困难</strong>。
+这也会导致误报，指的是误报，其中令人困惑的背景对象被预测为道路并抑制了准确的估计。</p>
 <p>考虑到地理场景的复杂性以及大尺度架空遥感影像中道路和背景的不平衡性，提出了一种具有全局关注度的深度学习模型，该模型可以自动学习路段连通性。<strong>通过基于全局特征的全域注意力模块实现全局注意力，感知道路相关特征通道和道路上下文空间信息，增强道路特征表达，弱化嘈杂地理环境的影响，从而提高像素级道路分类的准确率</strong>。</p>
 <p>为了细化道路拓扑结构信息，我们设计了一个考虑道路连通性的任务，该任务符合手动标注道路标签时对每个点的追踪方法。我们使用可用的标签共同学习道路分段和道路连通性，这些标签明确地将分段特征与道路连通性信息相辅相成，以生成拓扑连接和像素对齐的道路掩模。我们的网络的完整结构是用于多任务联合学习的堆叠沙漏的变体，如图所示。这种全局感知的多显示端堆叠网络通过添加显式道路连通性任务实现端到端的拓扑约束，并通过重复的自下而上、自上而下的处理来利用道路掩码特征融合和道路连通性信息。我们评估了所提模型在三个遥感数据集上的性能。实验结果表明，该模型在分割精度和连通性正确性方面均优于现有方法。我们的目标是在保持像素定位精度的同时增强道路连通性。主要贡献如下：</p>
 <ul>
@@ -194,232 +197,436 @@
 <li>由于地理场景的复杂性以及道路的细长，我们的网络中使用了全局感知模块来替代正常的残差块。这个轻量级模块使网络能够专注于道路和道路环境，从而增强道路特征表达并抑制背景特征干扰。</li>
 <li>在多端结构中，设计了一种新型的与道路方向相关的连通性任务，作为道路分段的辅助任务。一方面，精细的道路分段有助于道路连通性学习，连通性直接从具有少数错误分类区域的掩蔽区域回归。另一方面，精确的道路连通性可以改善破碎的道路分段，尤其是在复杂的十字路口。</li>
 </ul>
-<h1 id="3-道路提取相关工作"><a href="#3-道路提取相关工作" class="headerlink" title="3.道路提取相关工作"></a>3.道路提取相关工作</h1><div class="table-container">
+<h1 id="道路提取相关工作">3.道路提取相关工作</h1>
 <table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>名称</th>
 <th>论文链接</th>
 <th>备注</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>利用手工制作的特征来区分道路和背景。通过结合几何信息强加的道路点之间的连通性通常可分为基于边缘的方法[13]–[17]和基于区域的方法[18]–[21]</td>
-<td>[18]<a target="_blank" rel="noopener" href="http://www.sciencedirect.com/science/article/pii/S0924271601000272">http://www.sciencedirect.com/science/article/pii/S0924271601000272</a></td>
+<td>[18]http://www.sciencedirect.com/science/article/pii/S0924271601000272</td>
 <td>方法有点古老，大多是0几年的</td>
 </tr>
-<tr>
+<tr class="even">
 <td>近期许多研究将深度学习技术应用于航拍图像中的道路提取。在这些技术中，道路提取在文献[11][22]-[25]中一般被表述为一个二值语义分割问题。</td>
 <td>[22(CVPR)]D-Linknet：用于高分辨率卫星影像道路提取的带有预训练编码器和空洞卷积的Linknet</td>
-<td>与本文一样专注于基于分割的方法。引入了神经网络技术来提取航空图像中的道路[26 ]。使用训练好的神经网络进行初步预测，并通过附近的预测来修复缝隙和断开的污点。</td>
+<td>与本文一样专注于基于分割的方法。引入了神经网络技术来提取航空图像中的道路[26
+]。使用训练好的神经网络进行初步预测，并通过附近的预测来修复缝隙和断开的污点。</td>
 </tr>
-<tr>
-<td>在[ 27 ]中，通过CNN获得像素级响应图，并开发了线积分卷积来连接小间隙。</td>
+<tr class="odd">
+<td>在[ 27
+]中，通过CNN获得像素级响应图，并开发了线积分卷积来连接小间隙。</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>RoadTracer[7]使用迭代卷积神经网络（CNN）来预测道路图连通性，即使在道路可见但密集的区域，其稳定性也不如基于分割的方法。</td>
-<td><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8578594/">https://ieeexplore.ieee.org/document/8578594/</a></td>
+<td>https://ieeexplore.ieee.org/document/8578594/</td>
 <td>道路连通性</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>[29] 在道路识别过程中增加了方向任务，以帮助改善道路连通性。</td>
-<td><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8953380">https://ieeexplore.ieee.org/document/8953380</a></td>
+<td>https://ieeexplore.ieee.org/document/8953380</td>
 <td></td>
 </tr>
-<tr>
-<td>UNet[32]及其变体在道路分段中得到了很好的应用。在这些方法中，分割一般是第一步，分割结果用于参与后续阶段。在[33]中，UNet用于在后处理之前生成道路分段结果。[24]、[34]、[35]结合了ResNet编码器[36]和UNet解码器来检测道路。组装的多个UNets[37]和堆叠的U-Nets[25]用于提取道路。相关方法还包括D-LinkNet[22]，它使用常用的分割结构LinkNet [38]和膨胀卷积中心部分。</td>
-<td><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/document/8575492">https://ieeexplore.ieee.org/document/8575492</a></td>
+<tr class="even">
+<td>UNet[32]及其变体在道路分段中得到了很好的应用。在这些方法中，分割一般是第一步，分割结果用于参与后续阶段。在[33]中，UNet用于在后处理之前生成道路分段结果。[24]、[34]、[35]结合了ResNet编码器[36]和UNet解码器来检测道路。组装的多个UNets[37]和堆叠的U-Nets[25]用于提取道路。相关方法还包括D-LinkNet[22]，它使用常用的分割结构LinkNet
+[38]和膨胀卷积中心部分。</td>
+<td>https://ieeexplore.ieee.org/document/8575492</td>
 <td>在这些作品中，道路连通性是通过连接管标记点过程[33]、固定长度线性逼近[39]、基于平滑优化[37]和辐条轮[40]来实现的。相比之下，我们的网络通过连通性任务学习，直接将连通性约束添加到道路分段过程中，端到端学习连通性道路分段。</td>
 </tr>
 </tbody>
 </table>
-</div>
-<h1 id="4-方法"><a href="#4-方法" class="headerlink" title="4.方法"></a>4.方法</h1><p>道路通常横跨整个遥感影像。它们的伸长性、薄度和连通性使传统的语义分割方法能够生成碎片化的路段。为了解决这个问题，我们提出了一个端到端的深度学习框架，用于从遥感图像中提取具有连通性信息的道路。在该框架中，<strong>引入全局感知模块来学习道路的道路上下文特征</strong>，并使用与道路方向相关的连通性任务，<strong>通过显式学习道路像素之间的连通性来捕捉连通路段之间的关系</strong>。在这里，我们将道路连通性任务的回归表述为分类任务。</p>
-<p><img src="https://s2.loli.net/2024/01/11/Zln1FjsdrUzoefq.png" alt=""></p>
-<h3 id="4-1全局感知模块（Global-Aware-Module）"><a href="#4-1全局感知模块（Global-Aware-Module）" class="headerlink" title="4.1全局感知模块（Global-Aware Module）"></a>4.1全局感知模块（Global-Aware Module）</h3><blockquote>
+<h1 id="方法">4.方法</h1>
+<p>道路通常横跨整个遥感影像。它们的伸长性、薄度和连通性使传统的语义分割方法能够生成碎片化的路段。为了解决这个问题，我们提出了一个端到端的深度学习框架，用于从遥感图像中提取具有连通性信息的道路。在该框架中，<strong>引入全局感知模块来学习道路的道路上下文特征</strong>，并使用与道路方向相关的连通性任务，<strong>通过显式学习道路像素之间的连通性来捕捉连通路段之间的关系</strong>。在这里，我们将道路连通性任务的回归表述为分类任务。</p>
+<p><img src="https://s2.loli.net/2024/01/11/Zln1FjsdrUzoefq.png" /></p>
+<h3 id="全局感知模块global-aware-module">4.1全局感知模块（Global-Aware
+Module）</h3>
+<blockquote>
 <p><strong>这部分实际上就是改进的ResBlock，在ResBlock中先后嵌入了通道注意力模块和空间注意力模块，形成了GA-ResBlock。通道注意力模块用以学习全局的上下文特征，同时通过对特征图通道加权，分离道路特征和背景。</strong></p>
 </blockquote>
 <p>全局上下文信息有助于增强大跨度道路特征的表达，并减少背景误报。考虑到道路伸长和图像中杂乱的背景，我们引入了一个具有通道和空间全局信息的特征增强模块，称为全局感知模块，使网络能够专注于中间特征层中与道路相关的信息</p>
-<p><img src="https://s2.loli.net/2024/01/11/cA87tVpiO19sLD5.png" alt=""></p>
-<p>该模块通过添加忽略的全局空间信息，从SENet[41]中的<code>squeeze-and-excitation模块（SE模块）</code>扩展而来。SE 模块中的<code>通道注意力机制（The channel attention mechanism）</code>通过全局平均池化获得通道重要性，该池化通过对要素图层中的所有像素进行等权重来压缩空间信息。这是空间结构的损失，对分割很重要。因此，在我们的框架中，我们在通道注意力模块之后级联空间注意力模块，在语义层面和空间层面分配注意力，并将它们添加到<code>ResBlocks</code>中以改进中间特征图。具有全局关注度的改进型 <code>ResBlock</code> 称为<code>GA-ResBlock</code>。现在，我们介绍通道感知、空间感知和完整的 <code>GA-ResBlock</code>。</p>
-<ol>
-<li><p><strong>通道注意力模块</strong>：位于上图中的红色框中。它通过<a target="_blank" rel="noopener" href="https://www.notion.so/0d5e260dbe484f85a9fdf97ef92f0f39?pvs=21"><strong>自适应的全局平均池化</strong></a>来获得全局感受野，从而获得<strong>代表全局地理特征的向量</strong>。<strong>利用该向量对输入特征图进行加权，以扩大道路相关特征层与背景相关特征层之间的差距</strong>。</p>
-<p>实现细节如下：对于任意输入特征映射$V = [v_1, v_2,…,v_C]$，其中$v_i∈R^{C×W×H}$，C表示通道数。为了获取全局信息，通道注意力模块对$V$进行自适应全局平均池化，得到一维场景嵌入向量$U∈R^C$。</p>
-<p>为了进一步学习全局上下文特征以确定通道重要性，通过在 U 上应用$φ_c(·)$来计算<strong>场景嵌入向量</strong> $U’$：</p>
-<script type="math/tex; mode=display">
-U'=φ_c(U)</script><p>其中$φ_c$ 表示用于地理空间场景表示的投影函数，它由两个1×1卷积层实现，学习每个通道的相关性，然后通过 sigmoid 门函数用输出向量（即每个通道的权重）进行归一化$U’ \isin  R^C$ 用于通道加权。为了简化计算并减少参数，$φ_c$的隐藏层以降维率<strong><em>r</em></strong>进行降维。然后，将输入特征图$V$乘以场景嵌入向量$U’$以获得通道注意力增强特征图$V’$。与$V’$相比，$V$更关注道路上下文的特征层，例如道路方向、路段连接以及道路与周围环境的关系。</p>
-</li>
+<p><img src="https://s2.loli.net/2024/01/11/cA87tVpiO19sLD5.png" /></p>
+<p>该模块通过添加忽略的全局空间信息，从SENet[41]中的<code>squeeze-and-excitation模块（SE模块）</code>扩展而来。SE
+模块中的<code>通道注意力机制（The channel attention mechanism）</code>通过全局平均池化获得通道重要性，该池化通过对要素图层中的所有像素进行等权重来压缩空间信息。这是空间结构的损失，对分割很重要。因此，在我们的框架中，我们在通道注意力模块之后级联空间注意力模块，在语义层面和空间层面分配注意力，并将它们添加到<code>ResBlocks</code>中以改进中间特征图。具有全局关注度的改进型
+<code>ResBlock</code>
+称为<code>GA-ResBlock</code>。现在，我们介绍通道感知、空间感知和完整的
+<code>GA-ResBlock</code>。</p>
+<ol type="1">
+<li><p><strong>通道注意力模块</strong>：位于上图中的红色框中。它通过<a
+target="_blank" rel="noopener" href="https://www.notion.so/0d5e260dbe484f85a9fdf97ef92f0f39?pvs=21"><strong>自适应的全局平均池化</strong></a>来获得全局感受野，从而获得<strong>代表全局地理特征的向量</strong>。<strong>利用该向量对输入特征图进行加权，以扩大道路相关特征层与背景相关特征层之间的差距</strong>。</p>
+<p>实现细节如下：对于任意输入特征映射<span class="math inline">\(V =
+[v_1, v_2,…,v_C]\)</span>，其中<span
+class="math inline">\(v_i∈R^{C×W×H}\)</span>，C表示通道数。为了获取全局信息，通道注意力模块对<span
+class="math inline">\(V\)</span>进行自适应全局平均池化，得到一维场景嵌入向量<span
+class="math inline">\(U∈R^C\)</span>。</p>
+<p>为了进一步学习全局上下文特征以确定通道重要性，通过在 U 上应用<span
+class="math inline">\(φ_c(·)\)</span>来计算<strong>场景嵌入向量</strong>
+<span class="math inline">\(U&#39;\)</span>：</p>
+<p><span class="math display">\[
+U&#39;=φ_c(U)
+\]</span></p>
+<p>其中<span class="math inline">\(φ_c\)</span>
+表示用于地理空间场景表示的投影函数，它由两个1×1卷积层实现，学习每个通道的相关性，然后通过
+sigmoid 门函数用输出向量（即每个通道的权重）进行归一化<span
+class="math inline">\(U&#39; \isin  R^C\)</span>
+用于通道加权。为了简化计算并减少参数，<span
+class="math inline">\(φ_c\)</span>的隐藏层以降维率<strong><em>r</em></strong>进行降维。然后，将输入特征图<span
+class="math inline">\(V\)</span>乘以场景嵌入向量<span
+class="math inline">\(U&#39;\)</span>以获得通道注意力增强特征图<span
+class="math inline">\(V&#39;\)</span>。与<span
+class="math inline">\(V&#39;\)</span>相比，<span
+class="math inline">\(V\)</span>更关注道路上下文的特征层，例如道路方向、路段连接以及道路与周围环境的关系。</p></li>
 <li><p><strong>空间注意力模块</strong>：空间感知模块（图中蓝色方框内）级联在通道感知模块之后，是对通道信息的补充。它压缩全局通道信息以获得空间关系图，描述道路与其邻域之间的空间关系。<strong>此操作将池化操作忽略的空间信息添加回模型</strong>。</p>
-<p>实现细节如下：基于通道注意力增强特征图$V’$，通过<strong>无参数操作</strong>得到空间注意力图$R∈R^{1×W×H}$，如下所示。</p>
-<script type="math/tex; mode=display">
-R = φ_s(V ) = mean(V^′, dim = 1)</script><p>对应于通道感知模块，通过对给定空间位置处每个通道的值进行求和来聚合沿通道维度的信息，得到二维特征图R，其中$R_{ij}$表示像素$(i,j)$的重要性。这里，如果使用卷积层对空间关系图进行重新编码，则需要固定输入图像的大小，这降低了网络的灵活性。$φ_s$为线性运算，如果我们直接将 $V^′$ 与 $R$ 相乘，则线性函数前后特征的乘法会导致特征退化。为了避免这种情况，增加了一个额外的 <strong><em>sigmoid</em></strong> 函数来引入非线性特征并得到最终的空间注意力图 R，用于将 $V^′$ 与输出的空间增强特征图 $V^{′′}$ 重新加权。该特征图更侧重于与道路相关的关键空间区域，并替换输入要素以参与后续操作。</p>
-</li>
+<p>实现细节如下：基于通道注意力增强特征图<span
+class="math inline">\(V&#39;\)</span>，通过<strong>无参数操作</strong>得到空间注意力图<span
+class="math inline">\(R∈R^{1×W×H}\)</span>，如下所示。</p>
+<p><span class="math display">\[
+R = φ_s(V ) = mean(V^′, dim = 1)
+\]</span></p>
+<p>对应于通道感知模块，通过对给定空间位置处每个通道的值进行求和来聚合沿通道维度的信息，得到二维特征图R，其中<span
+class="math inline">\(R_{ij}\)</span>表示像素<span
+class="math inline">\((i,j)\)</span>的重要性。这里，如果使用卷积层对空间关系图进行重新编码，则需要固定输入图像的大小，这降低了网络的灵活性。<span
+class="math inline">\(φ_s\)</span>为线性运算，如果我们直接将 <span
+class="math inline">\(V^′\)</span> 与 <span
+class="math inline">\(R\)</span>
+相乘，则线性函数前后特征的乘法会导致特征退化。为了避免这种情况，增加了一个额外的
+<strong><em>sigmoid</em></strong>
+函数来引入非线性特征并得到最终的空间注意力图 R，用于将 <span
+class="math inline">\(V^′\)</span> 与输出的空间增强特征图 <span
+class="math inline">\(V^{′′}\)</span>
+重新加权。该特征图更侧重于与道路相关的关键空间区域，并替换输入要素以参与后续操作。</p></li>
 </ol>
-<h2 id="4-2道路连通性任务（Road-Connectivity-Task）"><a href="#4-2道路连通性任务（Road-Connectivity-Task）" class="headerlink" title="4.2道路连通性任务（Road Connectivity Task）"></a>4.2道路连通性任务（Road Connectivity Task）</h2><p>由于像素级道路标注既费时又有数据冗余，因此道路标注一般是由折点及其连接关系组成的矢量格式。基于分割的道路提取需要二值化像素标签，这意味着大部分拓扑信息丢失，道路地面实况中存在遗漏和配准噪声[42]。道路连通性在道路开采中起着关键作用。受ConnNet [43]的启发，<strong>为了显式学习道路连通性，我们开发了一个与道路方向相关的连通性任务，该任务强制网络计算每个像素发出的分支数，从而对特征编码过程施加连通性约束。</strong></p>
-<p>ConnNet主要使用4连接和8连接，如下图（a）和（b）所示。对于两个像素 $P =（x，y）$ 和 $Q = （u， v）$，4-连通性使用曼哈顿距离作为度量，定义为 $d_4(P，Q) = |(x−u)|+ |(y−v)|$。对于8连通性，使用切比雪夫距离，$d_8(P,Q) = max(|((x − u）,|(y− v)|)|)$。它们都以像素为最小单位。在道路场景中，两点的连接表示为线性距离或欧几里得距离，$d = \sqrt{((x − u)^2 + (y − v)^2)}$。因此，如果从连通性的角度考虑道路线串的方向，可以有效地反映路段的拓扑关系（c）。</p>
-<p>对于给定的连通性模式，如果一个像素及其对应的相邻像素是道路，则它们被视为已连接。这样，通过计算每个像素的连接像素数来获得连通性标签。对于连通性图P，如图所示，$P_{ij}$表示给定模式中相邻道路像素的数量。由于4连接和8连接仅考虑像素连接，因此连接的组件出现在内部深处，边缘较浅。这仅表示路段的显著性，而不是道路拓扑连通性。在所提出的与方向相关的连通性中，在分支较多的交叉口处可视化较暗，直观地表示了道路的拓扑关系。道路像素通常最多有五个连接方向，即 C ≤ 5表示所有道路连通情况。</p>
-<p><img src="https://s2.loli.net/2024/01/11/dPFxsKhiX5UzvnB.png" alt=""></p>
+<h2 id="道路连通性任务road-connectivity-task">4.2道路连通性任务（Road
+Connectivity Task）</h2>
+<p>由于像素级道路标注既费时又有数据冗余，因此道路标注一般是由折点及其连接关系组成的矢量格式。基于分割的道路提取需要二值化像素标签，这意味着大部分拓扑信息丢失，道路地面实况中存在遗漏和配准噪声[42]。道路连通性在道路开采中起着关键作用。受ConnNet
+[43]的启发，<strong>为了显式学习道路连通性，我们开发了一个与道路方向相关的连通性任务，该任务强制网络计算每个像素发出的分支数，从而对特征编码过程施加连通性约束。</strong></p>
+<p>ConnNet主要使用4连接和8连接，如下图（a）和（b）所示。对于两个像素
+<span class="math inline">\(P =（x，y）\)</span> 和 <span
+class="math inline">\(Q = （u，
+v）\)</span>，4-连通性使用曼哈顿距离作为度量，定义为 <span
+class="math inline">\(d_4(P，Q) = |(x−u)|+
+|(y−v)|\)</span>。对于8连通性，使用切比雪夫距离，<span
+class="math inline">\(d_8(P,Q) = max(|((x − u）,|(y−
+v)|)|)\)</span>。它们都以像素为最小单位。在道路场景中，两点的连接表示为线性距离或欧几里得距离，<span
+class="math inline">\(d = \sqrt{((x − u)^2 + (y −
+v)^2)}\)</span>。因此，如果从连通性的角度考虑道路线串的方向，可以有效地反映路段的拓扑关系（c）。</p>
+<p>对于给定的连通性模式，如果一个像素及其对应的相邻像素是道路，则它们被视为已连接。这样，通过计算每个像素的连接像素数来获得连通性标签。对于连通性图P，如图所示，<span
+class="math inline">\(P_{ij}\)</span>表示给定模式中相邻道路像素的数量。由于4连接和8连接仅考虑像素连接，因此连接的组件出现在内部深处，边缘较浅。这仅表示路段的显著性，而不是道路拓扑连通性。在所提出的与方向相关的连通性中，在分支较多的交叉口处可视化较暗，直观地表示了道路的拓扑关系。道路像素通常最多有五个连接方向，即
+C ≤ 5表示所有道路连通情况。</p>
+<p><img src="https://s2.loli.net/2024/01/11/dPFxsKhiX5UzvnB.png" /></p>
 <p>不同连通性表示的图示。左侧面板是简化的十字路口网格，其中蓝色区域表示道路像素，白色区域表示背景。右图显示了如何对4连通性（a）、8连通性（b）和道路方向相关连通性（c）进行建模，以及如何生成地面实况。（a）和（b）分别预测给定像素的相邻4个或8个像素。（c）预测沿路相邻像素。具体来说，四个分支在十字路口连接，三个分支在岔路口连接，两个沿路连接，只有一个在端点连接。具体而言，连通性标签是通过计算给定方向上连接的像素数来生成的，其中颜色越深表示值越大。</p>
-<p>在下文中，我们将介绍从矢量真实值生成连通性标签的过程。如图所示，道路标注由道路线串 ${l_1， l_2， . . . , l_m}$ 和道路顶点 ${p_1， p_2， . . . ， p_m}$ 组成。对于每个节点，我们得到连接到它的线段数，表示 ${deg_1， deg_2， . . . ， deg_m}$。</p>
+<p>在下文中，我们将介绍从矢量真实值生成连通性标签的过程。如图所示，道路标注由道路线串
+<span class="math inline">\(\{l_1， l_2， . . . , l_m\}\)</span>
+和道路顶点 <span class="math inline">\(\{p_1， p_2， . . . ，
+p_m\}\)</span> 组成。对于每个节点，我们得到连接到它的线段数，表示 <span
+class="math inline">\(\{deg_1， deg_2， . . . ， deg_m\}\)</span>。</p>
 <p>道路连通性标签的计算方法如下：</p>
-<ol>
+<ol type="1">
 <li>首先，我们根据上图中的定义将道路像素分配为2。对道路线串进行矢量化以获得道路中心线。</li>
 <li>然后，通过方程（1）计算距离图（下图（b）），用于计算从非道路像素p0到其最近的道路像素p1的线性距离。</li>
-<li>根据距离图，方程（2）用于生成高斯分布$G ∈ [0， 1]$[下图（c）]。</li>
-<li>对于连通性标签 $C$，$G_{ij}$ 小于阈值的像素被分配 $c_r$；对于所有其他像素，分配非道路值0（式（3））。然后，我们以同样的方式重新分配交叉点 $p_i$ 的连通性值。此时，$c_r$ 是该节点的连接线串数 $deg_i$</li>
+<li>根据距离图，方程（2）用于生成高斯分布<span class="math inline">\(G ∈
+[0， 1]\)</span>[下图（c）]。</li>
+<li>对于连通性标签 <span class="math inline">\(C\)</span>，<span
+class="math inline">\(G_{ij}\)</span> 小于阈值的像素被分配 <span
+class="math inline">\(c_r\)</span>；对于所有其他像素，分配非道路值0（式（3））。然后，我们以同样的方式重新分配交叉点
+<span class="math inline">\(p_i\)</span> 的连通性值。此时，<span
+class="math inline">\(c_r\)</span> 是该节点的连接线串数 <span
+class="math inline">\(deg_i\)</span></li>
 </ol>
-<script type="math/tex; mode=display">
-\begin{gathered}d\left(p_0, p_i\right)=\left\|p_0(x, y)-p_i(x, y)\right\|_2^2 & (1)\\G_{i j}=\exp \left(-\frac{d_{i j}^2}{2 \theta^2}\right) & (2)\\G_{i j}= \begin{cases}c_r & \text { if } G_{i j}<\lambda \\c_b & \text { otherwise. }\end{cases}& (3)\end{gathered}</script><p>其中 $∥p_i − p_j∥_2^2$ 是两点之间的欧几里得距离，$(x， y)$是点的像素坐标，$G$ 是道路中心线的高斯分布图，$C$ 是连通性标签。</p>
-<p><img src="https://s2.loli.net/2024/01/11/xl3sGpQzvuMHU5m.png" alt=""></p>
+<p><span class="math display">\[
+\begin{gathered}d\left(p_0, p_i\right)=\left\|p_0(x, y)-p_i(x,
+y)\right\|_2^2 &amp; (1)\\G_{i j}=\exp \left(-\frac{d_{i j}^2}{2
+\theta^2}\right) &amp; (2)\\G_{i j}= \begin{cases}c_r &amp; \text { if }
+G_{i j}&lt;\lambda \\c_b &amp; \text { otherwise. }\end{cases}&amp;
+(3)\end{gathered}
+\]</span></p>
+<p>其中 <span class="math inline">\(∥p_i − p_j∥_2^2\)</span>
+是两点之间的欧几里得距离，<span class="math inline">\((x，
+y)\)</span>是点的像素坐标，<span class="math inline">\(G\)</span>
+是道路中心线的高斯分布图，<span class="math inline">\(C\)</span>
+是连通性标签。</p>
+<p><img src="https://s2.loli.net/2024/01/11/xl3sGpQzvuMHU5m.png" /></p>
 <p>生成道路连通性标签的过程。（a）道路线串，（b）表示从其他像素到最近正像素的距离的距离图。（c）高斯热图和（d）连通性基本实况。请注意，数据增强（例如裁剪）将在训练过程中应用，并且边界上的节点将被丢弃，并且不会被视为端点。</p>
-<h2 id="4-3多头沙漏模块-Multihead-Hourglass-Module"><a href="#4-3多头沙漏模块-Multihead-Hourglass-Module" class="headerlink" title="4.3多头沙漏模块(Multihead Hourglass Module)"></a>4.3多头沙漏模块(Multihead Hourglass Module)</h2><p>为了整合连通性任务和分割任务，我们使用了下图中的多头沙漏模块，它是堆叠沙漏网络中沙漏单元的变体。双头网络具有单独的预测和融合模块。中间输出由3×3特征转换层和1×1像素分类层获得，原始图像大小为/4。</p>
-<p>在本模块中，我们在第4.1节中引入了 <code>GA-ResBlock</code>，以获取全局信息并增强道路和非道路特征之间的差异。第4.2节中的道路连通性任务用作分割的辅助任务，以同时学习鲁棒性和可推广的连通性道路特征。在第 i 个多端沙漏模块中，输入特征图 $I_i$ 通过一个嵌套的 U 形架构，具有3个下采样和3个上采样。在下采样过程中，利用池化层来扩展感受野，减少特征冗余，获取多尺度空间和通道信息。在上采样过程中，多尺度要素通过跳跃连接进行融合。与原来的堆叠沙漏不同，我们在跳过层连接处丢弃了额外的卷积层以保留空间细节，而是直接以相同的方式传输编码器输出。该 U 形网络的输出表示为 $y^′_i = U_i(I_i)$，其中 $i ∈ [1， 2， · · · ， n]$，$n$ 是堆叠模块的数量。然后，使用<code>GA-ResBlock</code>进行特征融合，得到$y_i ∈ R^{d×H×W}$。<code>中间监督块(Intermediate Supervision)</code>（下图（b））由3×3特征变换层和1×1预测层组成，得到1/4大小的粗分割预测$\bar{s_i}∈R^{d×H×W}$和连通性预测$\bar{c_i}∈R^{t_2×H×W}$，由1/4大小标签监督，其中t1和t2是两个任务的类数。</p>
-<p><img src="https://s2.loli.net/2024/01/11/8JlRGKahOzfHtNv.png" alt=""></p>
-<p>在确定网络结构时，我们考虑了三种组合方法：多分支结构、多头结构和侧输出结构（以LinkNet34 为例，三种架构如下图所示）。<strong>实验验证了多头网络能够以更少的计算冗余实现更高的性能，根据实验结果可以看出，在LinkNet上增加了多头网络之后推理时间都略有上涨，指标都有明显增长，其中多头结构推理时间增长最少，指标增长最多。</strong></p>
-<p>为了方便理解，我先把这部分的实验结果放一下：包括3种多任务架构的性能，其中 MH、MB 、SO分别表示多头、多分支和侧输出（MULTIHEAD、 MULTIBRANCH、SIDE-OUTPUT）。（由于 GPU 内存限制，UNET 只能调整为多头和多分支结构，这表明侧输出架构在推理性能上较差）。LAYERS：卷积层数。PARAMS：模型参数的大小。INFER TIME：每个512×512图像的推理时间。IOU 和 APLS：指标。</p>
-<p><img src="https://s2.loli.net/2024/01/11/42dVJkY8QCPr6Fx.png" alt=""></p>
-<p><img src="https://s2.loli.net/2024/01/11/dPpmg91McIRotWs.png" alt=""></p>
+<h2
+id="多头沙漏模块multihead-hourglass-module">4.3多头沙漏模块(Multihead
+Hourglass Module)</h2>
+<p>为了整合连通性任务和分割任务，我们使用了下图中的多头沙漏模块，它是堆叠沙漏网络中沙漏单元的变体。双头网络具有单独的预测和融合模块。中间输出由3×3特征转换层和1×1像素分类层获得，原始图像大小为/4。</p>
+<p>在本模块中，我们在第4.1节中引入了
+<code>GA-ResBlock</code>，以获取全局信息并增强道路和非道路特征之间的差异。第4.2节中的道路连通性任务用作分割的辅助任务，以同时学习鲁棒性和可推广的连通性道路特征。在第
+i 个多端沙漏模块中，输入特征图 <span class="math inline">\(I_i\)</span>
+通过一个嵌套的 U
+形架构，具有3个下采样和3个上采样。在下采样过程中，利用池化层来扩展感受野，减少特征冗余，获取多尺度空间和通道信息。在上采样过程中，多尺度要素通过跳跃连接进行融合。与原来的堆叠沙漏不同，我们在跳过层连接处丢弃了额外的卷积层以保留空间细节，而是直接以相同的方式传输编码器输出。该
+U 形网络的输出表示为 <span class="math inline">\(y^′_i =
+U_i(I_i)\)</span>，其中 <span class="math inline">\(i ∈ [1， 2， · · ·
+， n]\)</span>，<span class="math inline">\(n\)</span>
+是堆叠模块的数量。然后，使用<code>GA-ResBlock</code>进行特征融合，得到<span
+class="math inline">\(y_i ∈
+R^{d×H×W}\)</span>。<code>中间监督块(Intermediate Supervision)</code>（下图（b））由3×3特征变换层和1×1预测层组成，得到1/4大小的粗分割预测<span
+class="math inline">\(\bar{s_i}∈R^{d×H×W}\)</span>和连通性预测<span
+class="math inline">\(\bar{c_i}∈R^{t_2×H×W}\)</span>，由1/4大小标签监督，其中t1和t2是两个任务的类数。</p>
+<p><img src="https://s2.loli.net/2024/01/11/8JlRGKahOzfHtNv.png" /></p>
+<p>在确定网络结构时，我们考虑了三种组合方法：多分支结构、多头结构和侧输出结构（以LinkNet34
+为例，三种架构如下图所示）。<strong>实验验证了多头网络能够以更少的计算冗余实现更高的性能，根据实验结果可以看出，在LinkNet上增加了多头网络之后推理时间都略有上涨，指标都有明显增长，其中多头结构推理时间增长最少，指标增长最多。</strong></p>
+<p>为了方便理解，我先把这部分的实验结果放一下：包括3种多任务架构的性能，其中
+MH、MB 、SO分别表示多头、多分支和侧输出（MULTIHEAD、
+MULTIBRANCH、SIDE-OUTPUT）。（由于 GPU 内存限制，UNET
+只能调整为多头和多分支结构，这表明侧输出架构在推理性能上较差）。LAYERS：卷积层数。PARAMS：模型参数的大小。INFER
+TIME：每个512×512图像的推理时间。IOU 和 APLS：指标。</p>
+<p><img src="https://s2.loli.net/2024/01/11/42dVJkY8QCPr6Fx.png" /></p>
+<p><img src="https://s2.loli.net/2024/01/11/dPpmg91McIRotWs.png" /></p>
 <p>多任务学习模型图。框中的数字表示输出特征图的通道数。（a）是共享底层编码-解码网络的多头结构。作为分割的辅助任务，然后直接从分割覆盖率处的图像特征预测连通性。（b）是多分支结构。该架构共享编码部分，其中网络学习连接路段的鲁棒性一般特征表达式。（c）为侧输出结构。解码器网络的侧块用于信息转换（从分割到连接）和特征压缩。</p>
-<p>一个类似 FPN 的模块用于上采样融合，以及一个用于连通性预测的最终分类层。我们还将捕获到的连通性信息传输到骨干道路分段分支，以增强信息。</p>
-<h2 id="4-4堆叠式多显示端网络-Stacked-Multihead-Network"><a href="#4-4堆叠式多显示端网络-Stacked-Multihead-Network" class="headerlink" title="4.4堆叠式多显示端网络(Stacked Multihead Network)"></a>4.4堆叠式多显示端网络(Stacked Multihead Network)</h2><p>如图所示，堆叠多头网络将堆叠沙漏网络调整为多任务形式。堆叠沙漏在重复的自下而上和自上而下的过程中具有很强的整合局部和全局信息的能力，而我们使用堆叠架构的目的是通过多头沙漏模块中的特征融合过程促进相关任务之间的信息流动。</p>
+<p>一个类似 FPN
+的模块用于上采样融合，以及一个用于连通性预测的最终分类层。我们还将捕获到的连通性信息传输到骨干道路分段分支，以增强信息。</p>
+<h2
+id="堆叠式多显示端网络stacked-multihead-network">4.4堆叠式多显示端网络(Stacked
+Multihead Network)</h2>
+<p>如图所示，堆叠多头网络将堆叠沙漏网络调整为多任务形式。堆叠沙漏在重复的自下而上和自上而下的过程中具有很强的整合局部和全局信息的能力，而我们使用堆叠架构的目的是通过多头沙漏模块中的特征融合过程促进相关任务之间的信息流动。</p>
 <p>我们的网络由三个模块组成：<code>下采样模块、迭代多头沙漏模块和像素级分类器</code>。该网络在分割和连通任务的联合学习中利用互补信息来增强拓扑描述和分割输出。</p>
-<p><img src="https://s2.loli.net/2024/01/11/Zln1FjsdrUzoefq.png" alt=""></p>
-<p>堆叠式多头网络将遥感影像X作为输入，然后馈入下采样模块（上图（a））。1/4尺寸的特征图由 $d = D（X）$获得，其中 $D（·）$表示下采样函数。d 是第一个多端沙漏模块的输入特征（$I<em>1$）。堆叠式多头沙漏模块中的具体过程在第4.3节中描述，其中重复特征学习（获取$y_i$）和中间监督（获取$\bar{s_i}，\bar{c_i}$）发生。这个过程重复了n次。当 $i &lt; n−1$时，我们通过四个独立的特征转换层将$\bar{s_i}，\bar{c_i}，\bar{y_i}$ 融合在一起，将它们投影到相同的特征空间 $R^{d×H×W}$ 中。将变换后的特征 $s^′</em>{i−1}、c^′<em>{i−1}、y^1</em>{i−1}、y^2_{i−1}$ 和输入特征 $I_i$ 作为输入添加到下一个多头模块。中间输出过程由下式表示：</p>
-<script type="math/tex; mode=display">
-\begin{gathered}\\\bar{s_i}，\bar{c_i}= \begin{cases}M_i(I_i+ s^′_{i−1}+c^′_{i−1}+y^′_{i−1}) & \text { if } i>1\\M_i(I_i)& \text  { if } i=1 \end{cases}&  \end{gathered}</script><p>其中$M<em>i（·）$表示多端模块功能，$I_i$是每个$M_i（·）$的骨干输入特征，$\bar{s_i}，\bar{c_i}$是分割和连接中间输出， $s^′</em>{i−1}、c^′<em>{i−1}、y^′</em>{i−1}$是最后一个多头解码器特征和输出的投影结果，其中 $y^′<em>{i−1}$分别包括两个分支的$y^1</em>{i−1}和y^2_{i−1}$。</p>
-<h2 id="4-5损失函数（Loss-Function）"><a href="#4-5损失函数（Loss-Function）" class="headerlink" title="4.5损失函数（Loss Function）"></a>4.5损失函数（Loss Function）</h2><p>在<strong>分段任务</strong>中，我们使用 IoU 作为指标。将式（5）中的软IoU作为损失函数，确保训练过程朝着IoU递增方向迈进。由于软 IoU 是每个类内的比率，因此每个类的样本量差异是不相关的，避免了类不平衡。</p>
-<script type="math/tex; mode=display">
+<p><img src="https://s2.loli.net/2024/01/11/Zln1FjsdrUzoefq.png" /></p>
+<p>堆叠式多头网络将遥感影像X作为输入，然后馈入下采样模块（上图（a））。1/4尺寸的特征图由
+<span class="math inline">\(d = D（X）\)</span>获得，其中 <span
+class="math inline">\(D（·）\)</span>表示下采样函数。d
+是第一个多端沙漏模块的输入特征（<span
+class="math inline">\(I_1\)</span>）。堆叠式多头沙漏模块中的具体过程在第4.3节中描述，其中重复特征学习（获取<span
+class="math inline">\(y_i\)</span>）和中间监督（获取<span
+class="math inline">\(\bar{s_i}，\bar{c_i}\)</span>）发生。这个过程重复了n次。当 <span
+class="math inline">\(i &lt;
+n−1\)</span>时，我们通过四个独立的特征转换层将<span
+class="math inline">\(\bar{s_i}，\bar{c_i}，\bar{y_i}\)</span>
+融合在一起，将它们投影到相同的特征空间 <span
+class="math inline">\(R^{d×H×W}\)</span> 中。将变换后的特征 <span
+class="math inline">\(s^′_{i−1}、c^′_{i−1}、y^1_{i−1}、y^2_{i−1}\)</span>
+和输入特征 <span class="math inline">\(I_i\)</span>
+作为输入添加到下一个多头模块。中间输出过程由下式表示：</p>
+<p><span class="math display">\[
+\begin{gathered}\\\bar{s_i}，\bar{c_i}= \begin{cases}M_i(I_i+
+s^′_{i−1}+c^′_{i−1}+y^′_{i−1}) &amp; \text { if } i&gt;1\\M_i(I_i)&amp;
+\text  { if } i=1 \end{cases}&amp;  \end{gathered}
+\]</span></p>
+<p>其中<span
+class="math inline">\(M_i（·）\)</span>表示多端模块功能，<span
+class="math inline">\(I_i\)</span>是每个<span
+class="math inline">\(M_i（·）\)</span>的骨干输入特征，<span
+class="math inline">\(\bar{s_i}，\bar{c_i}\)</span>是分割和连接中间输出，
+<span
+class="math inline">\(s^′_{i−1}、c^′_{i−1}、y^′_{i−1}\)</span>是最后一个多头解码器特征和输出的投影结果，其中
+<span class="math inline">\(y^′_{i−1}\)</span>分别包括两个分支的<span
+class="math inline">\(y^1_{i−1}和y^2_{i−1}\)</span>。</p>
+<h2 id="损失函数loss-function">4.5损失函数（Loss Function）</h2>
+<p>在<strong>分段任务</strong>中，我们使用 IoU
+作为指标。将式（5）中的软IoU作为损失函数，确保训练过程朝着IoU递增方向迈进。由于软
+IoU
+是每个类内的比率，因此每个类的样本量差异是不相关的，避免了类不平衡。</p>
+<p><span class="math display">\[
 \begin{equation}
-\ell_s=-\frac{1}{C} \sum_c \sum_{i=1}^h \sum_{j=1}^w \frac{\hat{Y}_{i j} \cdot Y_{i j}}{\hat{Y}_{i j}+Y_{i j}-\hat{Y}_{i j} \cdot Y_{i j}} \tag{5}
-\end{equation}</script><p>其中$\hat Y<em>{ij}$表示分割的基本事实，$Y</em>{ij}$是预测。</p>
+\ell_s=-\frac{1}{C} \sum_c \sum_{i=1}^h \sum_{j=1}^w \frac{\hat{Y}_{i j}
+\cdot Y_{i j}}{\hat{Y}_{i j}+Y_{i j}-\hat{Y}_{i j} \cdot Y_{i j}}
+\tag{5}
+\end{equation}
+\]</span></p>
+<p>其中<span class="math inline">\(\hat
+Y_{ij}\)</span>表示分割的基本事实，<span
+class="math inline">\(Y_{ij}\)</span>是预测。</p>
 <p>对于<strong>连通性任务</strong>，我们使用平衡的交叉熵损失（方程（6））。由于道路交叉口只占道路像素的一小部分，因此类大小极不平衡。因此，每个类别都乘以类别权重，以避免忽略样本量较小的类别。</p>
-<script type="math/tex; mode=display">
-\begin{equation}\ell_c=-\frac{1}{\sum w_c} \sum_{c=1}^C \hat{Y}_c \log \left(Y_c\right) \cdot w_c \tag{6}\end{equation}</script><p>其中 C 是连通性类的数量。类权重采用反边界权重，$w_c = 1/ln（1.02+p_c）$，可以让较小的类获得更多的权重。在这个公式中，$p_c$可能表示某一类的比例，$w_c$则表示这一类的权重。这个公式的效果是，当某一类的比例$p_c$较小（即这一类的样本数量较少）时，计算出的权重$w_c$较大，这样可以让这一类在模型训练中获得更多的关注。我们只期望在不改变损失总和的情况下调整损失分布，因此我们通过除以权重的数量来归一化加权交叉熵损失。</p>
+<p><span class="math display">\[
+\begin{equation}\ell_c=-\frac{1}{\sum w_c} \sum_{c=1}^C \hat{Y}_c \log
+\left(Y_c\right) \cdot w_c \tag{6}\end{equation}
+\]</span></p>
+<p>其中 C 是连通性类的数量。类权重采用反边界权重，<span
+class="math inline">\(w_c =
+1/ln（1.02+p_c）\)</span>，可以让较小的类获得更多的权重。在这个公式中，<span
+class="math inline">\(p_c\)</span>可能表示某一类的比例，<span
+class="math inline">\(w_c\)</span>则表示这一类的权重。这个公式的效果是，当某一类的比例<span
+class="math inline">\(p_c\)</span>较小（即这一类的样本数量较少）时，计算出的权重<span
+class="math inline">\(w_c\)</span>较大，这样可以让这一类在模型训练中获得更多的关注。我们只期望在不改变损失总和的情况下调整损失分布，因此我们通过除以权重的数量来归一化加权交叉熵损失。</p>
 <p>每个多头模块都产生中间监控，并执行全分辨率监控。总损失是所有损失的总和，如式（7）所示。</p>
-<script type="math/tex; mode=display">
-\begin{equation} \ell=\sum_{i=1}^{n+1}\left(\ell_s^i+\ell_c^i\right) \tag{7}\end{equation}</script><p>其中 n 是堆栈数。</p>
-<h1 id="实施详细信息"><a href="#实施详细信息" class="headerlink" title="实施详细信息"></a>实施详细信息</h1><div class="table-container">
+<p><span class="math display">\[
+\begin{equation} \ell=\sum_{i=1}^{n+1}\left(\ell_s^i+\ell_c^i\right)
+\tag{7}\end{equation}
+\]</span></p>
+<p>其中 n 是堆栈数。</p>
+<h1 id="实施详细信息">实施详细信息</h1>
 <table>
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 34%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>名称</th>
 <th>设置</th>
 <th>备注</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>训练期间将图像数据尺寸</td>
 <td>256×256</td>
 <td>防止过度拟合</td>
 </tr>
-<tr>
+<tr class="even">
 <td>随机旋转</td>
 <td>90 × k （k = 1，2，3）</td>
 <td>数据增强</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>增强概率</td>
 <td>0.5</td>
 <td>数据增强</td>
 </tr>
-<tr>
+<tr class="even">
 <td>优化器Adam</td>
 <td>权重衰减为 5e-4</td>
 <td>防止过度拟合</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>epoch</td>
 <td>120</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>初始学习率</td>
-<td>1e-3并乘以 $ 0.5 ∗(1 + cos(\frac{step }{max_step}π))$</td>
+<td>1e-3并乘以 $ 0.5 ∗(1 + cos(π))$</td>
 <td>在训练过程结束时减少到零</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>批处理大小训练的批处理大小</td>
 <td>32</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td>验证和测试的批处理大小</td>
 <td>1</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>连接类别</td>
 <td>5</td>
 <td>The connectivity category</td>
 </tr>
-<tr>
+<tr class="even">
 <td>残差块ResNet-34中的BasicBlock带有 GA 模块，特征数</td>
 <td>128</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>堆叠多头网络的堆栈数</td>
 <td>2</td>
 <td>The number of stacks of our stacked multihead network</td>
 </tr>
-<tr>
+<tr class="even">
 <td>SpaceNet 数据集的容差阈值</td>
 <td>2像素</td>
 <td>the tolerance threshold</td>
 </tr>
 </tbody>
 </table>
-</div>
 <p>考虑到不均匀的分割结果可能会导致骨架化过程中出现许多毛刺，我们从分割结果中去除了小于30像素的短悬垂曲线。</p>
-<h1 id="实验与讨论-Experiment-And-Discussion"><a href="#实验与讨论-Experiment-And-Discussion" class="headerlink" title="实验与讨论(Experiment And Discussion)"></a>实验与讨论(Experiment And Discussion)</h1><h2 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h2><ul>
+<h1 id="实验与讨论experiment-and-discussion">实验与讨论(Experiment And
+Discussion)</h1>
+<h2 id="datasets">Datasets</h2>
+<ul>
 <li>the SpaceNet Road Dataset</li>
 <li>Massachusetts Road Dataset</li>
 <li>RoadTracer Dataset</li>
 </ul>
-<h2 id="指标-Metrics"><a href="#指标-Metrics" class="headerlink" title="指标(Metrics)"></a>指标(Metrics)</h2><p>为了评估路面分割和道路中心线连通性的定量和定性性能，引入了基于像素的指标和基于图形的指标。</p>
+<h2 id="指标metrics">指标(Metrics)</h2>
+<p>为了评估路面分割和道路中心线连通性的定量和定性性能，引入了基于像素的指标和基于图形的指标。</p>
 <ul>
-<li><p><strong>分段指标</strong>：道路分段任务适用于常用的基于像素的分段指标：并集交集（IoU）。但是，道路分割的实况是从具有恒定宽度的中心线字符串生成的，这意味着像素标签的精度最多只有几个像素。因此，我们采用了Mnih推荐的松弛机制，将预测到的真值ρ像素以内的道路像素视为真值。召回率是预测道路中真阳性的分数，准确性是真实道路中真阳性的分数。我们使用标准 IoU 和宽松 IoU （IoU r）作为像素级指标。</p>
-</li>
-<li><p><strong>连通性指标</strong>：为了评估道路预测的连通性保持，我们使用基于图形的指标 APLS（平均路径长度相似性）。APLS 是一种基于 Dijkstra 最短路径算法的图论指标，用于衡量预测道路图的正确性和连通性。这是通过使用方程（8）将真值图和建议图中节点之间相应最优路径长度的差值相加来计算的。</p>
-<p>其中 N 表示图像中唯一路径的数量，L(a， b)路径(a， b)的长度。我们将真值中的节点捕捉到一个建议上，以测量两个图之间的相似性，该建议表示为 $M<em>{g→p}$。 此外，为了惩罚虚报道路建议，还需要对称逆运算，建议对真值节点捕捉 Mp→g。最终的APLS是$M</em>{g→p}$和$M_{p→g}$的平均值，使用方程（9）。</p>
-<script type="math/tex; mode=display">
-\begin{equation} M_{a p l s}=1-\frac{1}{N} \sum \min \left\{1, \frac{\left|L(a, b)-L\left(a^{\prime}, b^{\prime}\right)\right|}{L(a, b)}\right\}\tag{8}\end{equation}</script><script type="math/tex; mode=display">
-\begin{equation} A P L S=\frac{1}{N} \sum \frac{1}{\frac{1}{M_{g \rightarrow p}}+\frac{1}{M_{p \rightarrow g}}}\tag{9}\end{equation}</script><p>这里 N 是图像的数量。</p>
-</li>
+<li><p><strong>分段指标</strong>：道路分段任务适用于常用的基于像素的分段指标：并集交集（IoU）。但是，道路分割的实况是从具有恒定宽度的中心线字符串生成的，这意味着像素标签的精度最多只有几个像素。因此，我们采用了Mnih推荐的松弛机制，将预测到的真值ρ像素以内的道路像素视为真值。召回率是预测道路中真阳性的分数，准确性是真实道路中真阳性的分数。我们使用标准
+IoU 和宽松 IoU （IoU r）作为像素级指标。</p></li>
+<li><p><strong>连通性指标</strong>：为了评估道路预测的连通性保持，我们使用基于图形的指标
+APLS（平均路径长度相似性）。APLS 是一种基于 Dijkstra
+最短路径算法的图论指标，用于衡量预测道路图的正确性和连通性。这是通过使用方程（8）将真值图和建议图中节点之间相应最优路径长度的差值相加来计算的。</p>
+<p>其中 N 表示图像中唯一路径的数量，L(a， b)路径(a，
+b)的长度。我们将真值中的节点捕捉到一个建议上，以测量两个图之间的相似性，该建议表示为
+<span class="math inline">\(M_{g→p}\)</span>。
+此外，为了惩罚虚报道路建议，还需要对称逆运算，建议对真值节点捕捉
+Mp→g。最终的APLS是<span class="math inline">\(M_{g→p}\)</span>和<span
+class="math inline">\(M_{p→g}\)</span>的平均值，使用方程（9）。</p>
+<p><span class="math display">\[
+\begin{equation} M_{a p l s}=1-\frac{1}{N} \sum \min \left\{1,
+\frac{\left|L(a, b)-L\left(a^{\prime}, b^{\prime}\right)\right|}{L(a,
+b)}\right\}\tag{8}\end{equation}
+\]</span></p>
+<p><span class="math display">\[
+\begin{equation} A P L S=\frac{1}{N} \sum \frac{1}{\frac{1}{M_{g
+\rightarrow p}}+\frac{1}{M_{p \rightarrow g}}}\tag{9}\end{equation}
+\]</span></p>
+<p>这里 N 是图像的数量。</p></li>
 </ul>
-<h2 id="性能验证-Performance-Validation"><a href="#性能验证-Performance-Validation" class="headerlink" title="性能验证(Performance Validation)"></a>性能验证(Performance Validation)</h2><ul>
-<li><p><strong>全局感知模块</strong>：我们选择经典的语义分割网络 UNet 和 LinkNet34 作为验证全局感知模块有效性的基线。如表所示，GA在三个不同的数据集中优于基线。与普通UNet和LinkNet34相比，GA模块分别提高了SpaceNet数据集的IoU和1.34%。我们还在下图中可视化了有/没有 GA 模块的网络中相应位置的特征图。带有 GA 模块的网络保留了更多反映道路细节的高频信息，并减少了背景干扰。因此，GA 可以专注于感兴趣区域并了解更准确的道路要素。</p>
-<p><img src="https://s2.loli.net/2024/01/11/gyiY6KJ35FfcPIt.png" alt=""></p>
-<p>全局感知模块附近的特征图可视化：（a）原始图像（b）Ground-truth（c）来自没有 GA 的模型的特征图（d）来自具有 GA 的模型的特征图。当使用全局感知模块时，特征地图可以更准确地表达道路的位置和细节</p>
-<p><img src="https://s2.loli.net/2024/01/11/8UvDLh2A64KXa3W.png" alt=""></p>
-</li>
-<li><p><strong>连通性学习</strong>：为了融合连通性任务，我们比较了三种组合方法：多头网络、多分支网络和侧输出网络。UNet和LinkNet34作为SpaceNet的基线。需要注意的是，多头网络可以用最少的参数实现最佳性能。与两个基线相比，我们的连通性任务将 APLS 提高了2.98%和2.28%。多头网络在获得输出方面更加稳定，没有跨卷积层引起的棋盘效应。</p>
+<h2 id="性能验证performance-validation">性能验证(Performance
+Validation)</h2>
+<ul>
+<li><p><strong>全局感知模块</strong>：我们选择经典的语义分割网络 UNet 和
+LinkNet34
+作为验证全局感知模块有效性的基线。如表所示，GA在三个不同的数据集中优于基线。与普通UNet和LinkNet34相比，GA模块分别提高了SpaceNet数据集的IoU和1.34%。我们还在下图中可视化了有/没有
+GA 模块的网络中相应位置的特征图。带有 GA
+模块的网络保留了更多反映道路细节的高频信息，并减少了背景干扰。因此，GA
+可以专注于感兴趣区域并了解更准确的道路要素。</p>
+<p><img src="https://s2.loli.net/2024/01/11/gyiY6KJ35FfcPIt.png" /></p>
+<p>全局感知模块附近的特征图可视化：（a）原始图像（b）Ground-truth（c）来自没有
+GA 的模型的特征图（d）来自具有 GA
+的模型的特征图。当使用全局感知模块时，特征地图可以更准确地表达道路的位置和细节</p>
+<p><img
+src="https://s2.loli.net/2024/01/11/8UvDLh2A64KXa3W.png" /></p></li>
+<li><p><strong>连通性学习</strong>：为了融合连通性任务，我们比较了三种组合方法：多头网络、多分支网络和侧输出网络。UNet和LinkNet34作为SpaceNet的基线。需要注意的是，多头网络可以用最少的参数实现最佳性能。与两个基线相比，我们的连通性任务将
+APLS
+提高了2.98%和2.28%。多头网络在获得输出方面更加稳定，没有跨卷积层引起的棋盘效应。</p>
 <p>为了研究连通性任务对保持路段之间正确拓扑关系的意义，我们将LinkNet34调整为多端结构，并将其与其他两类共享任务进行比较。第一种是定向任务。第二种是表示道路中心线和交叉口的点线任务，因为点和线是道路图的组成部分，因此直观地将这两者结合起来，理论上可以提高道路连通性。下表的结果表明，<strong>连通性任务的APLS有所改善，高于定向任务和点线任务的APLS</strong>，表明该方法的连通性任务对预测连通道路的拓扑特征是有效的。这表明结果的改善是由于我们的连接任务，而不是多任务学习机制。显示了上述网络在三种不同场景中的分割输出。我们发现，与其他网络相比，结合我们的连通性任务在停车场车道、立交桥下的道路和被树木遮荫的未铺砌轨道的道路连通性方面表现更好。</p>
-<p><img src="https://s2.loli.net/2024/01/11/df2EXtli3wY61h9.png" alt=""></p>
-<p>（a）原始图像（b）Ground-truth（c） LinkNet34 预测（d）LinkNet（e）具有定向任务预测的LinkNet（f） LinkNet 与我们的连接任务预测</p>
-<p><img src="https://s2.loli.net/2024/01/11/rlSpK1o6kA9Q2NV.png" alt=""></p>
-<p>连接性（CONN）、方向（ORIENT）和点中心线（P-L）学习作为辅助任务的比较。这表明道路连通性的改善是由于连通性任务而不是多任务学习。</p>
-</li>
+<p><img src="https://s2.loli.net/2024/01/11/df2EXtli3wY61h9.png" /></p>
+<p>（a）原始图像（b）Ground-truth（c） LinkNet34
+预测（d）LinkNet（e）具有定向任务预测的LinkNet（f） LinkNet
+与我们的连接任务预测</p>
+<p><img src="https://s2.loli.net/2024/01/11/rlSpK1o6kA9Q2NV.png" /></p>
+<p>连接性（CONN）、方向（ORIENT）和点中心线（P-L）学习作为辅助任务的比较。这表明道路连通性的改善是由于连通性任务而不是多任务学习。</p></li>
 <li><p><strong>堆叠式多头网络（Stacked Multihead Network）</strong></p>
-<p>为了验证堆叠结构相对于常用的普通结构的优越性，我们将堆叠多头网络与最先进的语义分割网络进行了比较。UNet 和 LinkNet 被调整为多头形式，我们还研究了堆栈数量对性能的影响。下表的结果表明，具有两个堆栈的多头网络最稳定，与UNet多头结构相比，IoU和APLS分别平均提高了4%和8%。</p>
-<p><img src="https://s2.loli.net/2024/01/11/qYiowOKIXF8Wlc5.png" alt=""></p>
-<p>为了证明我们提议的 GA 模块和连接任务的有效性，我们逐步将它们应用到我们的框架中。如表V所示，我们以两个堆栈为基准设置网络，然后添加全局感知模块和道路连通性任务。我们网络的最终形式是一个2层2头网络，带有 GA 模块，用于同时学习道路分段和道路连通性。我们的最终网络在几乎所有数据集上都表现得更好，这表明全球感知和连通性任务都有助于改进遥感图像的道路提取。但是，可以看出，与LinkNet和UNet相比，全局感知模块在这种堆叠网络上略有改进。我们假设1/4中间监督的工作方式与全局注意力机制类似。</p>
-<p><img src="https://s2.loli.net/2024/01/11/uhwq8ygZAiXIUOf.png" alt=""></p>
-<p>为了证明我们的方法在大尺度遥感图像上的有效性，我们对原始RoadTracer测试图像（4,096×4,096）进行了推理实验。由于网络的输入大小受限于 GPU 内存大小，并且推理图像相对较大，因此我们需要在推理过程中对图像进行裁剪和拼接。由于每个块的边缘区域缺少上下文信息，因此边界预测不是那么准确。为了避免边界效应引起的拼接痕迹，我们采用了扩展预测。我们将推理补丁大小设置为512×512，步长设置为368，忽略边缘的72像素并拼接到最终预测中。下图显示了两张4,096×4,096图像的结果，这两张图像来自不同的国家，具有不同的景观，并且包含具有不同比例和外观的道路的混合体，这使得道路提取非常具有挑战性。我们的网络可以识别大部分道路，这证明了其有效性和普遍性。每个图像左下角的放大视图显示连通性结果。我们的网络可以准确地统计每个路口的分支并识别道路区域，这使得网络可以学习路段的拓扑关系，提高路图的连通性，特别是在路口。</p>
-<p><img src="https://s2.loli.net/2024/01/11/sjXTKk46N2wzQmr.png" alt=""></p>
-</li>
-<li><p><strong>与最新方法的比较（Comparisons with State-of-the-Art Methods）</strong></p>
-<p>我们将我们提出的方法与最先进的分割或道路分割方法UNet [32]、LinkNet [38]、DLA [48]、D-LinkNet [22]、DeepRoadMapper （segmentation）[6]、Li et al. [29]和Batra et al. [11]进行了比较。下表列出了三个数据集的性能，从该表中，我们观察到我们的方法优于其他方法。</p>
-<p><img src="https://s2.loli.net/2024/01/11/CRqZkp4a5SDP9QL.png" alt=""></p>
-<p>尽管三个数据集之间存在很大差异，尤其是地面分辨率呈指数级增长（0.3 m/像素、0.6 m/像素和1.2m/像素），但我们的方法显着提高了道路分割精度和道路图连通性。在图13中，我们展示了在一些具有挑战性的情况下与上述方法的比较，其中我们的方法在遮挡和阴影区域取得了更好的结果，尽管它在这些遮挡下在精确连接的道路方面也面临挑战。缺乏纹理和光谱相似性也是误报的主要原因。该方法可以连接下图（a）中立交桥下的路段，检测下图（b）中树木覆盖较重的路段，识别下图（c）中未铺设路面的道路，以及（e）中由于缺乏纹理信息而难以区分的无车停车场。虽然我们的方法不能完全检测出下图（d）所示的大部分阴影道路，但它确实提供了良好的完整性。上述所有方法都检测到了下图中未标记的道路，但是我们的方法更好地保留了路段的连通性。</p>
-<p><img src="https://s2.loli.net/2024/01/11/qJ1veo4BhFjKYIw.png" alt=""></p>
-</li>
+<p>为了验证堆叠结构相对于常用的普通结构的优越性，我们将堆叠多头网络与最先进的语义分割网络进行了比较。UNet
+和 LinkNet
+被调整为多头形式，我们还研究了堆栈数量对性能的影响。下表的结果表明，具有两个堆栈的多头网络最稳定，与UNet多头结构相比，IoU和APLS分别平均提高了4%和8%。</p>
+<p><img src="https://s2.loli.net/2024/01/11/qYiowOKIXF8Wlc5.png" /></p>
+<p>为了证明我们提议的 GA
+模块和连接任务的有效性，我们逐步将它们应用到我们的框架中。如表V所示，我们以两个堆栈为基准设置网络，然后添加全局感知模块和道路连通性任务。我们网络的最终形式是一个2层2头网络，带有
+GA
+模块，用于同时学习道路分段和道路连通性。我们的最终网络在几乎所有数据集上都表现得更好，这表明全球感知和连通性任务都有助于改进遥感图像的道路提取。但是，可以看出，与LinkNet和UNet相比，全局感知模块在这种堆叠网络上略有改进。我们假设1/4中间监督的工作方式与全局注意力机制类似。</p>
+<p><img src="https://s2.loli.net/2024/01/11/uhwq8ygZAiXIUOf.png" /></p>
+<p>为了证明我们的方法在大尺度遥感图像上的有效性，我们对原始RoadTracer测试图像（4,096×4,096）进行了推理实验。由于网络的输入大小受限于
+GPU
+内存大小，并且推理图像相对较大，因此我们需要在推理过程中对图像进行裁剪和拼接。由于每个块的边缘区域缺少上下文信息，因此边界预测不是那么准确。为了避免边界效应引起的拼接痕迹，我们采用了扩展预测。我们将推理补丁大小设置为512×512，步长设置为368，忽略边缘的72像素并拼接到最终预测中。下图显示了两张4,096×4,096图像的结果，这两张图像来自不同的国家，具有不同的景观，并且包含具有不同比例和外观的道路的混合体，这使得道路提取非常具有挑战性。我们的网络可以识别大部分道路，这证明了其有效性和普遍性。每个图像左下角的放大视图显示连通性结果。我们的网络可以准确地统计每个路口的分支并识别道路区域，这使得网络可以学习路段的拓扑关系，提高路图的连通性，特别是在路口。</p>
+<p><img
+src="https://s2.loli.net/2024/01/11/sjXTKk46N2wzQmr.png" /></p></li>
+<li><p><strong>与最新方法的比较（Comparisons with State-of-the-Art
+Methods）</strong></p>
+<p>我们将我们提出的方法与最先进的分割或道路分割方法UNet [32]、LinkNet
+[38]、DLA [48]、D-LinkNet [22]、DeepRoadMapper （segmentation）[6]、Li
+et al. [29]和Batra et al.
+[11]进行了比较。下表列出了三个数据集的性能，从该表中，我们观察到我们的方法优于其他方法。</p>
+<p><img src="https://s2.loli.net/2024/01/11/CRqZkp4a5SDP9QL.png" /></p>
+<p>尽管三个数据集之间存在很大差异，尤其是地面分辨率呈指数级增长（0.3
+m/像素、0.6
+m/像素和1.2m/像素），但我们的方法显着提高了道路分割精度和道路图连通性。在图13中，我们展示了在一些具有挑战性的情况下与上述方法的比较，其中我们的方法在遮挡和阴影区域取得了更好的结果，尽管它在这些遮挡下在精确连接的道路方面也面临挑战。缺乏纹理和光谱相似性也是误报的主要原因。该方法可以连接下图（a）中立交桥下的路段，检测下图（b）中树木覆盖较重的路段，识别下图（c）中未铺设路面的道路，以及（e）中由于缺乏纹理信息而难以区分的无车停车场。虽然我们的方法不能完全检测出下图（d）所示的大部分阴影道路，但它确实提供了良好的完整性。上述所有方法都检测到了下图中未标记的道路，但是我们的方法更好地保留了路段的连通性。</p>
+<p><img
+src="https://s2.loli.net/2024/01/11/qJ1veo4BhFjKYIw.png" /></p></li>
 </ul>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz">Zhang Han</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz/posts/20240110/">https://www.zhanghan.xyz/posts/20240110/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.zhanghan.xyz" target="_blank">ZhangHan个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Road-segmentation%EF%BC%88%E9%81%93%E8%B7%AF%E5%88%86%E5%89%B2%EF%BC%89/">Road segmentation（道路分割）</a><a class="post-meta__tags" href="/tags/image-segmentation%EF%BC%88%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%EF%BC%89/">image segmentation（图像分割）</a><a class="post-meta__tags" href="/tags/multitask-learning%EF%BC%88%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%EF%BC%89/">multitask learning（多任务学习）</a><a class="post-meta__tags" href="/tags/road-extraction%EF%BC%88%E9%81%93%E8%B7%AF%E6%8F%90%E5%8F%96%EF%BC%89/">road extraction（道路提取）</a><a class="post-meta__tags" href="/tags/topology-relationships%EF%BC%88%E6%8B%93%E6%89%91%E5%85%B3%E7%B3%BB%EF%BC%89/">topology relationships（拓扑关系）</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2024/01/11/Zln1FjsdrUzoefq.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/20240111/" title="ChatGPT账号快速注册"><img class="cover" src="https://s2.loli.net/2024/01/13/IaxVq7JwSMHGAKi.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ChatGPT账号快速注册</div></div></a></div><div class="next-post pull-right"><a href="/posts/231229/" title="Hexo+butterfly为文章添加AI摘要"><img class="cover" src="https://s2.loli.net/2023/12/29/clKfGeuDFiRzOP5.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hexo+butterfly为文章添加AI摘要</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Abstract"><span class="toc-number">1.</span> <span class="toc-text">1.Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Introduction"><span class="toc-number">2.</span> <span class="toc-text">2.Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E9%81%93%E8%B7%AF%E6%8F%90%E5%8F%96%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">3.道路提取相关工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">4.方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1%E5%85%A8%E5%B1%80%E6%84%9F%E7%9F%A5%E6%A8%A1%E5%9D%97%EF%BC%88Global-Aware-Module%EF%BC%89"><span class="toc-number">4.0.1.</span> <span class="toc-text">4.1全局感知模块（Global-Aware Module）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2%E9%81%93%E8%B7%AF%E8%BF%9E%E9%80%9A%E6%80%A7%E4%BB%BB%E5%8A%A1%EF%BC%88Road-Connectivity-Task%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">4.2道路连通性任务（Road Connectivity Task）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3%E5%A4%9A%E5%A4%B4%E6%B2%99%E6%BC%8F%E6%A8%A1%E5%9D%97-Multihead-Hourglass-Module"><span class="toc-number">4.2.</span> <span class="toc-text">4.3多头沙漏模块(Multihead Hourglass Module)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4%E5%A0%86%E5%8F%A0%E5%BC%8F%E5%A4%9A%E6%98%BE%E7%A4%BA%E7%AB%AF%E7%BD%91%E7%BB%9C-Stacked-Multihead-Network"><span class="toc-number">4.3.</span> <span class="toc-text">4.4堆叠式多显示端网络(Stacked Multihead Network)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%EF%BC%88Loss-Function%EF%BC%89"><span class="toc-number">4.4.</span> <span class="toc-text">4.5损失函数（Loss Function）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E6%96%BD%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="toc-number">5.</span> <span class="toc-text">实施详细信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%8E%E8%AE%A8%E8%AE%BA-Experiment-And-Discussion"><span class="toc-number">6.</span> <span class="toc-text">实验与讨论(Experiment And Discussion)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Datasets"><span class="toc-number">6.1.</span> <span class="toc-text">Datasets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E6%A0%87-Metrics"><span class="toc-number">6.2.</span> <span class="toc-text">指标(Metrics)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E9%AA%8C%E8%AF%81-Performance-Validation"><span class="toc-number">6.3.</span> <span class="toc-text">性能验证(Performance Validation)</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Zhang Han</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/隐私政策/">隐私政策</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz">Zhang Han</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.zhanghan.xyz/posts/20240110/">https://www.zhanghan.xyz/posts/20240110/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.zhanghan.xyz" target="_blank">ZhangHan个人博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Road-segmentation%EF%BC%88%E9%81%93%E8%B7%AF%E5%88%86%E5%89%B2%EF%BC%89/">Road segmentation（道路分割）</a><a class="post-meta__tags" href="/tags/image-segmentation%EF%BC%88%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%EF%BC%89/">image segmentation（图像分割）</a><a class="post-meta__tags" href="/tags/multitask-learning%EF%BC%88%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0%EF%BC%89/">multitask learning（多任务学习）</a><a class="post-meta__tags" href="/tags/road-extraction%EF%BC%88%E9%81%93%E8%B7%AF%E6%8F%90%E5%8F%96%EF%BC%89/">road extraction（道路提取）</a><a class="post-meta__tags" href="/tags/topology-relationships%EF%BC%88%E6%8B%93%E6%89%91%E5%85%B3%E7%B3%BB%EF%BC%89/">topology relationships（拓扑关系）</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2024/01/11/Zln1FjsdrUzoefq.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/SlfdQGJnMtbiC3F.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" target="_blank"><img class="post-qr-code-img" src="https://s2.loli.net/2023/12/29/nd7zrmV8hNs2a5i.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/20240111/" title="ChatGPT账号快速注册"><img class="cover" src="https://s2.loli.net/2024/01/13/IaxVq7JwSMHGAKi.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ChatGPT账号快速注册</div></div></a></div><div class="next-post pull-right"><a href="/posts/231229/" title="Hexo+butterfly为文章添加AI摘要"><img class="cover" src="https://s2.loli.net/2023/12/29/clKfGeuDFiRzOP5.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hexo+butterfly为文章添加AI摘要</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#abstract"><span class="toc-number">1.</span> <span class="toc-text">1.Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">2.</span> <span class="toc-text">2.Introduction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%81%93%E8%B7%AF%E6%8F%90%E5%8F%96%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">3.道路提取相关工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">4.方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%84%9F%E7%9F%A5%E6%A8%A1%E5%9D%97global-aware-module"><span class="toc-number">4.0.1.</span> <span class="toc-text">4.1全局感知模块（Global-Aware
+Module）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%81%93%E8%B7%AF%E8%BF%9E%E9%80%9A%E6%80%A7%E4%BB%BB%E5%8A%A1road-connectivity-task"><span class="toc-number">4.1.</span> <span class="toc-text">4.2道路连通性任务（Road
+Connectivity Task）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%A4%B4%E6%B2%99%E6%BC%8F%E6%A8%A1%E5%9D%97multihead-hourglass-module"><span class="toc-number">4.2.</span> <span class="toc-text">4.3多头沙漏模块(Multihead
+Hourglass Module)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E5%BC%8F%E5%A4%9A%E6%98%BE%E7%A4%BA%E7%AB%AF%E7%BD%91%E7%BB%9Cstacked-multihead-network"><span class="toc-number">4.3.</span> <span class="toc-text">4.4堆叠式多显示端网络(Stacked
+Multihead Network)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0loss-function"><span class="toc-number">4.4.</span> <span class="toc-text">4.5损失函数（Loss Function）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E6%96%BD%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="toc-number">5.</span> <span class="toc-text">实施详细信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E4%B8%8E%E8%AE%A8%E8%AE%BAexperiment-and-discussion"><span class="toc-number">6.</span> <span class="toc-text">实验与讨论(Experiment And
+Discussion)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#datasets"><span class="toc-number">6.1.</span> <span class="toc-text">Datasets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E6%A0%87metrics"><span class="toc-number">6.2.</span> <span class="toc-text">指标(Metrics)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E9%AA%8C%E8%AF%81performance-validation"><span class="toc-number">6.3.</span> <span class="toc-text">性能验证(Performance
+Validation)</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Zhang Han</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a href="/隐私政策/">隐私政策</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
   if (typeof pangu === 'object') pangu.autoSpacingPage()
   else {
     getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
